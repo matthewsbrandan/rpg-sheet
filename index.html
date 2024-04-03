@@ -515,9 +515,13 @@
 
           if(!this.atributos.habilidades) this.atributos.habilidades = [];
           
-          if(isChecked) this.atributos.habilidades.push(value)
+          if(isChecked){
+            if(!this.atributos.habilidades.includes(value)) this.atributos.habilidades.push(
+              value
+            )
+          }
           else this.atributos.habilidades = this.atributos.habilidades.filter(
-            (ab) => ab === value
+            (ab) => ab !== value
           )
         },
         updateEquipament: function (el){
@@ -526,10 +530,14 @@
 
           if(!this.itens.equipamentos) this.itens.equipamentos = [];
           
-          if(isChecked) this.itens.equipamentos.push(value)
+          if(isChecked){
+            if(!this.itens.equipamentos.includes(value)) this.itens.equipamentos.push(
+              value
+            );
+          }
           else this.itens.equipamentos = this.itens.equipamentos.filter(
-            (ab) => ab === value
-          )
+            (ab) => ab !== value
+          );
         },
         updateArm: function (el){
           const isChecked = el.checked;
@@ -540,9 +548,14 @@
           const finded = this.game.arms.find((arm) => arm.name === value);
           if(!finded) return;
           
-          if(isChecked) this.itens.armas.push({ name: value, value: finded.value  })
+          if(isChecked){
+            if(!this.itens.armas.some((arm) => arm.name === name)) this.itens.armas.push({
+              name: value,
+              value: finded.value
+            });
+          }
           else this.itens.armas = this.itens.armas.filter(
-            (arm) => arm.name === value
+            (arm) => arm.name !== value
           )
         }
       }
