@@ -142,6 +142,11 @@
       </div>
     </div>
 
+    <div class="mt-6 flex shadow-sm ring-2 ring-inset ring-gray-800 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative rounded">
+      <textarea v-model="notas" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" rows="10"></textarea>
+      <span class="text-gray-700 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-slate-900 font-semibold px-2">Notas Adicionais</span>
+    </div>
+
     <div class="mt-6 mb-6 flex flex-wrap items-center justify-center gap-4">
       <button type="button" v-on:click="save()" class="w-32 text-center rounded-md bg-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-600 shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100">Salvar</button>
       <a href="./regras.pdf" target="_blank" class="w-32 text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100">Regras</a>
@@ -357,7 +362,7 @@
           personalidade: initialPlayer?.atributos?.personalidade ?? 0,
           modificador_personalidade: initialPlayer?.atributos?.modificador_personalidade ?? 0,
           defesa: initialPlayer?.atributos?.defesa ?? 0,
-          modificador_defesa: initialPlayer.atributos.modificador_defesa ?? '',
+          modificador_defesa: initialPlayer?.atributos?.modificador_defesa ?? '',
           vida: initialPlayer?.atributos?.vida ?? 0,
           modificador_vida: initialPlayer?.atributos?.modificador_vida ?? '',
           habilidades: initialPlayer?.atributos?.habilidades ?? []
@@ -367,6 +372,7 @@
           armas: initialPlayer?.itens?.armas ?? [],
           tesouros: initialPlayer?.itens?.tesouros && initialPlayer.itens.tesouros.length > 0 ? initialPlayer.itens.tesouros : ['']
         },
+        notas: initialPlayer?.notas ?? '',
         game: {
           is_auto_saved: false,
           modal: {
@@ -523,7 +529,8 @@
           const player = {
             bio: this.bio,
             atributos: this.atributos,
-            itens: this.itens
+            itens: this.itens,
+            notas: this.notas
           }
 
           setPlayer(player)
@@ -531,7 +538,7 @@
         verifyPayloadAndSave: function(){
           const storagedPlayer = getPlayer();
 
-          const player = { bio: this.bio, atributos: this.atributos, itens: this.itens };
+          const player = { bio: this.bio, atributos: this.atributos, itens: this.itens, notas: this.notas };
 
           if(JSON.stringify(storagedPlayer) === JSON.stringify(player)) return false;
 
@@ -590,8 +597,6 @@
         }
       }
     });
-
-    window.onload
   </script>
 </body>
 </html>
