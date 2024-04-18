@@ -6,6 +6,9 @@
   <title>RPG</title>
   <link rel="shortcut icon" href="icon.jpg" type="image/jpg">
   <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Jacquard+24&display=swap" rel="stylesheet">
   <style> input{ overflow: auto; } </style>
 </head>
 <body class="m-0 p-0 w-screen h-screen overflow-y-auto overflow-x-hidden">
@@ -506,8 +509,56 @@
                     </div>
                   </div>
                   <iframe v-if="game.maps.current.slice(-4) === '.pdf'" v-bind:src="game.maps.current" width="100%" style="height: calc(100vh - 5rem)" frameborder="0"></iframe>
-                  <div v-if="game.maps.current.slice(-4) !== '.pdf'" class="relative overflow-auto">
+                  <div v-if="game.maps.current.slice(-4) !== '.pdf'" class="relative overflow-auto text-xs text-gray-100" style="font-family: Cinzel;">
                     <img v-bind:src="game.maps.current" width="624" height="350" usemap="#image-map"/>
+                    <span class="absolute group" style="top: 87px;left: 117px;">
+                      <span class="opacity-0 group-hover:opacity-100" style="transform: translateX(-50%);display: block;">Costa da Serpente</span>
+                      <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+                    </span>
+                    <span class="absolute group" style="top: 144px;left: 114px;">
+                      <span class="opacity-0 group-hover:opacity-100" style="transform: translateX(-50%);display: block;">Ruínas de Ulthar</span>
+                      <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+                    </span>
+                    <span class="absolute group" style="top: 167px;left: 173px;">
+                      <span class="opacity-0 group-hover:opacity-100" style="transform: translateX(-50%);display: block;">Monte de Horus</span>
+                      <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+                    </span>
+                    <span class="absolute group" style="top: 213px;left: 236px;">
+                      <span class="opacity-0 group-hover:opacity-100" style="transform: translateX(-50%);display: block;">Ruínas de Frostar</span>
+                      <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+                    </span>
+                    <span class="absolute group" style="bottom: 82px;left: 272px;">
+                      <span class="opacity-0 group-hover:opacity-100" style="transform: translateX(-50%);display: block;">Taverna do Lobo Cinzen</span>
+                      <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+                    </span>
+                    <span class="absolute group" style="top: 41px;left: 286px;">
+                      <span class="opacity-0 group-hover:opacity-100" style="transform: translateX(-50%);display: block;">Norte Gélido</span>
+                      <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+                    </span>
+                    <span class="absolute group" style="top: 163px;left: 291px;">
+                      <span class="opacity-0 group-hover:opacity-100" style="transform: translateX(-50%);display: block;">Cidadela de Urdir</span>
+                      <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+                    </span>
+                    <span class="absolute group" style="bottom: 97px;left: 327px;">
+                      <span class="opacity-0 group-hover:opacity-100" style="transform: translateX(-50%);display: block;">Castelo de Nimir</span>
+                      <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+                    </span>
+                    <span class="absolute group" style="top: 86px;right: 78px;">
+                      <span class="opacity-0 group-hover:opacity-100" style="transform: translateX(-50%);display: block;">Planícies Amarelas</span>
+                      <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+                    </span>
+                    <span class="absolute group" style="top: 127px;right: 134px;">
+                      <span class="opacity-0 group-hover:opacity-100" style="transform: translateX(-50%);display: block;">Templo de Prata</span>
+                      <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+                    </span>
+                    <span class="absolute group flex flex-col items-end" style="top: 148px;right: 37px;">
+                      <span class="opacity-0 group-hover:opacity-100" style="transform: translateX(25%);display: block;">Portal de Nasir</span>
+                      <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+                    </span>
+                    <span class="absolute group flex flex-col items-end" style="bottom: 128px;right: 54px;">
+                      <span class="opacity-0 group-hover:opacity-100" style="transform: translateX(25%); display: block;">Torre Arcana</span>
+                      <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -586,7 +637,7 @@
             is_open_arms: false,
             is_open_attributes: false,
             is_open_books: false,
-            is_open_maps: true
+            is_open_maps: false
           },
           calculeds: {
             defense: [0, '-/-'],
