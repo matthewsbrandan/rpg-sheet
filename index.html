@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="bg-slate-900">
+<html lang="pt-BR" class="bg-zinc-950">
 <head class="m-0 p-0">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,149 +13,171 @@
 </head>
 <body class="m-0 p-0 w-screen h-screen overflow-y-auto overflow-x-hidden">
   <main class="text-gray-400 py-4 px-6 m-0" id="app">
-    <div class="fixed right-4 bg-slate-900 px-2.5 pt-1 pb-1.5  border-2 border-emerald-500 text-emerald-500 text-xs rounded-xl z-10" v-if="game.is_auto_saved">Salvo Automaticamente</div>
+    <div class="fixed right-4 bg-zinc-950 px-2.5 pt-1 pb-1.5  border-2 border-emerald-500 text-emerald-500 text-xs rounded-xl z-10" v-if="game.is_auto_saved">Salvo Automaticamente</div>
     <header class="grid grid-cols-3 mt-2">
-      <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-800 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
+      <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
         <input type="text" v-model="bio.nome" id="nome" autocomplete="nome" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="">
-        <span class="text-gray-700 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-slate-900 font-semibold px-2">Nome</span>
+        <span class="text-gray-500 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-950 font-semibold px-2">Nome</span>
       </div>
       
-      <div class="flex shadow-sm ring-2 ring-inset ring-gray-800 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
+      <div class="flex shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
         <input type="text" v-model="bio.ocupacao" id="ocupacao" autocomplete="ocupacao" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-        <span class="text-gray-700 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-slate-900 font-semibold px-2">Ocupação</span>
+        <span class="text-gray-500 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-950 font-semibold px-2">Ocupação</span>
       </div>
       
-      <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-800 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
+      <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
         <input type="text" v-model="bio.origem" id="origem" autocomplete="origem" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-        <span class="text-gray-700 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-slate-900 font-semibold px-2">Origem</span>
+        <span class="text-gray-500 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-950 font-semibold px-2">Origem</span>
       </div>
     </header>
     <div class="grid sm:grid-cols-3 gap-y-6 sm:gap-x-6 mt-6">
       <div class="grid grid-cols-3 gap-y-2" id="attributes">
-        <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-800 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
+        <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
           <input type="number" v-model="atributos.forca" id="forca" autocomplete="forca" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-          <span class="text-gray-700 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-slate-900 font-semibold px-2">Base</span>
-        </div>
-        <div class="bg-slate-800 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center">Força</div>
-        <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-800 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
+          <span class="text-gray-500 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-950 font-semibold px-2">Base</span>
+        </div>    
+        <div
+          class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
+          v-on:click="openTestAttribute('forca')"
+        >Força</div>
+        <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
           <input type="number" v-model="atributos.modificador_forca" id="modificador-forca" autocomplete="modificador-forca" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-          <span class="text-gray-700 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-slate-900 font-semibold px-2">Modificadores</span>
+          <span class="text-gray-500 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-950 font-semibold px-2">Modificadores</span>
         </div>
 
-        <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-800 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+        <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
           <input type="number" v-model="atributos.agilidade" id="agilidade" autocomplete="agilidade" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
         </div>
-        <div class="bg-slate-800 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center">Agilid.</div>
-        <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-800 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+        <div
+          class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
+          v-on:click="openTestAttribute('agilidade')"
+        >Agilid.</div>
+        <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
           <input type="number" v-model="atributos.modificador_agilidade" id="modificador-agilidade" autocomplete="modificador-agilidade" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
         </div>
 
-        <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-800 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+        <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
           <input type="number" v-model="atributos.saude" id="saude" autocomplete="saude" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
         </div>
-        <div class="bg-slate-800 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center">Saúde</div>
-        <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-800 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+        <div
+          class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
+          v-on:click="openTestAttribute('saude')"
+        >Saúde</div>
+        <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
           <input type="number" v-model="atributos.modificador_saude" id="modificador-saude" autocomplete="modificador-saude" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
         </div>
         
-        <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-800 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+        <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
           <input type="number" v-model="atributos.inteligencia" id="inteligencia" autocomplete="inteligencia" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
         </div>
-        <div class="bg-slate-800 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center">Inteli.</div>
-        <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-800 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+        <div
+          class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
+          v-on:click="openTestAttribute('inteligencia')"
+        >Inteli.</div>
+        <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
           <input type="number" v-model="atributos.modificador_inteligencia" id="modificador-inteligencia" autocomplete="modificador-inteligencia" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
         </div>
 
-        <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-800 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+        <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
           <input type="number" v-model="atributos.sabedoria" id="sabedoria" autocomplete="sabedoria" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
         </div>
-        <div class="bg-slate-800 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center">Sabedo.</div>
-        <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-800 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+        <div
+          class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
+          v-on:click="openTestAttribute('sabedoria')"
+        >Sabedo.</div>
+        <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
           <input type="number" v-model="atributos.modificador_sabedoria" id="modificador-sabedoria" autocomplete="modificador-sabedoria" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
         </div>
 
-        <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-800 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+        <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
           <input type="number" v-model="atributos.personalidade" id="personalidade" autocomplete="personalidade" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
         </div>
-        <div class="bg-slate-800 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center">Person.</div>
-        <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-800 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+        <div
+          class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
+          v-on:click="openTestAttribute('personalidade')"
+        >Person.</div>
+        <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
           <input type="number" v-model="atributos.modificador_personalidade" id="modificador-personalidade" autocomplete="modificador-personalidade" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
         </div>
       </div>
 
       <div class="col-span-2 grid grid-cols-2 gap-x-2 gap-y-2">
-        <div class="bg-slate-800 flex flex-col">
+        <div class="bg-zinc-900 flex flex-col">
           <div class="flex-1">
-            <div class="flex items-center border-b border-slate-700">
-              <span class="px-2 flex-1 block text-sm font-semibold">Defesa</span>
-              <div class="flex ring-0 ring-inset focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative bg-slate-700 max-w-[4rem]">
+            <div class="flex items-center border-b border-zinc-800">
+              <span
+                class="px-2 flex-1 block text-sm font-semibold cursor-pointer"
+                v-on:click="openTestAttribute('defesa')"
+              >Defesa</span>
+              <div class="flex ring-0 ring-inset focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative bg-zinc-800 max-w-[4rem]">
                 <input type="number" v-model="atributos.defesa" class="block border-0 bg-transparent py-1 focus:ring-0 text-sm">
               </div>
             </div>
             <textarea v-model="atributos.modificador_defesa" @input="() => calculateDamages('modificador_defesa')" id="defesa" name="defesa" class="flex-1 w-full  !border-0 py-1.5 px-2 text-sm sm:leading-6 bg-transparent p-0 !outline-0 !ring-0"></textarea>
           </div>
           <span class="text-[10px]">{{ game.calculeds.life[1] }}</span>
-          <div class="bg-slate-700">
+          <div class="bg-zinc-800">
             <div class="bg-blue-500 h-2.5" v-bind:style="{ width: `${game.calculeds.defense[0]}%` }"></div>
           </div>
         </div>
-        <div class="bg-slate-800  flex flex-col">
+        <div class="bg-zinc-900  flex flex-col">
           <div class="flex-1"> 
-            <div class="flex items-center border-b border-slate-700">
+            <div class="flex items-center border-b border-zinc-800">
               <span class="px-2 flex-1 block text-sm font-semibold">Pontos de vida</span>
-              <div class="flex ring-0 ring-inset focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative bg-slate-700 max-w-[4rem]">
+              <div class="flex ring-0 ring-inset focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative bg-zinc-800 max-w-[4rem]">
                 <input type="number" v-model="atributos.vida" class="block border-0 bg-transparent py-1 focus:ring-0 text-sm">
               </div>
             </div>
             <textarea v-model="atributos.modificador_vida" @input="() => calculateDamages('modificador_vida')" id="vida" name="vida" class="flex-1 w-full  !border-0 py-1.5 px-2 text-sm sm:leading-6 bg-transparent p-0 !outline-0 !ring-0"></textarea>
           </div>
           <span class="text-[10px]">{{ game.calculeds.life[1] }}</span>
-          <div class="bg-slate-700">
+          <div class="bg-zinc-800">
             <div class="bg-red-500 h-2.5" v-bind:style="{ width: `${game.calculeds.life[0]}%` }">
             </div>
           </div>
         </div>
-        <div class="bg-slate-800 col-span-2 min-h-[4rem]">
-          <button type="button" class="bg-slate-700 px-2 py-1 w-full text-left text-sm font-semibold" v-on:click="openModal('abilities')">Habilidades</button>
+        <div class="bg-zinc-900 col-span-2 min-h-[4rem]">
+          <button type="button" class="bg-zinc-800 px-2 py-1 w-full text-left text-sm font-semibold" v-on:click="openModal('abilities')">Habilidades</button>
           <div class="grid grid-cols-2 gap-2 px-2 py-1 max-h-[8rem] overflow-y-auto" v-if="!!atributos.habilidades">
-            <span class="border-b border-slate-700/40" v-for="habilidade in atributos.habilidades" :key="habilidade">{{ habilidade }}</span>
+            <span class="border-b border-zinc-800/40" v-for="habilidade in atributos.habilidades" :key="habilidade">{{ habilidade }}</span>
           </div>
         </div>
       </div>
     </div>
     <div class="grid sm:grid-cols-3 gap-2 mt-2 sm:mt-6 w-full">
-      <div class="sm:col-span-2 bg-slate-800 min-h-[4rem]">
-        <button type="button" class="bg-slate-700 px-2 py-1 w-full text-left text-sm font-semibold" v-on:click="openModal('equipaments')">Equipamentos</button>
+      <div class="sm:col-span-2 bg-zinc-900 min-h-[4rem]">
+        <button type="button" class="bg-zinc-800 px-2 py-1 w-full text-left text-sm font-semibold" v-on:click="openModal('equipaments')">Equipamentos</button>
         <div class="grid grid-cols-2 gap-2 px-2 py-1 max-h-[16rem] overflow-y-auto" v-if="!!itens.equipamentos">
-          <span class="border-b border-slate-700/40" v-for="equipamento in itens.equipamentos" :key="equipamento">{{ equipamento }}</span>
+          <span class="border-b border-zinc-800/40" v-for="equipamento in itens.equipamentos" :key="equipamento">{{ equipamento }}</span>
         </div>
       </div>
       <div class="flex flex-col flex-1 gap-y-2">
-        <div class="bg-slate-800 min-h-[3rem]">
-          <button type="button" class="bg-slate-700 px-2 pt-1 w-full text-left text-sm font-semibold" v-on:click="openModal('arms')">Armas e Armaduras</button>
+        <div class="bg-zinc-900 min-h-[3rem]">
+          <button type="button" class="bg-zinc-800 px-2 pt-1 w-full text-left text-sm font-semibold" v-on:click="openModal('arms')">Armas e Armaduras</button>
           <div class="flex flex-col gap-1 max-h-[8rem] overflow-y-auto" v-if="!!itens.armas">
-            <span class="flex justify-between border-b last:border-0 border-slate-700/40" v-for="arma in itens.armas" :key="arma">
+            <span class="flex justify-between border-b last:border-0 border-zinc-800/40" v-for="arma in itens.armas" :key="arma">
               <span class="px-2 py-1 flex-1">{{ arma.name }}</span>
-              <span class="bg-slate-700/40 px-2 py-1">{{ arma.value }}</span>
+              <span class="bg-zinc-800/40 px-2 py-1">{{ arma.value }}</span>
             </span>
           </div>
         </div>
-        <div class="bg-slate-800 min-h-[4rem] px-2 py-1">
+        <div class="bg-zinc-900 min-h-[4rem] px-2 py-1">
           <span class="text-sm font-semibold">Tesouros</span>
           <textarea v-model="itens.tesouros[0]" class="flex-1 w-full  !border-0 py-1.5 sm:text-sm sm:leading-6 bg-transparent p-0 !outline-0 !ring-0"></textarea>
         </div>
       </div>
     </div>
 
-    <div class="mt-6 flex shadow-sm ring-2 ring-inset ring-gray-800 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative rounded">
+    <div class="mt-6 flex shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative rounded">
       <textarea v-model="notas" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" rows="10"></textarea>
-      <span class="text-gray-700 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-slate-900 font-semibold px-2">Notas Adicionais</span>
+      <span class="text-gray-500 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-950 font-semibold px-2">Notas Adicionais</span>
     </div>
 
     <div class="mt-6 mb-6 flex flex-wrap items-center justify-center gap-4">
       <button type="button" v-on:click="openModal('attributes')" class="w-40 text-center rounded-md bg-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-600 shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100">Teste de Atrib.</button>
       <button type="button" v-on:click="openModal('books')" class="w-40 text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100">Livros</button>
       <button type="button" v-on:click="openModal('maps')" class="w-40 text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100">Mapas</button>
+      <button type="button" v-on:click="openModal('alternate')" class="w-40 text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100">Alternar Pers.</button>
     </div>
 
     <!-- BEGIN:: MODALS -->
@@ -166,14 +188,15 @@
       role="dialog"
       aria-modal="true"
     >
-      <div
-        class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-        v-bind:style="{ display: game.modal.is_open_abilities ? 'block':'none' }"
-      ></div>
       <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div
+          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+          v-bind:style="{ display: game.modal.is_open_abilities ? 'block':'none' }"
+          v-on:click="closeModal('abilities')"
+        ></div>
         <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl">
-            <div class="bg-slate-800 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+            <div class="bg-zinc-900 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
               <!-- BEGIN:: HEADER -->
               <div>
                 <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
@@ -184,13 +207,13 @@
               <!-- END:: HEADER -->
               <div class="pt-6 pr-2 max-h-[calc(100vh-13rem)] overflow-y-auto">
                 <div class="grid grid-cols-2 gap-4">
-                  <label class="flex hover:bg-slate-700 p-2 pt-1 rounded-md border border-slate-700" v-for="ability in game.abilities" :key="ability.name">
+                  <label class="flex hover:bg-zinc-800 p-2 pt-1 rounded-md border border-zinc-800" v-for="ability in game.abilities" :key="ability.name">
                     <input
                       type="checkbox"
                       v-on:change="updateAbility($event.target)"
                       v-bind:checked="atributos.habilidades && atributos.habilidades.includes(ability.name)"
                       v-bind:value="ability.name"
-                      name="check_abilities"class="h-4 w-4 rounded border-gray-300 text-indigo-600  self-center focus:ring-indigo-500">
+                      name="check_abilities"class="h-4 w-4 rounded border-gray-200 text-indigo-600  self-center focus:ring-indigo-500">
                     <div class="ml-3 min-w-0 flex-1 text-gray-400">
                       {{ ability.name }}<br/>
                       <span class="text-xs text-gray-500 leading-none block">
@@ -201,7 +224,7 @@
                 </div>
               </div>
             </div>
-            <div class="bg-gray-900 px-4 py-3 sm:flex sm:justify-end gap-2 sm:px-6">
+            <div class="bg-gray-950 px-4 py-3 sm:flex sm:justify-end gap-2 sm:px-6">
               <button
                 type="button"
                 class="mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50/10 sm:mt-0 sm:w-auto"
@@ -219,14 +242,15 @@
       role="dialog"
       aria-modal="true"
     >
-      <div
-        class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-        v-bind:style="{ display: game.modal.is_open_equipaments ? 'block':'none' }"
-      ></div>
       <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div
+          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+          v-bind:style="{ display: game.modal.is_open_equipaments ? 'block':'none' }"
+          v-on:click="closeModal('equipaments')"
+        ></div>
         <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl">
-            <div class="bg-slate-800 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+            <div class="bg-zinc-900 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
               <!-- BEGIN:: HEADER -->
               <div>
                 <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
@@ -237,13 +261,13 @@
               <!-- END:: HEADER -->
               <div class="pt-6 pr-2 max-h-[calc(100vh-13rem)] overflow-y-auto">
                 <div class="grid grid-cols-2 gap-4">
-                  <label class="flex hover:bg-slate-700 p-2 pt-1 rounded-md border border-slate-700" v-for="equipament in game.equipaments" :key="equipament.name">
+                  <label class="flex hover:bg-zinc-800 p-2 pt-1 rounded-md border border-zinc-800" v-for="equipament in game.equipaments" :key="equipament.name">
                     <input
                       type="checkbox"
                       v-on:change="updateEquipament($event.target)"
                       v-bind:checked="itens.equipamentos && itens.equipamentos.includes(equipament.name)"
                       v-bind:value="equipament.name"
-                      name="check_equipaments"class="h-4 w-4 rounded border-gray-300 text-indigo-600  self-center focus:ring-indigo-500">
+                      name="check_equipaments"class="h-4 w-4 rounded border-gray-200 text-indigo-600  self-center focus:ring-indigo-500">
                     <div class="ml-3 min-w-0 flex-1 text-gray-400">
                       {{ equipament.name }}<br/>
                       <span class="text-xs text-gray-500 leading-none block">
@@ -254,7 +278,7 @@
                 </div>
               </div>
             </div>
-            <div class="bg-gray-900 px-4 py-3 sm:flex sm:justify-end gap-2 sm:px-6">
+            <div class="bg-gray-950 px-4 py-3 sm:flex sm:justify-end gap-2 sm:px-6">
               <button
                 type="button"
                 class="mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50/10 sm:mt-0 sm:w-auto"
@@ -272,14 +296,15 @@
       role="dialog"
       aria-modal="true"
     >
-      <div
-        class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-        v-bind:style="{ display: game.modal.is_open_arms ? 'block':'none' }"
-      ></div>
       <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div
+          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+          v-bind:style="{ display: game.modal.is_open_arms ? 'block':'none' }"
+          v-on:click="closeModal('arms')"
+        ></div>
         <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl">
-            <div class="bg-slate-800 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+            <div class="bg-zinc-900 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
               <!-- BEGIN:: HEADER -->
               <div>
                 <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
@@ -290,13 +315,13 @@
               <!-- END:: HEADER -->
               <div class="pt-6 pr-2 max-h-[calc(100vh-13rem)] overflow-y-auto">
                 <div class="grid grid-cols-2 gap-4">
-                  <label class="flex hover:bg-slate-700 p-2 pt-1 rounded-md border border-slate-700" v-for="arm in game.arms" :key="arm.name">
+                  <label class="flex hover:bg-zinc-800 p-2 pt-1 rounded-md border border-zinc-800" v-for="arm in game.arms" :key="arm.name">
                     <input
                       type="checkbox"
                       v-on:change="updateArm($event.target)"
                       v-bind:checked="itens.armas && itens.armas.some((a) => a.name === arm.name)"
                       v-bind:value="arm.name"
-                      name="check_arms"class="h-4 w-4 rounded border-gray-300 text-indigo-600  self-center focus:ring-indigo-500">
+                      name="check_arms"class="h-4 w-4 rounded border-gray-200 text-indigo-600  self-center focus:ring-indigo-500">
                     <div class="ml-3 min-w-0 flex-1 text-gray-400">
                       {{ arm.name }}<br/>
                       <span class="text-xs text-gray-500 leading-none block">
@@ -309,7 +334,7 @@
                 </div>
               </div>
             </div>
-            <div class="bg-gray-900 px-4 py-3 sm:flex sm:justify-end gap-2 sm:px-6">
+            <div class="bg-gray-950 px-4 py-3 sm:flex sm:justify-end gap-2 sm:px-6">
               <button
                 type="button"
                 class="mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50/10 sm:mt-0 sm:w-auto"
@@ -327,14 +352,15 @@
       role="dialog"
       aria-modal="true"
     >
-      <div
-        class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-        v-bind:style="{ display: game.modal.is_open_attributes ? 'block':'none' }"
-      ></div>
       <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div
+          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+          v-bind:style="{ display: game.modal.is_open_attributes ? 'block':'none' }"
+          v-on:click="closeModal('attributes')"
+        ></div>
         <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl">
-            <div class="bg-slate-800 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+            <div class="bg-zinc-900 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
               <!-- BEGIN:: HEADER -->
               <div>
                 <div class="mt-3 text-center sm:mt-0 sm:text-left">
@@ -351,42 +377,42 @@
                 <div class="flex flex-col sm:flex-row">
                   <div class="flex flex-1 max-sm:rounded-t-md sm:rounded-l-md shadow-sm ring-2 ring-inset ring-gray-600 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
                     <input type="number" v-model="game.test_attribute.max" class="block flex-1 border-0 bg-transparent rounded-md py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-                    <span class="text-gray-300 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-slate-800 font-semibold px-2">Pontuação Máxima</span>
+                    <span class="text-gray-300 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-900 font-semibold px-2">Pontuação Máxima</span>
                   </div>
                   <div class="flex flex-1 max-sm:rounded-b-md sm:rounded-r-md shadow-sm ring-2 ring-inset ring-gray-600 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
                     <input type="number" v-model="game.test_attribute.current" class="block flex-1 border-0 bg-transparent rounded-md py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-                    <span class="text-gray-300 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-slate-800 font-semibold px-2">Pontuação Atual</span>
+                    <span class="text-gray-300 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-900 font-semibold px-2">Pontuação Atual</span>
                   </div>
                 </div>
                 <div class="grid grid-cols-6 mt-6">
-                  <strong class="border border-slate-700 p-1 text-xs">Pontos Max.</strong>
-                  <strong class="border border-slate-700 p-1 text-xs">Extremo (20%)</strong>
-                  <strong class="border border-slate-700 p-1 text-xs">Bom (40%)</strong>
-                  <strong class="border border-slate-700 p-1 text-xs">Regular (40%)</strong>
-                  <strong class="border border-slate-700 p-1 text-xs">Ruim (50%)</strong>
-                  <strong class="border border-slate-700 p-1 text-xs">Péssimo (50%)</strong>
+                  <strong class="border border-zinc-800 p-1 text-xs">Pontos Max.</strong>
+                  <strong class="border border-zinc-800 p-1 text-xs">Extremo (20%)</strong>
+                  <strong class="border border-zinc-800 p-1 text-xs">Bom (40%)</strong>
+                  <strong class="border border-zinc-800 p-1 text-xs">Regular (40%)</strong>
+                  <strong class="border border-zinc-800 p-1 text-xs">Ruim (50%)</strong>
+                  <strong class="border border-zinc-800 p-1 text-xs">Péssimo (50%)</strong>
                 </div>  
-                <div class="grid grid-cols-6" v-bind:class="{ 'bg-slate-700': row.points == game.test_attribute.max }" v-for="row in game.test_attribute.grid" :key="row.points">
-                  <span class="border-x border-b border-slate-700/40 text-center">{{ row.points }}</span>
+                <div class="grid grid-cols-6" v-bind:class="{ 'bg-zinc-800': row.points == game.test_attribute.max }" v-for="row in game.test_attribute.grid" :key="row.points">
+                  <span class="border-x border-b border-zinc-800/40 text-center">{{ row.points }}</span>
                   <span
-                    class="border-x border-b border-slate-700/40 text-center"
-                    v-bind:class="{ 'bg-slate-500': row.points == game.test_attribute.max && itsBetween(game.test_attribute.current, row.extreme) }"
+                    class="border-x border-b border-zinc-800/40 text-center"
+                    v-bind:class="{ 'bg-zinc-500': row.points == game.test_attribute.max && itsBetween(game.test_attribute.current, row.extreme) }"
                   >{{ row.extreme[0] + ' - ' + row.extreme[1] }}</span>
                   <span
-                    class="border-x border-b border-slate-700/40 text-center"
-                    v-bind:class="{ 'bg-slate-500': row.points == game.test_attribute.max && itsBetween(game.test_attribute.current, row.good) }"
+                    class="border-x border-b border-zinc-800/40 text-center"
+                    v-bind:class="{ 'bg-zinc-500': row.points == game.test_attribute.max && itsBetween(game.test_attribute.current, row.good) }"
                   >{{ row.good[0] + ' - ' + row.good[1] }}</span>
                   <span
-                    class="border-x border-b border-slate-700/40 text-center"
-                    v-bind:class="{ 'bg-slate-500': row.points == game.test_attribute.max && itsBetween(game.test_attribute.current, row.regular) }"
+                    class="border-x border-b border-zinc-800/40 text-center"
+                    v-bind:class="{ 'bg-zinc-500': row.points == game.test_attribute.max && itsBetween(game.test_attribute.current, row.regular) }"
                   >{{ row.regular[0] + ' - ' + row.regular[1] }}</span>
                   <span
-                    class="border-x border-b border-slate-700/40 text-center"
-                    v-bind:class="{ 'bg-slate-500': row.points == game.test_attribute.max && itsBetween(game.test_attribute.current, row.bad) }"
+                    class="border-x border-b border-zinc-800/40 text-center"
+                    v-bind:class="{ 'bg-zinc-500': row.points == game.test_attribute.max && itsBetween(game.test_attribute.current, row.bad) }"
                   >{{ row.bad[0] + ' - ' + row.bad[1] }}</span>
                   <span
-                    class="border-x border-b border-slate-700/40 text-center"
-                    v-bind:class="{ 'bg-slate-500': row.points == game.test_attribute.max && itsBetween(game.test_attribute.current, row.terrible) }"
+                    class="border-x border-b border-zinc-800/40 text-center"
+                    v-bind:class="{ 'bg-zinc-500': row.points == game.test_attribute.max && itsBetween(game.test_attribute.current, row.terrible) }"
                   >{{ row.terrible[0] + ' - ' + row.terrible[1] }}</span>
                 </div>
 
@@ -394,15 +420,15 @@
                   Para definir a dificuldade o mestre(ou narrador da cena) pode usar 1D8 seguindo os valores da tabela abaixo. Está é a dificuldade mínima que o jogador deve atingir.
                 </p>
                 <div class="mt-2">
-                  <div class="flex border border-slate-700 gap-4 p-1 text-sm"><strong class="">1-2</strong><span>Extremo</span></div>
-                  <div class="flex border border-slate-700 gap-4 p-1 text-sm"><strong class="">3-4</strong><span>Bom</span></div>
-                  <div class="flex border border-slate-700 gap-4 p-1 text-sm"><strong class="">5-6</strong><span>Regular</span></div>
-                  <div class="flex border border-slate-700 gap-4 p-1 text-sm"><strong class="">7-7</strong><span>Ruim</span></div>
-                  <div class="flex border border-slate-700 gap-4 p-1 text-sm"><strong class="">8-8</strong><span>Péssimo (Nesse caso dispensa o teste de atributo)</span></div>
+                  <div class="flex border border-zinc-800 gap-4 p-1 text-sm"><strong class="">1-2</strong><span>Extremo</span></div>
+                  <div class="flex border border-zinc-800 gap-4 p-1 text-sm"><strong class="">3-4</strong><span>Bom</span></div>
+                  <div class="flex border border-zinc-800 gap-4 p-1 text-sm"><strong class="">5-6</strong><span>Regular</span></div>
+                  <div class="flex border border-zinc-800 gap-4 p-1 text-sm"><strong class="">7-7</strong><span>Ruim</span></div>
+                  <div class="flex border border-zinc-800 gap-4 p-1 text-sm"><strong class="">8-8</strong><span>Péssimo (Nesse caso dispensa o teste de atributo)</span></div>
                 </div>
               </div>
             </div>
-            <div class="bg-gray-900 px-4 py-3 sm:flex sm:justify-end gap-2 sm:px-6">
+            <div class="bg-gray-950 px-4 py-3 sm:flex sm:justify-end gap-2 sm:px-6">
               <button
                 type="button"
                 class="mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50/10 sm:mt-0 sm:w-auto"
@@ -420,14 +446,15 @@
       role="dialog"
       aria-modal="true"
     >
-      <div
-        class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-        v-bind:style="{ display: game.modal.is_open_books ? 'block':'none' }"
-      ></div>
       <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div
+          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+          v-bind:style="{ display: game.modal.is_open_books ? 'block':'none' }"
+          v-on:click="closeModal('books')"
+        ></div>
         <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl">
-            <div class="bg-slate-800 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+            <div class="bg-zinc-900 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
               <!-- BEGIN:: HEADER -->
               <div>
                 <div class="mt-3 text-center sm:mt-0 sm:text-left">
@@ -456,7 +483,7 @@
               <div class="pt-6 pr-2 max-h-[calc(100vh-13rem)] overflow-y-auto">
               </div>
             </div>
-            <div class="bg-gray-900 px-4 py-3 sm:flex sm:justify-end gap-2 sm:px-6">
+            <div class="bg-gray-950 px-4 py-3 sm:flex sm:justify-end gap-2 sm:px-6">
               <button
                 type="button"
                 class="mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50/10 sm:mt-0 sm:w-auto"
@@ -474,14 +501,15 @@
       role="dialog"
       aria-modal="true"
     >
-      <div
-        class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-        v-bind:style="{ display: game.modal.is_open_maps ? 'block':'none' }"
-      ></div>
       <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div
+          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+          v-bind:style="{ display: game.modal.is_open_maps ? 'block':'none' }"
+          v-on:click="closeModal('maps')"
+        ></div>
         <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl">
-            <div class="bg-slate-800 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+            <div class="bg-zinc-900 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
               <!-- BEGIN:: HEADER -->
               <div>
                 <div class="mt-3 text-center sm:mt-0 sm:text-left">
@@ -509,56 +537,62 @@
                     </div>
                   </div>
                   <iframe v-if="game.maps.current.slice(-4) === '.pdf'" v-bind:src="game.maps.current" width="100%" style="height: calc(100vh - 5rem)" frameborder="0"></iframe>
-                  <div v-if="game.maps.current.slice(-4) !== '.pdf'" class="relative overflow-auto text-xs text-gray-100" style="font-family: Cinzel;">
-                    <img v-bind:src="game.maps.current" width="624" height="350" usemap="#image-map"/>
-                    <span class="absolute group" style="top: 87px;left: 117px;">
-                      <span class="opacity-0 group-hover:opacity-100" style="transform: translateX(-50%);display: block;">Costa da Serpente</span>
-                      <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
-                    </span>
-                    <span class="absolute group" style="top: 144px;left: 114px;">
-                      <span class="opacity-0 group-hover:opacity-100" style="transform: translateX(-50%);display: block;">Ruínas de Ulthar</span>
-                      <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
-                    </span>
-                    <span class="absolute group" style="top: 167px;left: 173px;">
-                      <span class="opacity-0 group-hover:opacity-100" style="transform: translateX(-50%);display: block;">Monte de Horus</span>
-                      <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
-                    </span>
-                    <span class="absolute group" style="top: 213px;left: 236px;">
-                      <span class="opacity-0 group-hover:opacity-100" style="transform: translateX(-50%);display: block;">Ruínas de Frostar</span>
-                      <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
-                    </span>
-                    <span class="absolute group" style="bottom: 82px;left: 272px;">
-                      <span class="opacity-0 group-hover:opacity-100" style="transform: translateX(-50%);display: block;">Taverna do Lobo Cinzen</span>
-                      <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
-                    </span>
-                    <span class="absolute group" style="top: 41px;left: 286px;">
-                      <span class="opacity-0 group-hover:opacity-100" style="transform: translateX(-50%);display: block;">Norte Gélido</span>
-                      <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
-                    </span>
-                    <span class="absolute group" style="top: 163px;left: 291px;">
-                      <span class="opacity-0 group-hover:opacity-100" style="transform: translateX(-50%);display: block;">Cidadela de Urdir</span>
-                      <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
-                    </span>
-                    <span class="absolute group" style="bottom: 97px;left: 327px;">
-                      <span class="opacity-0 group-hover:opacity-100" style="transform: translateX(-50%);display: block;">Castelo de Nimir</span>
-                      <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
-                    </span>
-                    <span class="absolute group" style="top: 86px;right: 78px;">
-                      <span class="opacity-0 group-hover:opacity-100" style="transform: translateX(-50%);display: block;">Planícies Amarelas</span>
-                      <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
-                    </span>
-                    <span class="absolute group" style="top: 127px;right: 134px;">
-                      <span class="opacity-0 group-hover:opacity-100" style="transform: translateX(-50%);display: block;">Templo de Prata</span>
-                      <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
-                    </span>
-                    <span class="absolute group flex flex-col items-end" style="top: 148px;right: 37px;">
-                      <span class="opacity-0 group-hover:opacity-100" style="transform: translateX(25%);display: block;">Portal de Nasir</span>
-                      <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
-                    </span>
-                    <span class="absolute group flex flex-col items-end" style="bottom: 128px;right: 54px;">
-                      <span class="opacity-0 group-hover:opacity-100" style="transform: translateX(25%); display: block;">Torre Arcana</span>
-                      <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
-                    </span>
+                  <div v-if="game.maps.current.slice(-4) !== '.pdf'" class="overflow-auto">
+                    <div class="relative text-xs text-gray-100" style="
+                      font-family: Cinzel;
+                      width: 624px; min-width: 624px;
+                      height: 350px; min-height: 350px;
+                    ">
+                      <img v-bind:src="game.maps.current" usemap="#image-map" class="absolute" style="inset: 0;"/>
+                      <span class="absolute group" style="top: 87px;left: 117px;">
+                        <span class="opacity-0 group-hover:opacity-100" style="transform: tranzincX(-50%);display: block;">Costa da Serpente</span>
+                        <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+                      </span>
+                      <span class="absolute group" style="top: 144px;left: 114px;">
+                        <span class="opacity-0 group-hover:opacity-100" style="transform: tranzincX(-50%);display: block;">Ruínas de Ulthar</span>
+                        <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+                      </span>
+                      <span class="absolute group" style="top: 167px;left: 173px;">
+                        <span class="opacity-0 group-hover:opacity-100" style="transform: tranzincX(-50%);display: block;">Monte Horus</span>
+                        <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+                      </span>
+                      <span class="absolute group" style="top: 213px;left: 236px;">
+                        <span class="opacity-0 group-hover:opacity-100" style="transform: tranzincX(-50%);display: block;">Ruínas de Frostar</span>
+                        <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+                      </span>
+                      <span class="absolute group" style="bottom: 82px;left: 272px;">
+                        <span class="opacity-0 group-hover:opacity-100" style="transform: tranzincX(-50%);display: block;">Taverna do Lobo Cinzen</span>
+                        <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+                      </span>
+                      <span class="absolute group" style="top: 41px;left: 286px;">
+                        <span class="opacity-0 group-hover:opacity-100" style="transform: tranzincX(-50%);display: block;">Norte Gélido</span>
+                        <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+                      </span>
+                      <span class="absolute group" style="top: 163px;left: 291px;">
+                        <span class="opacity-0 group-hover:opacity-100" style="transform: tranzincX(-50%);display: block;">Cidadela de Urdir</span>
+                        <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+                      </span>
+                      <span class="absolute group" style="bottom: 97px;left: 327px;">
+                        <span class="opacity-0 group-hover:opacity-100" style="transform: tranzincX(-50%);display: block;">Castelo de Nimir</span>
+                        <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+                      </span>
+                      <span class="absolute group" style="top: 86px;right: 78px;">
+                        <span class="opacity-0 group-hover:opacity-100" style="transform: tranzincX(-50%);display: block;">Planícies Amarelas</span>
+                        <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+                      </span>
+                      <span class="absolute group" style="top: 127px;right: 134px;">
+                        <span class="opacity-0 group-hover:opacity-100" style="transform: tranzincX(-50%);display: block;">Templo de Prata</span>
+                        <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+                      </span>
+                      <span class="absolute group flex flex-col items-end" style="top: 148px;right: 37px;">
+                        <span class="opacity-0 group-hover:opacity-100" style="transform: tranzincX(25%);display: block;">Portal de Nasir</span>
+                        <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+                      </span>
+                      <span class="absolute group flex flex-col items-end" style="bottom: 128px;right: 54px;">
+                        <span class="opacity-0 group-hover:opacity-100" style="transform: tranzincX(25%); display: block;">Torre Arcana</span>
+                        <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -566,11 +600,86 @@
               <div class="pt-6 pr-2 max-h-[calc(100vh-13rem)] overflow-y-auto">
               </div>
             </div>
-            <div class="bg-gray-900 px-4 py-3 sm:flex sm:justify-end gap-2 sm:px-6">
+            <div class="bg-gray-950 px-4 py-3 sm:flex sm:justify-end gap-2 sm:px-6">
               <button
                 type="button"
                 class="mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50/10 sm:mt-0 sm:w-auto"
                 v-on:click="closeModal('maps')"
+              >Fechar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="modal-alternate"
+      class="relative z-10 hidden"
+      v-bind:style="{ display: game.modal.is_open_alternate ? 'block':'none' }"
+      aria-labelledby="modal-title"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div
+          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+          v-bind:style="{ display: game.modal.is_open_alternate ? 'block':'none' }"
+          v-on:click="closeModal('alternate')"
+        ></div>
+        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+          <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl">
+            <div class="bg-zinc-900 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+              <!-- BEGIN:: HEADER -->
+              <div>
+                <div class="mt-3 text-center sm:mt-0 sm:text-left">
+                  <div class="flex justify-between mb-4 gap-2">
+                    <h3 class="text-base font-semibold leading-6 text-gray-50" id="modal-title">Alternar Personagem</h3>
+                    <div>
+                      <button
+                        type="button"
+                        class="text-center rounded-md  px-3 py-2 px-8 text-sm font-semibold shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100 bg-gray-200 text-gray-600"
+                        v-on:click="downloadCharacter()"
+                      >Baixar</button>
+                    </div>
+                  </div>
+                  
+                  <div class="flex flex-col mt-4">
+                    <div class="flex" v-for="player of game.allPlayers">
+                      <div
+                        class="p-2 flex-1 text-left text-[10px] font-semibold uppercase flex items-center justify-start hover:bg-zinc-950/50"
+                        v-bind:class="{ 'bg-zinc-950 cursor-pointer': player !== bio.nome }"
+                        v-on:click="selectCharacter(player)"
+                      >{{ player }}</div>
+                      <button
+                        v-if="player !== bio.nome"
+                        type="button"
+                        class="p-2 text-red-500 font-weight-bold bg-zinc-950 cursor-pointer"
+                        v-on:click="deleteCharacter(player)"
+                      > x </button>
+                    </div>
+                    <div
+                      class="p-2 bg-zinc-950 flex-1 text-left text-[10px] font-semibold uppercase flex items-center justify-start cursor-pointer hover:bg-zinc-950/50"
+                      v-on:click="selectCharacter()"
+                    >Novo +</div>
+                    <div class="mt-6 mb-4 flex shadow-sm ring-2 ring-inset ring-gray-700 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative rounded">
+                      <textarea v-model="game.import" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" rows="10"></textarea>
+                      <span class="text-gray-500 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-900 font-semibold px-2">Importar Personagem</span>
+                    </div>
+                    <button
+                      type="button"
+                      class="text-center rounded-md  px-3 py-2 px-8 text-sm font-semibold shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100 bg-gray-200 text-gray-600"
+                      v-on:click="importChar()"
+                    >Importar</button>
+                  </div>
+                </div>
+              </div>
+              <!-- END:: HEADER -->
+              <div class="pt-6 pr-2 max-h-[calc(100vh-13rem)] overflow-y-auto">
+              </div>
+            </div>
+            <div class="bg-gray-950 px-4 py-3 sm:flex sm:justify-end gap-2 sm:px-6">
+              <button
+                type="button"
+                class="mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50/10 sm:mt-0 sm:w-auto"
+                v-on:click="closeModal('alternate')"
               >Fechar</button>
             </div>
           </div>
@@ -583,52 +692,74 @@
   <script>
     //#region STORAGE
     const storageKey = 'rpg@player';
+    const storageAll = 'rpg@all-players';
     let playerPayload = undefined;
     const setPlayer = (player) => {
       playerPayload = JSON.stringify(player)
       localStorage.setItem(storageKey, playerPayload)
+
+      if(player.bio?.nome){
+        let name = player.bio.nome;
+        localStorage.setItem(`${storageKey}:${name}`, playerPayload)
+        const allPlayers = getAllPlayers();
+        if(!allPlayers.includes(name)) setAllPlayers([
+          ...allPlayers,
+          name
+        ]);
+      }
     }
-    const getPlayer = () => {
-      const player = localStorage.getItem(storageKey)
+    const getPlayer = (name) => {
+      const key = name ? `${storageKey}:${name}` : storageKey;
+      const player = localStorage.getItem(key);
       try{ return JSON.parse(player); }
       catch(e){ return undefined; }
     }
+    const getAllPlayers = () => {
+      const allPlayers = localStorage.getItem(storageAll)
+      if(!allPlayers) return [];
+      return allPlayers.split(',').filter(p => !!p);
+    }
+    const setAllPlayers = (allPlayers) => localStorage.setItem(storageAll, allPlayers.join(','));
+
     const initialPlayer = getPlayer();
     //#endregion STORAGE'
-    const availableModals = ['abilities', 'equipaments', 'arms', 'attributes', 'books', 'maps'];
+    const availableModals = ['abilities', 'equipaments', 'arms', 'attributes', 'books', 'maps', 'alternate'];
+    const playerConstructor = (initialPlayer) => ({
+      bio: {
+        nome: initialPlayer?.bio?.nome ?? '',
+        ocupacao: initialPlayer?.bio?.ocupacao ?? '',
+        origem : initialPlayer?.bio?.origem ?? '',
+      },
+      atributos: {
+        forca: initialPlayer?.atributos?.forca ?? 0,
+        modificador_forca: initialPlayer?.atributos?.modificador_forca ?? 0,
+        agilidade: initialPlayer?.atributos?.agilidade ?? 0,
+        modificador_agilidade: initialPlayer?.atributos?.modificador_agilidade ?? 0,
+        saude: initialPlayer?.atributos?.saude ?? 0,
+        modificador_saude: initialPlayer?.atributos?.modificador_saude ?? 0,
+        inteligencia: initialPlayer?.atributos?.inteligencia ?? 0,
+        modificador_inteligencia: initialPlayer?.atributos?.modificador_inteligencia ?? 0,
+        sabedoria: initialPlayer?.atributos?.sabedoria ?? 0,
+        modificador_sabedoria: initialPlayer?.atributos?.modificador_sabedoria ?? 0,
+        personalidade: initialPlayer?.atributos?.personalidade ?? 0,
+        modificador_personalidade: initialPlayer?.atributos?.modificador_personalidade ?? 0,
+        defesa: initialPlayer?.atributos?.defesa ?? 0,
+        modificador_defesa: initialPlayer?.atributos?.modificador_defesa ?? '',
+        vida: initialPlayer?.atributos?.vida ?? 0,
+        modificador_vida: initialPlayer?.atributos?.modificador_vida ?? '',
+        habilidades: initialPlayer?.atributos?.habilidades ?? []
+      },
+      itens: {
+        equipamentos: initialPlayer?.itens?.equipamentos ?? [],
+        armas: initialPlayer?.itens?.armas ?? [],
+        tesouros: initialPlayer?.itens?.tesouros && initialPlayer.itens.tesouros.length > 0 ? initialPlayer.itens.tesouros : ['']
+      },
+      notas: initialPlayer?.notas ?? '',
+    });
     const app = new Vue({
       el: '#app',
       data: {
-        bio: {
-          nome: initialPlayer?.bio?.nome ?? '',
-          ocupacao: initialPlayer?.bio?.ocupacao ?? '',
-          origem : initialPlayer?.bio?.origem ?? '',
-        },
-        atributos: {
-          forca: initialPlayer?.atributos?.forca ?? 0,
-          modificador_forca: initialPlayer?.atributos?.modificador_forca ?? 0,
-          agilidade: initialPlayer?.atributos?.agilidade ?? 0,
-          modificador_agilidade: initialPlayer?.atributos?.modificador_agilidade ?? 0,
-          saude: initialPlayer?.atributos?.saude ?? 0,
-          modificador_saude: initialPlayer?.atributos?.modificador_saude ?? 0,
-          inteligencia: initialPlayer?.atributos?.inteligencia ?? 0,
-          modificador_inteligencia: initialPlayer?.atributos?.modificador_inteligencia ?? 0,
-          sabedoria: initialPlayer?.atributos?.sabedoria ?? 0,
-          modificador_sabedoria: initialPlayer?.atributos?.modificador_sabedoria ?? 0,
-          personalidade: initialPlayer?.atributos?.personalidade ?? 0,
-          modificador_personalidade: initialPlayer?.atributos?.modificador_personalidade ?? 0,
-          defesa: initialPlayer?.atributos?.defesa ?? 0,
-          modificador_defesa: initialPlayer?.atributos?.modificador_defesa ?? '',
-          vida: initialPlayer?.atributos?.vida ?? 0,
-          modificador_vida: initialPlayer?.atributos?.modificador_vida ?? '',
-          habilidades: initialPlayer?.atributos?.habilidades ?? []
-        },
-        itens: {
-          equipamentos: initialPlayer?.itens?.equipamentos ?? [],
-          armas: initialPlayer?.itens?.armas ?? [],
-          tesouros: initialPlayer?.itens?.tesouros && initialPlayer.itens.tesouros.length > 0 ? initialPlayer.itens.tesouros : ['']
-        },
-        notas: initialPlayer?.notas ?? '',
+        ...playerConstructor(initialPlayer),
         game: {
           is_auto_saved: false,
           modal: {
@@ -637,7 +768,8 @@
             is_open_arms: false,
             is_open_attributes: false,
             is_open_books: false,
-            is_open_maps: false
+            is_open_maps: false,
+            is_open_alternate: false
           },
           calculeds: {
             defense: [0, '-/-'],
@@ -776,7 +908,9 @@
             })
           },
           books: { current: './regras.pdf' },
-          maps: {  current: './map.jpg'    }
+          maps: {  current: './map.jpg'    },
+          allPlayers: [],
+          import: ''
         }
       },
       mounted() {
@@ -790,10 +924,12 @@
 
           setTimeout(recursiveAutosave, 5 * 1000)
         }
-        setTimeout(recursiveAutosave, 5 * 1000)
+        setTimeout(recursiveAutosave, 5 * 1000);
 
-        this.calculateDamages('modificador_vida')
-        this.calculateDamages('modificador_defesa')
+        this.calculateDamages('modificador_vida');
+        this.calculateDamages('modificador_defesa');
+
+        this.game.allPlayers = getAllPlayers();
       },
       methods: {
         openModal: function (modal){
@@ -812,6 +948,19 @@
 
           this.game.modal[`is_open_${modal}`] = false;
         },
+        openTestAttribute: function (attr){
+          let value = Number(this.atributos[attr] ?? 0);
+          
+          if(isNaN(value)) value = '';
+          else if(!['defesa', 'vida'].includes(attr) && this.atributos[`modificador_${attr}`]){
+            const modifier = Number(this.atributos[`modificador_${attr}`]);
+            if(!isNaN(modifier)) value+=modifier;
+          }
+
+          this.game.test_attribute.max = value;
+
+          this.openModal('attributes');
+        },
         save: function (){
           const player = {
             bio: this.bio,
@@ -822,7 +971,7 @@
 
           setPlayer(player)
         },
-        verifyPayloadAndSave: function(){
+        verifyPayloadAndSave: function (){
           const storagedPlayer = getPlayer();
 
           const player = { bio: this.bio, atributos: this.atributos, itens: this.itens, notas: this.notas };
@@ -888,7 +1037,7 @@
 
           return curr >= range[0] && curr <= range[1]
         },
-        calculateDamages: function(modifier){
+        calculateDamages: function (modifier){
           this.atributos[modifier] = this.atributos[modifier].replace(/[^+\-\d]|^[^\+\-]|(\+{2,})|(-{2,})|\+-|-\+/g, '')
 
           let refs = {
@@ -924,7 +1073,7 @@
 
           this.game.calculeds[refs[modifier].calculateds] = [percent,`${curr ?? '-'}/${total}`]
         },
-        calculateStrOperations(initialValue, strOperation) {
+        calculateStrOperations: function (initialValue, strOperation){
           let numbers = [];
           strOperation.replace(/[^+\-\d]/g, '').split(/[\+\-]/).forEach((n) => {
             if(n === '') return;
@@ -940,6 +1089,70 @@
 
           return result;
         },
+        downloadCharacter: function (){
+          const player = encodeURIComponent(JSON.stringify(getPlayer()));
+          window.open(`https://api.whatsapp.com/send?text=${player}`, '_blank');
+        },
+        selectCharacter: function (player){
+          if(player && this.bio.player === player) return;
+
+          this.save();
+
+          let selectedPlayer = player ? getPlayer(player) : undefined;
+          const { bio, atributos, itens, notas } = playerConstructor(selectedPlayer);
+
+          this.bio = bio;
+          this.atributos = atributos;
+          this.itens = itens;
+          this.notas = notas;
+
+          this.calculateDamages('modificador_vida');
+          this.calculateDamages('modificador_defesa');
+
+          this.closeModal('alternate');
+        },
+        deleteCharacter: function (player){
+          if(!window.confirm('Tem certeza que deseja excluir esse personagem?')) return;
+
+          const all = getAllPlayers();
+          const allPlayers = all.filter(p => p !== player);
+          setAllPlayers(allPlayers);
+          localStorage.removeItem(`${storageKey}:${player}`);
+
+          this.game.allPlayers = allPlayers;
+        },
+        importChar: function (){
+          if(!this.game.import){
+            alert('É obrigatório preencher o campo de importação');
+            return;
+          }
+
+          try{
+            const importObject = JSON.parse(this.game.import);
+
+            if(!importObject.bio || !importObject.atributos || !importObject.itens){
+              alert('Importação inválida');
+              return;
+            }
+            
+            this.save();
+
+            const { bio, atributos, itens, notas } = playerConstructor(importObject);
+
+            this.bio = bio;
+            this.atributos = atributos;
+            this.itens = itens;
+            this.notas = notas;
+
+            this.calculateDamages('modificador_vida');
+            this.calculateDamages('modificador_defesa');
+
+            this.closeModal('alternate');
+          }catch(e){
+            alert('Não foi possível importar')
+            return;
+          }
+        }
       }
     });
   </script>
