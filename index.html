@@ -33,16 +33,27 @@
     <div class="grid sm:grid-cols-3 gap-y-6 sm:gap-x-6 mt-6">
       <div class="grid grid-cols-3 gap-y-2" id="attributes">
         <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
-          <input type="number" v-model="atributos.forca" id="forca" autocomplete="forca" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+          <input type="number" v-model="atributos.defesa" id="defesa" autocomplete="defesa" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
           <span class="text-gray-500 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-950 font-semibold px-2">Base</span>
+        </div>    
+        <div
+          class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
+          v-on:click="openTestAttribute('defesa')"
+        >Defesa</div>
+        <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
+          <input type="number" v-model="atributos.modificador_defesa" id="modificador-defesa" autocomplete="modificador-defesa" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+          <span class="text-gray-500 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-950 font-semibold px-2">Modificadores</span>
+        </div>
+        
+        <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+          <input type="number" v-model="atributos.forca" id="forca" autocomplete="forca" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
         </div>    
         <div
           class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
           v-on:click="openTestAttribute('forca')"
         >Força</div>
-        <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
+        <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
           <input type="number" v-model="atributos.modificador_forca" id="modificador-forca" autocomplete="modificador-forca" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-          <span class="text-gray-500 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-950 font-semibold px-2">Modificadores</span>
         </div>
 
         <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
@@ -107,17 +118,17 @@
             <div class="flex items-center border-b border-zinc-800">
               <span
                 class="px-2 flex-1 block text-sm font-semibold cursor-pointer"
-                v-on:click="openTestAttribute('defesa')"
-              >Defesa</span>
+                v-on:click="openTestAttribute('sanidade')"
+              >Sanidade</span>
               <div class="flex ring-0 ring-inset focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative bg-zinc-800 max-w-[4rem]">
-                <input type="number" v-model="atributos.defesa" class="block border-0 bg-transparent py-1 focus:ring-0 text-sm">
+                <input type="number" v-model="atributos.sanidade" class="block border-0 bg-transparent py-1 focus:ring-0 text-sm">
               </div>
             </div>
-            <textarea v-model="atributos.modificador_defesa" @input="() => calculateDamages('modificador_defesa')" id="defesa" name="defesa" class="flex-1 w-full  !border-0 py-1.5 px-2 text-sm sm:leading-6 bg-transparent p-0 !outline-0 !ring-0"></textarea>
+            <textarea v-model="atributos.modificador_sanidade" @input="() => calculateDamages('modificador_sanidade')" id="sanidade" name="sanidade" class="flex-1 w-full  !border-0 py-1.5 px-2 text-sm sm:leading-6 bg-transparent p-0 !outline-0 !ring-0"></textarea>
           </div>
-          <span class="text-[10px]">{{ game.calculeds.life[1] }}</span>
+          <span class="text-[10px]">{{ game.calculeds.sanity[1] }}</span>
           <div class="bg-zinc-800">
-            <div class="bg-blue-500 h-2.5" v-bind:style="{ width: `${game.calculeds.defense[0]}%` }"></div>
+            <div class="bg-blue-500 h-2.5" v-bind:style="{ width: `${game.calculeds.sanity[0]}%` }"></div>
           </div>
         </div>
         <div class="bg-zinc-900  flex flex-col">
@@ -139,7 +150,12 @@
         <div class="bg-zinc-900 col-span-2 min-h-[4rem]">
           <button type="button" class="bg-zinc-800 px-2 py-1 w-full text-left text-sm font-semibold" v-on:click="openModal('abilities')">Habilidades</button>
           <div class="grid grid-cols-2 gap-2 px-2 py-1 max-h-[8rem] overflow-y-auto" v-if="!!atributos.habilidades">
-            <span class="border-b border-zinc-800/40" v-for="habilidade in atributos.habilidades" :key="habilidade">{{ habilidade }}</span>
+            <span
+              class="border-b border-zinc-800/40 cursor-pointer"
+              v-for="habilidade in atributos.habilidades"
+              v-on:click="onDetails('abilities', habilidade)"
+              :key="habilidade"
+            >{{ habilidade }}</span>
           </div>
         </div>
       </div>
@@ -155,7 +171,12 @@
         <div class="bg-zinc-900 min-h-[3rem]">
           <button type="button" class="bg-zinc-800 px-2 pt-1 w-full text-left text-sm font-semibold" v-on:click="openModal('arms')">Armas e Armaduras</button>
           <div class="flex flex-col gap-1 max-h-[8rem] overflow-y-auto" v-if="!!itens.armas">
-            <span class="flex justify-between border-b last:border-0 border-zinc-800/40" v-for="arma in itens.armas" :key="arma">
+            <span
+              class="flex justify-between border-b last:border-0 border-zinc-800/40 cursor-pointer"
+              v-for="arma in itens.armas"
+              :key="arma"
+              v-on:click="onDetails('arms', arma.name)"
+            >
               <span class="px-2 py-1 flex-1">{{ arma.name }}</span>
               <span class="bg-zinc-800/40 px-2 py-1">{{ arma.value }}</span>
             </span>
@@ -375,7 +396,11 @@
               <!-- END:: HEADER -->
               <div class="pt-6 pr-2 max-h-[calc(100vh-13rem)] overflow-y-auto">
                 <div class="flex flex-col sm:flex-row">
-                  <div class="flex flex-1 max-sm:rounded-t-md sm:rounded-l-md shadow-sm ring-2 ring-inset ring-gray-600 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
+                  <div class="flex max-sm:rounded-t-md sm:rounded-l-md shadow-sm ring-2 ring-inset ring-gray-600 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative" style="max-width: 5rem;">
+                    <input type="number" v-model="game.test_attribute.base" class="block flex-1 border-0 bg-transparent rounded-md py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+                    <span class="text-gray-300 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-900 font-semibold px-2">Base</span>
+                  </div>
+                  <div class="flex flex-1 shadow-sm ring-2 ring-inset ring-gray-600 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
                     <input type="number" v-model="game.test_attribute.max" class="block flex-1 border-0 bg-transparent rounded-md py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
                     <span class="text-gray-300 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-900 font-semibold px-2">Pontuação Máxima</span>
                   </div>
@@ -383,6 +408,20 @@
                     <input type="number" v-model="game.test_attribute.current" class="block flex-1 border-0 bg-transparent rounded-md py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
                     <span class="text-gray-300 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-900 font-semibold px-2">Pontuação Atual</span>
                   </div>
+                </div>
+                <div v-if="!isNaN(game.test_attribute.max) && !!game.test_attribute.max && !isNaN(game.test_attribute.current) && !!game.test_attribute.current">
+                  <span class="block bg-zinc-800 px-2 py-1 w-full text-center font-semibold mt-4">
+                    {{ 
+                      (game.test_attribute.current * 100 / game.test_attribute.max) <= 20 ? 'Extremo' : (
+                        (game.test_attribute.current * 100 / game.test_attribute.max) <= (40 + 20) ? 'Bom' : (
+                          (game.test_attribute.current * 100 / game.test_attribute.max) <= (40 + 40 + 20) ? 'Regular' : (
+                            ((game.test_attribute.current - game.test_attribute.max) * 100 / (game.test_attribute.base - game.test_attribute.max)) <= 50 ?
+                             'Ruim':'Péssimo'
+                          )
+                        )
+                      )
+                    }}
+                  </span>
                 </div>
                 <div class="grid grid-cols-6 mt-6">
                   <strong class="border border-zinc-800 p-1 text-xs">Pontos Max.</strong>
@@ -686,6 +725,44 @@
         </div>
       </div>
     </div>
+    <div id="modal-details"
+      class="relative z-10 hidden"
+      v-bind:style="{ display: game.modal.is_open_details ? 'block':'none' }"
+      aria-labelledby="modal-title"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div
+          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+          v-bind:style="{ display: game.modal.is_open_details ? 'block':'none' }"
+          v-on:click="closeModal('details')"
+        ></div>
+        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+          <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl">
+            <div class="bg-zinc-900 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+              <!-- BEGIN:: HEADER -->
+              <div>
+                <div class="mt-3 text-center sm:mt-0 sm:text-left">
+                  <h3 class="text-base font-semibold leading-6 text-gray-50" id="modal-title">{{ game.details.title }}</h3>
+                  <p class="text-sm text-gray-400 mt-2">{{ game.details.description }}</p>
+                </div>
+              </div>
+              <!-- END:: HEADER -->
+              <div class="pt-6 pr-2 max-h-[calc(100vh-13rem)] overflow-y-auto">
+              </div>
+            </div>
+            <div class="bg-gray-950 px-4 py-3 sm:flex sm:justify-end gap-2 sm:px-6">
+              <button
+                type="button"
+                class="mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50/10 sm:mt-0 sm:w-auto"
+                v-on:click="closeModal('details')"
+              >Fechar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- END:: MODALS -->
   </main>
   <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
@@ -723,7 +800,7 @@
 
     const initialPlayer = getPlayer();
     //#endregion STORAGE'
-    const availableModals = ['abilities', 'equipaments', 'arms', 'attributes', 'books', 'maps', 'alternate'];
+    const availableModals = ['abilities', 'equipaments', 'arms', 'attributes', 'books', 'maps', 'alternate', 'details'];
     const playerConstructor = (initialPlayer) => ({
       bio: {
         nome: initialPlayer?.bio?.nome ?? '',
@@ -744,7 +821,9 @@
         personalidade: initialPlayer?.atributos?.personalidade ?? 0,
         modificador_personalidade: initialPlayer?.atributos?.modificador_personalidade ?? 0,
         defesa: initialPlayer?.atributos?.defesa ?? 0,
-        modificador_defesa: initialPlayer?.atributos?.modificador_defesa ?? '',
+        modificador_defesa: initialPlayer?.atributos?.modificador_defesa ?? 0,
+        sanidade: initialPlayer?.atributos?.sanidade ?? 0,
+        modificador_sanidade: initialPlayer?.atributos?.modificador_sanidade ?? '',
         vida: initialPlayer?.atributos?.vida ?? 0,
         modificador_vida: initialPlayer?.atributos?.modificador_vida ?? '',
         habilidades: initialPlayer?.atributos?.habilidades ?? []
@@ -769,10 +848,11 @@
             is_open_attributes: false,
             is_open_books: false,
             is_open_maps: false,
-            is_open_alternate: false
+            is_open_alternate: false,
+            is_open_details: false
           },
           calculeds: {
-            defense: [0, '-/-'],
+            sanity: [0, '-/-'],
             life: [0, '-/-']
           },
           abilities: [
@@ -836,7 +916,7 @@
             { name: "Machado",           value: '2d6', description: "Arremesso e Luta Contundente e Cortante", cost: 10 },
             { name: "Machado de Batalha",value: '3d6', description: "Combate Contundente e Cortante", cost: 20 },
             { name: "Martelo",           value: '1d6', description: "Arremesso e Luta Contundente", cost: 5 },
-            { name: "Martelode Guerra",  value: '2d6', description: "Combate Contundente", cost: 15 },
+            { name: "Martelo de Guerra", value: '2d6', description: "Combate Contundente", cost: 15 },
             { name: "Porrete",           value: '1d6', description: "Luta Contundente", cost: 2 },
             { name: "Porrete com Pontas",value: '2d6', description: "Luta Contundente e Perfurante", cost: 10 },
             { name: "Punhal",            value: '1d6', description: "Arremesso e Luta Cortante e Perfurante", cost: 5 },
@@ -887,6 +967,7 @@
           test_attribute: {
             max: 0,
             current: 0,
+            base: 20,
             grid: Array.from({ length: 20 }).map((_,i) => {
               let points = 20 - i;
               
@@ -909,6 +990,7 @@
           },
           books: { current: './regras.pdf' },
           maps: {  current: './map.jpg'    },
+          details: { title: 'Detalhes', description: '' },
           allPlayers: [],
           import: ''
         }
@@ -927,7 +1009,7 @@
         setTimeout(recursiveAutosave, 5 * 1000);
 
         this.calculateDamages('modificador_vida');
-        this.calculateDamages('modificador_defesa');
+        this.calculateDamages('modificador_sanidade');
 
         this.game.allPlayers = getAllPlayers();
       },
@@ -948,16 +1030,41 @@
 
           this.game.modal[`is_open_${modal}`] = false;
         },
+        onDetails: function(modal, value){
+          if(modal === 'abilities'){
+            const findedAbility = this.game.abilities.find(({ name }) => name === value)
+            if(!findedAbility){
+              alert('Habilidade não encontrada');
+              return;
+            }
+
+            this.game.details.title = findedAbility.name;
+            this.game.details.description = findedAbility.description;
+          }else
+          if(modal === 'arms'){
+            const findedArm = this.game.arms.find(({ name }) => name === value)
+            if(!findedArm){
+              alert('Arma não encontrada');
+              return;
+            }
+            
+            this.game.details.title = `${findedArm.name} | ${findedArm.value}`;
+            this.game.details.description = findedArm.description;
+          }
+
+          this.openModal('details');
+        },
         openTestAttribute: function (attr){
           let value = Number(this.atributos[attr] ?? 0);
           
           if(isNaN(value)) value = '';
-          else if(!['defesa', 'vida'].includes(attr) && this.atributos[`modificador_${attr}`]){
+          else if(!['sanidade', 'vida'].includes(attr) && this.atributos[`modificador_${attr}`]){
             const modifier = Number(this.atributos[`modificador_${attr}`]);
             if(!isNaN(modifier)) value+=modifier;
           }
 
-          this.game.test_attribute.max = value;
+          this.game.test_attribute.max = value;          
+          this.game.test_attribute.base = attr === 'sanidade' ? 100 : 20
 
           this.openModal('attributes');
         },
@@ -1042,7 +1149,7 @@
 
           let refs = {
             modificador_vida:   { attr: 'vida',   calculateds: 'life'   },
-            modificador_defesa: { attr: 'defesa', calculateds: 'defense'}
+            modificador_sanidade: { attr: 'sanidade', calculateds: 'sanity'}
           }
           
           let total = Number(this.atributos[refs[modifier].attr]);
@@ -1107,7 +1214,7 @@
           this.notas = notas;
 
           this.calculateDamages('modificador_vida');
-          this.calculateDamages('modificador_defesa');
+          this.calculateDamages('modificador_sanidade');
 
           this.closeModal('alternate');
         },
@@ -1145,7 +1252,7 @@
             this.notas = notas;
 
             this.calculateDamages('modificador_vida');
-            this.calculateDamages('modificador_defesa');
+            this.calculateDamages('modificador_sanidade');
 
             this.closeModal('alternate');
           }catch(e){
