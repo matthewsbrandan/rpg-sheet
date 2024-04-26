@@ -430,7 +430,7 @@
                   <strong class="border border-zinc-800 p-1 text-xs">Regular (40%)</strong>
                   <strong class="border border-zinc-800 p-1 text-xs">Ruim (50%)</strong>
                   <strong class="border border-zinc-800 p-1 text-xs">Péssimo (50%)</strong>
-                </div>  
+                </div>
                 <div class="grid grid-cols-6" v-bind:class="{ 'bg-zinc-800': row.points == game.test_attribute.max }" v-for="row in game.test_attribute.grid" :key="row.points">
                   <span class="border-x border-b border-zinc-800/40 text-center">{{ row.points }}</span>
                   <span
@@ -502,6 +502,12 @@
                     <div>
                       <button
                         type="button"
+                        class="text-center rounded-md px-3 py-2 px-8 text-sm font-semibold shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
+                        v-bind:class="{ 'bg-gray-200 text-gray-600': game.books.current === 'grimorios', 'border border-gray-200 text-gray-400': game.books.current !== 'grimorios' }"
+                        v-on:click="game.books.current = 'grimorios'"
+                      >Grimórios</button>
+                      <button
+                        type="button"
                         class="text-center rounded-md  px-3 py-2 px-8 text-sm font-semibold shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
                         v-bind:class="{ 'bg-gray-200 text-gray-600': game.books.current === './regras.pdf', 'border border-gray-200 text-gray-400': game.books.current !== './regras.pdf' }"
                         v-on:click="game.books.current = './regras.pdf'"
@@ -515,7 +521,55 @@
                     </div>
                   </div>
                   
-                  <iframe v-bind:src="game.books.current" width="100%" style="height: calc(100vh - 5rem)" frameborder="0"></iframe>
+                  <iframe
+                    v-if="game.books.current !== 'grimorios'"
+                    v-bind:src="game.books.current" width="100%" style="height: calc(100vh - 5rem)" frameborder="0"
+                  ></iframe>
+                  <div v-if="game.books.current === 'grimorios'">
+                    <div class="flex flex-col sm:flex-row pt-2">
+                      <div class="flex max-sm:rounded-t-md sm:rounded-l-md shadow-sm ring-2 ring-inset ring-gray-600 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative" style="max-width: 5rem;">
+                        <input type="number" v-model="game.test_attribute.base" class="block flex-1 border-0 bg-transparent rounded-md py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+                        <span class="text-gray-300 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-900 font-semibold px-2">Base</span>
+                      </div>
+                      <div class="flex flex-1 shadow-sm ring-2 ring-inset ring-gray-600 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
+                        <input type="number" v-model="game.test_attribute.max" class="block flex-1 border-0 bg-transparent rounded-md py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+                        <span class="text-gray-300 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-900 font-semibold px-2">Pontuação Máxima</span>
+                      </div>
+                      <div class="flex flex-1 max-sm:rounded-b-md sm:rounded-r-md shadow-sm ring-2 ring-inset ring-gray-600 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
+                        <input type="number" v-model="game.test_attribute.current" class="block flex-1 border-0 bg-transparent rounded-md py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+                        <span class="text-gray-300 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-900 font-semibold px-2">Pontuação Atual</span>
+                      </div>
+                    </div>
+                    <h3 class="text-xs font-semibold mt-1 mb-1">Sua sabedoria é: {{ atributos.sabedoria }} +{{ atributos.modificador_sabedoria }}</h3>
+                    <div v-if="!isNaN(game.test_attribute.max) && !!game.test_attribute.max && !isNaN(game.test_attribute.current) && !!game.test_attribute.current">
+                      <span class="block bg-zinc-800 px-2 py-1 w-full text-center font-semibold mt-4">
+                        {{ 
+                          (game.test_attribute.current * 100 / game.test_attribute.max) <= 20 ? 'Extremo (100% dano | 0 custo)' : (
+                            (game.test_attribute.current * 100 / game.test_attribute.max) <= (40 + 20) ? 'Bom (custo => sanidade)' : (
+                              (game.test_attribute.current * 100 / game.test_attribute.max) <= (40 + 40 + 20) ? 'Regular (custo => vida)' : (
+                                ((game.test_attribute.current - game.test_attribute.max) * 100 / (game.test_attribute.base - game.test_attribute.max)) <= 50 ?
+                                 'Ruim (custo => vida)':'Péssimo (custo => vida + maldição)'
+                              )
+                            )
+                          )
+                        }}
+                      </span>
+                    </div>
+                    <div class="grid grid-cols-2 mt-6 bg-zinc-950/50">
+                      <div class="flex">
+                        <strong class="border border-zinc-800 p-1 text-xs w-[4rem]">Custo</strong>
+                        <strong class="border border-zinc-800 p-1 text-xs flex-1">Feitiço</strong>
+                      </div>
+                      <strong class="border border-zinc-800 p-1 text-xs">Descrição</strong>
+                    </div>
+                    <div class="grid grid-cols-2 hover:bg-zinc-700/50" v-for="magic of game.magicians">
+                      <div class="flex">
+                        <span class="font-semibold border border-zinc-800 p-1 text-sm w-[4rem]">{{ magic.cost }}</span>
+                        <span class="font-semibold border border-zinc-800 p-1 text-sm flex-1">{{ magic.name }}</span>
+                      </div>
+                      <span class="border border-zinc-800 p-1 text-xs">{{ magic.description }}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
               <!-- END:: HEADER -->
@@ -599,7 +653,7 @@
                         <span class="opacity-0 group-hover:opacity-100" style="transform: tranzincX(-50%);display: block;">Ruínas de Frostar</span>
                         <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
                       </span>
-                      <span class="absolute group" style="bottom: 82px;left: 272px;">
+                      <span class="absolute group" style="bottom: 71px;left: 272px;">
                         <span class="opacity-0 group-hover:opacity-100" style="transform: tranzincX(-50%);display: block;">Taverna do Lobo Cinzen</span>
                         <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
                       </span>
@@ -611,7 +665,7 @@
                         <span class="opacity-0 group-hover:opacity-100" style="transform: tranzincX(-50%);display: block;">Cidadela de Urdir</span>
                         <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
                       </span>
-                      <span class="absolute group" style="bottom: 97px;left: 327px;">
+                      <span class="absolute group" style="bottom: 94px;left: 327px;">
                         <span class="opacity-0 group-hover:opacity-100" style="transform: tranzincX(-50%);display: block;">Castelo de Nimir</span>
                         <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
                       </span>
@@ -766,6 +820,7 @@
     <!-- END:: MODALS -->
   </main>
   <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script src="./js/datas.js"></script>
   <script>
     //#region STORAGE
     const storageKey = 'rpg@player';
@@ -855,115 +910,10 @@
             sanity: [0, '-/-'],
             life: [0, '-/-']
           },
-          abilities: [
-            { name: '11. Arremesso',    description: 'Arremesso: adicione +1 à rolagem de Ataque toda vez que tentar acertar um oponente com alguma arma do tipo Arremesso (veja pág. 53).' },
-            { name: '12. Ataque Duplo', description: 'Ataque Duplo: faça a rolagem de Ataque duas vezes.' },
-            { name: '13. Caça',         description: 'Caça: você pode construir armadilhas simples e preparar a caça para alimento.' },
-            { name: '14. Combate',      description: 'Combate: adicione +1 à rolagem de Ataque toda vez que tentar acertar um oponente com alguma arma do tipo Combate (veja pág. 53).' },
-            { name: '15. Conhecimento', description: 'Conhecimento: você é capaz de compreender assuntos específicos  com profundidade considerável.' },
-            { name: '16. Construção',   description: 'Construção: você sabe como planejar e executar projetos de habitações, fortificações ou excavações.' },
-            { name: '21. Cura',         description: 'Cura: adicione +1 à rolagem de Teste de Atributo toda vez que tentar curar ferimentos. Caso obtenha sucesso, a vítima recupera até 1d3+3 Pontos de Vida.' },
-            { name: '22. Diplomacia',   description: 'Diplomacia: você sabe como conduzir  situações delicadas com sensatez.' },
-            { name: '23. Erudição',     description: 'Erudição: você é capaz de ler e escrever textos simples.' },
-            { name: '24. Escalada',     description: 'Escalada: você pode subir superfícies íngremes.' },
-            { name: '25. Exploração',   description: 'Exploração: adicione +1 à rolagem de Teste de Atributo toda vez que  tentar encontrar algo nos ermos.' },
-            { name: '26. Feitiçaria',   description: 'Feitiçaria: adicione +1 à rolagem de Teste de Atributo toda vez que  tentar conjurar um feitiço.' },
-            { name: '31. Furtividade',  description: 'Furtividade: adicione +1 à rolagem de Teste de Atributo toda vez que  tentar se esconder ou mover-se  silenciosamente.' },
-            { name: '32. Herbalismo',   description: 'Herbalismo: você sabe onde buscar  ervas e preparar antídotos e remédios.' },
-            { name: '33. Idioma',       description: 'Idioma: você conhece outras línguas e  pode se comunicar em outros idiomas.' },
-            { name: '34. Intimidação',  description: 'Intimidação: adicione +1 à rolagem de Teste de Atributo toda vez que  tentar amedrontar ou subjugar alguém.' },
-            { name: '35. Lábia',        description: 'Lábia: adicione +1 à rolagem de Teste de Atributo toda vez que  tentar enganar outras pessoas.' },
-            { name: '36. Ladinagem',    description: 'Ladinagem: adicione +1 à rolagem de Teste de Atributo toda vez que  tentar abrir fechaduras, desarmar  armadilhas ou furtar alguém.' },
-            { name: '41. Lei',          description: 'Lei: você conhece códigos penais.' },
-            { name: '42. Liderança',    description: 'Liderança: adicione +1 à rolagem de Teste de Atributo toda vez que  tentar comandar outras pessoas.' },
-            { name: '43. Luta',         description: 'Luta: adicione +1 à rolagem de Ataque toda vez que tentar acertar um oponente com alguma  arma do tipo Luta (veja pág. 53).' },
-            { name: '44. Manha',        description: 'Manha: você pode resolver embaraços  através de subterfúgios ou contatos.' },
-            { name: '45. Montaria',     description: 'Montaria: você sabe conduzir animais.' },
-            { name: '46. Navegação',    description: 'Navegação: você conduz embarcações.' },
-            { name: '51. Negociação',   description: 'Negociação: adicione +1 à rolagem de Teste de Atributo toda vez que tentar barganhar.' },
-            { name: '52. Observação',   description: 'Observação: você pode notar detalhes.' },
-            { name: '53. Ocultismo',    description: 'Ocultismo: você pode compreender  assuntos obscuros de natureza mística.' },
-            { name: '54. Ofício',       description: 'Ofício: você é capaz de executar um  trabalho específico ou especializado.' },
-            { name: '55. Persuasão',    description: 'Persuasão: adicione +1 à rolagem de Teste de Atributo toda vez que  tentar convencer outras pessoas.' },
-            { name: '56. Pontaria',     description: 'Pontaria: adicione +1 à rolagem de Ataque toda vez que tentar acertar um oponente com alguma  arma do tipo Pontaria (veja pág. 53).' },
-            { name: '61. Prontidão',    description: 'Prontidão: você age primeiro no Ataque e raramente é surpreendido.' },
-            { name: '62. Rastreio',     description: 'Rastreio: adicione +1 à rolagem de Teste de Atributo toda vez que  tentar encontrar rastros.' },
-            { name: '63. Religião',     description: 'Religião: você conhece ritos e crenças de natureza divina.' },
-            { name: '64. Resistência',  description: 'Resistência: adicione +1 à rolagem de Teste de Atributo toda vez que  tentar resistir à um esforço fora do  comum ou estiver sob ação de algum  tipo de veneno ou substância tóxica.' },
-            { name: '65. Sobrevivência',description: 'Sobrevivência: adicione +1 à rolagem de Teste de Atributo toda vez que  tentar encontrar abrigo nos ermos.' },
-            { name: '66. Tradição',     description: 'Tradição: você conhece costumes, lendas e profecias de um povo' },
-          ],
-          arms: [
-            { name: "Adaga",             value: '1d6', description: "Arremesso e Luta Cortante e Perfurante", cost: 5 },
-            { name: "Arco Curto",        value: '2d6', description: "Pontaria Perfurante (Flecha)", cost: 15 },
-            { name: "Arco Longo",        value: '3d6', description: "Pontaria Perfurante (Flecha)", cost: 25 },
-            { name: "Arma de Haste",     value: '3d6', description: "Combate Perfurante", cost: 20 },
-            { name: "Bastão",            value: '1d6', description: "Luta Contundente", cost: 2 },
-            { name: "Besta",             value: '3d6', description: "Pontaria Perfurante (Virote)", cost: 30 },
-            { name: "Cajado",            value: '1d6', description: "Luta Contundente", cost: 2 },
-            { name: "Chicote",           value: '1d6', description: "Luta Contundente e Cortante", cost: 5 },
-            { name: "Clava",             value: '1d6', description: "Luta Contundente", cost: 2 },
-            { name: "Clava Grande",      value: '2d6', description: "Luta Contundente", cost: 10 },
-            { name: "Clava Gigante",     value: '3d6', description: "Luta Contundente", cost: 20 },
-            { name: "Dardo",             value: '1d6', description: "Arremesso e Luta Perfurante", cost: 5 },
-            { name: "Espada Curta",      value: '2d6', description: "Combate Cortante e Perfurante", cost: 15 },
-            { name: "Espada Longa",      value: '3d6', description: "Combate Cortante e Perfurante", cost: 20 },
-            { name: "Faca",              value: '1d6', description: "Arremesso e Luta Cortante e Perfurante", cost: 5 },
-            { name: "Funda",             value: '1d6', description: "Pontaria Contundente (Pedra)", cost: 2 },
-            { name: "Lança",             value: '2d6', description: "Combate Perfurante", cost: 15 },
-            { name: "Lança de Montaria", value: '3d6', description: "Combate Perfurante", cost: 20 },
-            { name: "Maça",              value: '1d6', description: "Combate Contundente", cost: 5 },
-            { name: "Machado",           value: '2d6', description: "Arremesso e Luta Contundente e Cortante", cost: 10 },
-            { name: "Machado de Batalha",value: '3d6', description: "Combate Contundente e Cortante", cost: 20 },
-            { name: "Martelo",           value: '1d6', description: "Arremesso e Luta Contundente", cost: 5 },
-            { name: "Martelo de Guerra", value: '2d6', description: "Combate Contundente", cost: 15 },
-            { name: "Porrete",           value: '1d6', description: "Luta Contundente", cost: 2 },
-            { name: "Porrete com Pontas",value: '2d6', description: "Luta Contundente e Perfurante", cost: 10 },
-            { name: "Punhal",            value: '1d6', description: "Arremesso e Luta Cortante e Perfurante", cost: 5 },
-            { name: "Cota de Malha",     value: '+2',  description: "Reduz Dano Cortante e Perfurante em até 1d3+3 por até 1d3+3 vezes*", cost: 150 },
-            { name: "Couraça",           value: '+1',  description: "Reduz Dano Cortante em até 1d6 por até 1d3+3 vezes*", cost: 50 },
-            { name: "Escudo Grande",     value: '+1',  description: "Reduz Dano Contundente, Cortante e Perfurante em até 1d6 por até 1d3+3 vezes", cost: 60 },
-            { name: "Escudo Pequeno",    value: '+1',  description: "Reduz Dano Contundente, Cortante e Perfurante em até 1d3 por até 1d2+2 vezes", cost: 30 },
-            { name: "Peles",             value: '+1',  description: "Reduz Dano Cortante em até 1d3 por até 1d2+2 vezes*", cost: 25 },
-          ],
-          equipaments: [
-            { name: "Antídoto (para tratar venenos)", cost: 30 },
-            { name: "Bandagem (3 unidades)",          cost: 2 },
-            { name: "Bolsa",                          cost: 2 },
-            { name: "Botas de Viagem",                cost: 5 },
-            { name: "Cadeado",                        cost: 15 },
-            { name: "Capa",                           cost: 10 },
-            { name: "Cesta",                          cost: 1 },
-            { name: "Cinto",                          cost: 2 },
-            { name: "Cinzel (para esculpir pedra)",   cost: 2 },
-            { name: "Comida (3 porções)",             cost: 1 },
-            { name: "Corda (3 metros)",               cost: 1 },
-            { name: "Corrente (1 metro)",             cost: 5 },
-            { name: "Elixir (para tratar doenças)",   cost: 30 },
-            { name: "Ervas",                          cost: 5 },
-            { name: "Espelho de Metal",               cost: 10 },
-            { name: "Flauta",                         cost: 5 },
-            { name: "Flechas ou Virotes (6 unidades)",cost: 1 },
-            { name: "Formão (para entalhar madeira)", cost: 2 },
-            { name: "Gancho",                         cost: 5 },
-            { name: "Gazuas (3 unidades)",            cost: 15 },
-            { name: "Harpa",                          cost: 20 },
-            { name: "Lamparina de Cerâmica",          cost: 2 },
-            { name: "Lanterna de Bronze",             cost: 10 },
-            { name: "Machadinha",                     cost: 2 },
-            { name: "Martelete",                      cost: 2 },
-            { name: "Montaria",                       cost: 100 },
-            { name: "Odre",                           cost: 2 },
-            { name: "Óleo (frasco)",                  cost: 5 },
-            { name: "Pederneira",                     cost: 5 },
-            { name: "Pedra de Amolar",                cost: 2 },
-            { name: "Pergaminho (em branco)",         cost: 30 },
-            { name: "Saco",                           cost: 1 },
-            { name: "Símbolo Sagrado",                cost: 20 },
-            { name: "Tocha (3 unidades)",             cost: 1 },
-            { name: "Vela",                           cost: 2 },
-            { name: "Veneno (frasco)",                cost: 10 },
-          ],
+          abilities,
+          arms,
+          equipaments,
+          magicians,
           test_attribute: {
             max: 0,
             current: 0,
@@ -988,7 +938,7 @@
               return { points, extreme, good, regular, bad, terrible }
             })
           },
-          books: { current: './regras.pdf' },
+          books: { current: 'grimorios' },
           maps: {  current: './map.jpg'    },
           details: { title: 'Detalhes', description: '' },
           allPlayers: [],
@@ -1047,7 +997,7 @@
               alert('Arma não encontrada');
               return;
             }
-            
+
             this.game.details.title = `${findedArm.name} | ${findedArm.value}`;
             this.game.details.description = findedArm.description;
           }
