@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="bg-zinc-950">
+<head class="m-0 p-0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RPG / BATALHA</title>
+  <link rel="shortcut icon" href="../icon.jpg" type="image/jpg">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Jacquard+24&display=swap" rel="stylesheet">
+  <style> input{ overflow: auto; } </style>
+</head>
+<body class="m-0 p-0 w-screen h-screen overflow-y-auto overflow-x-hidden">
+  <main class="text-gray-400 py-4 px-6 m-0" id="app">
+    <div class="fixed right-4 bg-zinc-950 px-2.5 pt-1 pb-1.5  border-2 border-emerald-500 text-emerald-500 text-xs rounded-xl z-10" v-if="game.is_auto_saved">Salvo Automaticamente</div>
+    <div class="flex items-center gap-2">
+      <div class="flex-1 h-0.5 w-full bg-zinc-700"></div>
+      <h1 class="text-2xl font-semibold text-center my-4" style="font-family: 'Jacquard 24'; letter-spacing: 4px;">Batalha</h1>
+      <div class="flex-1 h-0.5 w-full bg-zinc-700"></div>
+    </div>
+    
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div v-for="[index, warrior] of warriors.entries()" :key="warrior.name">
+        <div class="bg-zinc-900 border-b border-zinc-950 rounded-t-md">
+          <h3 class="text-sm text-center font-semibold px-1 py-1">{{ warrior.name }}</h3>
+          <div class="bg-zinc-800 relative" v-if="warrior.progress_attr.sanidade !== undefined">
+            <span class="text-[9px] absolute text-white inset-0 text-center leading-none">{{ warrior.calculeds.sanity[1] }}</span>
+            <div class="bg-blue-500 h-2.5" v-bind:style="{ width: `${warrior.calculeds.sanity[0]}%` }"></div>
+          </div>
+          <div class="bg-zinc-800 relative" v-if="warrior.progress_attr.vida !== undefined">
+            <span class="text-[9px] absolute text-white inset-0 text-center leading-none">{{ warrior.calculeds.life[1] }}</span>
+            <div class="bg-red-500 h-2.5" v-bind:style="{ width: `${warrior.calculeds.life[0]}%` }"></div>
+          </div>
+        </div>
+        <div>
+          <div class="border-y border-zinc-950"  v-if="warrior.progress_attr.sanidade !== undefined">
+            <div class="grid grid-cols-2 border-zinc-950 border-b">
+              <!-- v-on:click="openTestAttribute('sanidade')" -->
+              <div
+                class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
+              >Sanidade</div>
+              <div class="flex shadow-sm ring-2 ring-inset ring-zinc-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                <input
+                  type="number"
+                  class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                  v-model="warriors[index].progress_attr.sanidade"
+                />
+              </div>
+            </div>
+            <div class="bg-zinc-900/70">
+              <textarea
+                v-model="warriors[index].progress_attr.modificador_sanidade"
+                @input="() => calculateDamages('modificador_sanidade', warrior)"
+                class="flex-1 -mb-1.5 w-full !border-0 py-1.5 px-2 text-sm sm:leading-6 bg-transparent p-0 !outline-0 !ring-0"
+                rows="1"
+              ></textarea>
+            </div>
+          </div>
+          <div class="border-y border-zinc-950">
+            <div class="grid grid-cols-2 border-zinc-950 border-b">
+              <!-- v-on:click="openTestAttribute('vida')" -->
+              <div
+                class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
+              >Vida</div>
+              <div class="flex shadow-sm ring-2 ring-inset ring-zinc-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                <input
+                  type="number"
+                  class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                  v-model="warriors[index].progress_attr.vida"
+                />
+              </div>
+            </div>
+            <div class="bg-zinc-900/70">
+              <textarea
+                v-model="warriors[index].progress_attr.modificador_vida"
+                @input="() => calculateDamages('modificador_vida', warrior)"
+                class="flex-1 -mb-1.5 w-full !border-0 py-1.5 px-2 text-sm sm:leading-6 bg-transparent p-0 !outline-0 !ring-0"
+                rows="1"
+              ></textarea>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 border-y border-zinc-950" v-for="[attr, value] of Object.entries(warrior.attr)" :key="attr">
+            <!-- v-on:click="openTestAttribute('defesa')" -->
+            <div
+              class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
+            >{{ attr.slice(0, 6) + (attr.length > 6 ? '.':'') }}</div>
+            <div class="flex shadow-sm ring-2 ring-inset ring-zinc-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+              <input
+                type="number"
+                class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                v-model="warriors[index].attr[attr]"
+              />
+            </div>
+          </div>
+          <div class="bg-zinc-900/70">
+            <!-- @input="() => calculateDamages('modificador_sanidade')" -->
+            <textarea
+              v-model="warriors[index].note"
+              class="flex-1 -mb-1.5 w-full !border-0 py-1.5 px-2 text-sm sm:leading-6 bg-transparent p-0 !outline-0 !ring-0"
+              rows="1"
+              placeholder="Notas..."
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="modal-attributes"
+      class="relative z-10 hidden"
+      v-bind:style="{ display: game.modal.is_open_attributes ? 'block':'none' }"
+      aria-labelledby="modal-title"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div
+          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+          v-bind:style="{ display: game.modal.is_open_attributes ? 'block':'none' }"
+          v-on:click="closeModal('attributes')"
+        ></div>
+        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+          <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl">
+            <div class="bg-zinc-900 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+              <!-- BEGIN:: HEADER -->
+              <div>
+                <div class="mt-3 text-center sm:mt-0 sm:text-left">
+                  <h3 class="text-base font-semibold leading-6 text-gray-50" id="modal-title">Teste de Atributo</h3>
+                  <p class="text-sm text-gray-500 mt-2">
+                    Você deve somar a pontuação do seu atributo escolhido + modificadores e/ou habilidades para determinar sua pontuação máxima.
+                    <br/>
+                    Depois jogue os dados e verifique na tabela, como o seu valor se qualifica.
+                  </p>
+                </div>
+              </div>
+              <!-- END:: HEADER -->
+              <div class="pt-6 pr-2 max-h-[calc(100vh-13rem)] overflow-y-auto">
+                <div class="flex flex-col sm:flex-row">
+                  <div class="flex max-sm:rounded-t-md sm:rounded-l-md shadow-sm ring-2 ring-inset ring-gray-600 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative" style="max-width: 5rem;">
+                    <input type="number" v-model="game.test_attribute.base" class="block flex-1 border-0 bg-transparent rounded-md py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+                    <span class="text-gray-300 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-900 font-semibold px-2">Base</span>
+                  </div>
+                  <div class="flex flex-1 shadow-sm ring-2 ring-inset ring-gray-600 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
+                    <input type="number" v-model="game.test_attribute.max" class="block flex-1 border-0 bg-transparent rounded-md py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+                    <span class="text-gray-300 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-900 font-semibold px-2">Pontuação Máxima</span>
+                  </div>
+                  <div class="flex flex-1 max-sm:rounded-b-md sm:rounded-r-md shadow-sm ring-2 ring-inset ring-gray-600 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
+                    <input type="number" v-model="game.test_attribute.current" class="block flex-1 border-0 bg-transparent rounded-md py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+                    <span class="text-gray-300 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-900 font-semibold px-2">Pontuação Atual</span>
+                  </div>
+                </div>
+                <div v-if="!isNaN(game.test_attribute.max) && !!game.test_attribute.max && !isNaN(game.test_attribute.current) && !!game.test_attribute.current">
+                  <span class="block bg-zinc-800 px-2 py-1 w-full text-center font-semibold mt-4">
+                    {{ 
+                      (game.test_attribute.current * 100 / game.test_attribute.max) <= 20 ? 'Extremo' : (
+                        (game.test_attribute.current * 100 / game.test_attribute.max) <= (40 + 20) ? 'Bom' : (
+                          (game.test_attribute.current * 100 / game.test_attribute.max) <= (40 + 40 + 20) ? 'Regular' : (
+                            ((game.test_attribute.current - game.test_attribute.max) * 100 / (game.test_attribute.base - game.test_attribute.max)) <= 50 ?
+                             'Ruim':'Péssimo'
+                          )
+                        )
+                      )
+                    }}
+                  </span>
+                </div>
+                <div class="grid grid-cols-6 mt-6">
+                  <strong class="border border-zinc-800 p-1 text-xs">Pontos Max.</strong>
+                  <strong class="border border-zinc-800 p-1 text-xs">Extremo (20%)</strong>
+                  <strong class="border border-zinc-800 p-1 text-xs">Bom (40%)</strong>
+                  <strong class="border border-zinc-800 p-1 text-xs">Regular (40%)</strong>
+                  <strong class="border border-zinc-800 p-1 text-xs">Ruim (50%)</strong>
+                  <strong class="border border-zinc-800 p-1 text-xs">Péssimo (50%)</strong>
+                </div>
+                <div class="grid grid-cols-6" v-bind:class="{ 'bg-zinc-800': row.points == game.test_attribute.max }" v-for="row in game.test_attribute.grid" :key="row.points">
+                  <span class="border-x border-b border-zinc-800/40 text-center">{{ row.points }}</span>
+                  <span
+                    class="border-x border-b border-zinc-800/40 text-center"
+                    v-bind:class="{ 'bg-zinc-500': row.points == game.test_attribute.max && itsBetween(game.test_attribute.current, row.extreme) }"
+                  >{{ row.extreme[0] + ' - ' + row.extreme[1] }}</span>
+                  <span
+                    class="border-x border-b border-zinc-800/40 text-center"
+                    v-bind:class="{ 'bg-zinc-500': row.points == game.test_attribute.max && itsBetween(game.test_attribute.current, row.good) }"
+                  >{{ row.good[0] + ' - ' + row.good[1] }}</span>
+                  <span
+                    class="border-x border-b border-zinc-800/40 text-center"
+                    v-bind:class="{ 'bg-zinc-500': row.points == game.test_attribute.max && itsBetween(game.test_attribute.current, row.regular) }"
+                  >{{ row.regular[0] + ' - ' + row.regular[1] }}</span>
+                  <span
+                    class="border-x border-b border-zinc-800/40 text-center"
+                    v-bind:class="{ 'bg-zinc-500': row.points == game.test_attribute.max && itsBetween(game.test_attribute.current, row.bad) }"
+                  >{{ row.bad[0] + ' - ' + row.bad[1] }}</span>
+                  <span
+                    class="border-x border-b border-zinc-800/40 text-center"
+                    v-bind:class="{ 'bg-zinc-500': row.points == game.test_attribute.max && itsBetween(game.test_attribute.current, row.terrible) }"
+                  >{{ row.terrible[0] + ' - ' + row.terrible[1] }}</span>
+                </div>
+
+                <p class="text-sm text-gray-400 mt-6">
+                  Para definir a dificuldade o mestre(ou narrador da cena) pode usar 1D8 seguindo os valores da tabela abaixo. Está é a dificuldade mínima que o jogador deve atingir.
+                </p>
+                <div class="mt-2">
+                  <div class="flex border border-zinc-800 gap-4 p-1 text-sm"><strong class="">1-2</strong><span>Extremo</span></div>
+                  <div class="flex border border-zinc-800 gap-4 p-1 text-sm"><strong class="">3-4</strong><span>Bom</span></div>
+                  <div class="flex border border-zinc-800 gap-4 p-1 text-sm"><strong class="">5-6</strong><span>Regular</span></div>
+                  <div class="flex border border-zinc-800 gap-4 p-1 text-sm"><strong class="">7-7</strong><span>Ruim</span></div>
+                  <div class="flex border border-zinc-800 gap-4 p-1 text-sm"><strong class="">8-8</strong><span>Péssimo (Nesse caso dispensa o teste de atributo)</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="bg-gray-950 px-4 py-3 sm:flex sm:justify-end gap-2 sm:px-6">
+              <button
+                type="button"
+                class="mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50/10 sm:mt-0 sm:w-auto"
+                v-on:click="closeModal('attributes')"
+              >Fechar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="modal-books"
+      class="relative z-10 hidden"
+      v-bind:style="{ display: game.modal.is_open_books ? 'block':'none' }"
+      aria-labelledby="modal-title"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div
+          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+          v-bind:style="{ display: game.modal.is_open_books ? 'block':'none' }"
+          v-on:click="closeModal('books')"
+        ></div>
+        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+          <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl">
+            <div class="bg-zinc-900 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+              <!-- BEGIN:: HEADER -->
+              <div>
+                <div class="mt-3 text-center sm:mt-0 sm:text-left">
+                  <div class="flex max-sm:flex-col justify-between mb-4">
+                    <h3 class="text-base font-semibold leading-6 text-gray-50 max-sm:mb-2" id="modal-title">Livros</h3>
+                    <div>
+                      <button
+                        type="button"
+                        class="my-1 text-center rounded-md px-3 py-1 text-sm font-semibold shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
+                        v-bind:class="{ 'bg-gray-200 text-gray-600': game.books.current === 'grimorios', 'border border-gray-200 text-gray-400': game.books.current !== 'grimorios' }"
+                        v-on:click="game.books.current = 'grimorios'"
+                      >Grimórios</button>
+                      <button
+                        type="button"
+                        class="my-1 text-center rounded-md px-3 py-1 text-sm font-semibold shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
+                        v-bind:class="{ 'bg-gray-200 text-gray-600': game.books.current === 'maldicoes', 'border border-gray-200 text-gray-400': game.books.current !== 'maldicoes' }"
+                        v-on:click="game.books.current = 'maldicoes'"
+                      >Maldições</button>
+                      <button
+                        type="button"
+                        class="my-1 text-center rounded-md  px-3 py-1 text-sm font-semibold shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
+                        v-bind:class="{ 'bg-gray-200 text-gray-600': game.books.current === './regras.pdf', 'border border-gray-200 text-gray-400': game.books.current !== './regras.pdf' }"
+                        v-on:click="game.books.current = './regras.pdf'"
+                      >Regras</button>
+                      <button
+                        type="button"
+                        class="my-1 text-center rounded-md px-3 py-1 text-sm font-semibold shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
+                        v-bind:class="{ 'bg-gray-200 text-gray-600': game.books.current === './guia.pdf', 'border border-gray-200 text-gray-400': game.books.current !== './guia.pdf' }"
+                        v-on:click="game.books.current = './guia.pdf'"
+                      >Guia</button>
+                    </div>
+                  </div>
+                  
+                  <iframe
+                    v-if="!['grimorios', 'maldicoes'].includes(game.books.current)"
+                    v-bind:src="game.books.current" width="100%" style="height: calc(100vh - 5rem)" frameborder="0"
+                  ></iframe>
+                  <div v-if="game.books.current === 'grimorios'">
+                    <div class="flex flex-col sm:flex-row pt-2">
+                      <div class="flex max-sm:rounded-t-md sm:rounded-l-md shadow-sm ring-2 ring-inset ring-gray-600 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative" style="max-width: 5rem;">
+                        <input type="number" v-model="game.test_attribute.base" class="block flex-1 border-0 bg-transparent rounded-md py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+                        <span class="text-gray-300 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-900 font-semibold px-2">Base</span>
+                      </div>
+                      <div class="flex flex-1 shadow-sm ring-2 ring-inset ring-gray-600 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
+                        <input type="number" v-model="game.test_attribute.max" class="block flex-1 border-0 bg-transparent rounded-md py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+                        <span class="text-gray-300 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-900 font-semibold px-2">Pontuação Máxima</span>
+                      </div>
+                      <div class="flex flex-1 max-sm:rounded-b-md sm:rounded-r-md shadow-sm ring-2 ring-inset ring-gray-600 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
+                        <input type="number" v-model="game.test_attribute.current" class="block flex-1 border-0 bg-transparent rounded-md py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+                        <span class="text-gray-300 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-900 font-semibold px-2">Pontuação Atual</span>
+                      </div>
+                    </div>
+                    <div v-if="!isNaN(game.test_attribute.max) && !!game.test_attribute.max && !isNaN(game.test_attribute.current) && !!game.test_attribute.current">
+                      <span class="block bg-zinc-800 px-2 py-1 w-full text-center font-semibold mt-4">
+                        {{ 
+                          (game.test_attribute.current * 100 / game.test_attribute.max) <= 20 ? 'Extremo (100% dano | 0 custo)' : (
+                            (game.test_attribute.current * 100 / game.test_attribute.max) <= (40 + 20) ? 'Bom (custo => sanidade)' : (
+                              (game.test_attribute.current * 100 / game.test_attribute.max) <= (40 + 40 + 20) ? 'Regular (custo => vida)' : (
+                                ((game.test_attribute.current - game.test_attribute.max) * 100 / (game.test_attribute.base - game.test_attribute.max)) <= 50 ?
+                                 'Ruim (custo => vida)':'Péssimo (custo => vida + maldição)'
+                              )
+                            )
+                          )
+                        }}
+                      </span>
+                    </div>
+                    <div class="grid grid-cols-2 mt-6 bg-zinc-950/50">
+                      <div class="flex">
+                        <strong class="border border-zinc-800 p-1 text-xs w-[4rem]">Custo</strong>
+                        <strong class="border border-zinc-800 p-1 text-xs flex-1">Feitiço</strong>
+                      </div>
+                      <strong class="border border-zinc-800 p-1 text-xs">Descrição</strong>
+                    </div>
+                    <div class="grid grid-cols-2 hover:bg-zinc-700/50" v-for="magic of game.magicians">
+                      <div class="flex">
+                        <span class="font-semibold border border-zinc-800 p-1 text-sm w-[4rem]">{{ magic.cost }}</span>
+                        <span class="font-semibold border border-zinc-800 p-1 text-sm flex-1">{{ magic.name }}</span>
+                      </div>
+                      <span class="border border-zinc-800 p-1 text-xs">{{ magic.description }}</span>
+                    </div>
+                  </div>
+                  <div v-if="game.books.current === 'maldicoes'">
+                    <div class="flex mt-6 bg-zinc-950/50">
+                      <strong class="border border-zinc-800 p-1 text-xs w-[4rem]">Dado</strong>
+                      <strong class="border border-zinc-800 p-1 text-xs flex-1">Maldições</strong>
+                    </div>
+                    <div class="flex hover:bg-zinc-700/50" v-for="malison of game.malisons">
+                      <span class="font-semibold border border-zinc-800 p-1 text-sm w-[4rem]">{{ malison.value }}</span>
+                      <span class="border border-zinc-800 p-1 text-xs flex-1">{{ malison.description }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- END:: HEADER -->
+              <div class="pt-6 pr-2 max-h-[calc(100vh-13rem)] overflow-y-auto">
+              </div>
+            </div>
+            <div class="bg-gray-950 px-4 py-3 sm:flex sm:justify-end gap-2 sm:px-6">
+              <button
+                type="button"
+                class="mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50/10 sm:mt-0 sm:w-auto"
+                v-on:click="closeModal('books')"
+              >Fechar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script src="../js/datas.js"></script>
+  <script src="../js/shared.js"></script>
+  <script src="../js/battle.js"></script>
+</body>
+</html>

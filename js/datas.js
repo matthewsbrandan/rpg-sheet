@@ -145,3 +145,23 @@ const magicians = [
   { name: "Teia Mágica",          cost: 2, description: "Cria área pegajosa com 1d6 metros de diâmetro" },
   { name: "Telepatia",            cost: 3, description: "Comunicação telepática por até 3d6 quilômetros" },
 ];
+const malisons = [
+  { value: "11-12", description: "Seu corpo apodrece lentamente, sofrendo 1d3 Dano por dia"             },
+  { value: "13-14", description: "Seus olhos se tornam turvos e leitosos, dificultando sua visão"       },
+  { value: "15-16", description: "Você é atingido por uma explosão incendiária, sofrendo 1d6 Dano"      },
+  { value: "21-22", description: "Seu paladar se torna fraco e insosso, dificultando sua alimentação"   },
+  { value: "23-24", description: "Você é transformado em (1d6): 1-3 um corvo ou 4-6 uma coruja"         },
+  { value: "25-26", description: "Um par de chifres pesados e pontiagudos surgem da sua cabeça"         },
+  { value: "31-32", description: "Seu corpo sofre uma paralisia duradoura e você é incapaz de se mover" },
+  { value: "33-34", description: "Toque de Ashaza: seu Modificador de Inteligência é reduzido para -1"  },
+  { value: "35-36", description: "Você é transformado em (1d6): 1-3 uma serpente ou 4-6 um lagarto"     },
+  { value: "41-42", description: "Uma cabeça demoníaca cresce lentamente do seu ombro direito"          },
+  { value: "43-44", description: "Sopro de Vartha: seu Modificador de Sabedoria é reduzido para -1"     },
+  { value: "45-46", description: "Você fica confuso e incapaz de lançar feitiços por até 1d6 dias"      },
+  { value: "51-52", description: "Você conjura um Morto-Vivo – Sombra Dominadora (pág. 72)"             },
+  { value: "53-54", description: "Olhar de Borka: seu Modificador de Personalidade é reduzido para -1"  },
+  { value: "55-56", description: "Você conjura uma Besta Demoníaca – Nebelor (pág. 66)"                 },
+  { value: "61-62", description: "Você é transformado em (1d6): 1-2 barro, 3-4 carvão ou 5-6 pedra"     },
+  { value: "63-64", description: "Você conjura um Demônio de Cinzas (pág. 67)"                          },
+  { value: "65-66", description: "Você é atingido por um raio mortal, sofrendo 2d6 Dano"                },
+];
