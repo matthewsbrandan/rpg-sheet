@@ -525,6 +525,10 @@
                         v-bind:class="{ 'bg-gray-200 text-gray-600': game.books.current === './guia.pdf', 'border border-gray-200 text-gray-400': game.books.current !== './guia.pdf' }"
                         v-on:click="game.books.current = './guia.pdf'"
                       >Guia</button>
+                      <a
+                        href="./sessions"
+                        class="my-1 text-center rounded-md px-3 py-1 text-sm font-semibold shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100 border border-gray-200 text-gray-400"
+                      >Sessões</a>
                     </div>
                   </div>
                   
@@ -653,7 +657,7 @@
                       width: 624px; min-width: 624px;
                       height: 350px; min-height: 350px;
                     ">
-                      <img v-bind:src="game.maps.current" usemap="#image-map" class="absolute" style="inset: 0;"/>
+                      <img v-bind:src="game.maps.current" class="absolute" style="inset: 0;"/>
                       <span class="absolute group" style="top: 87px;left: 117px;">
                         <span class="opacity-0 group-hover:opacity-100" style="transform: tranzincX(-50%);display: block;">Costa da Serpente</span>
                         <span class="h-2 w-2 rounded-full bg-red-500 block"></span>

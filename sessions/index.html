@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="bg-zinc-950">
+<head class="m-0 p-0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RPG</title>
+  <link rel="shortcut icon" href="../icon.jpg" type="image/jpg">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Jacquard+24&display=swap" rel="stylesheet">
+  <style> input{ overflow: auto; } </style>
+</head>
+<body class="m-0 p-0 w-screen h-screen overflow-y-auto overflow-x-hidden">
+  <main class="text-gray-400 py-4 px-6 m-0 max-w-5xl mx-auto" id="app">
+    <h1 class="flex flex-col text-3xl pt-2 cursor-pointer hover:opacity-70" v-on:click="navigateTo('summary')">
+      <span class="font-semibold leading-none" style="letter-spacing: 6px; font-family: 'Jacquard 24';">SHADOWLAND</span>
+      <span class="text-[8px] leading-none text-slate-600">SHADOWLAND</span>
+    </h1>
+
+    <article class="flex flex-col text-gray-400 text-sm pt-4" id="summary" v-if="current_article === 'summary'">
+      <button
+        type="button"
+        class="flex flex-col text-xl p-1.5 mb-2.5 rounded bg-slate-800 hover:bg-slate-700"
+        v-for="article of articles"
+        v-on:click="navigateTo(article.id)"
+      >
+        <span class="font-semibold leading-none" style="letter-spacing: 4px; font-family: 'Jacquard 24';">{{ article.title }}</span>  
+        <span class="text-[8px] leading-none text-slate-600">{{ article.title }}</span>
+      </button>
+
+      <a
+        href="../"
+        class="mt-4 mb-8 w-full text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
+      >Voltar p/ Personagem</a>
+    </article>
+
+    <article class="flex flex-col text-gray-400 text-sm" id="prologue" v-if="current_article === 'prologue'">
+      <h2 class="flex flex-col text-xl p-1.5 mt-4 mb-2 rounded bg-slate-800">
+        <span class="font-semibold leading-none" style="letter-spacing: 4px; font-family: 'Jacquard 24';">Prólogo</span>  
+        <span class="text-[8px] leading-none text-slate-600">Prólogo</span>
+      </h2>
+      <p class="mb-4">
+        Este é o continente de Shadowland, ou terra das sombras.<br/>
+        Em seu inicio era coberta por trevas, um lugar totalmente inóspto para humanos, infestado de monstros, mas que, graças a guerreiros do passado que foram capazes de selar o grande abismo no coração de shadowland, separando assim o reino dos monstros do reino dos humanos, hoje pôde se forma 9 povoados(ou casas) que se espalham pelas terras, que são:
+      </p>
+      <em class="mb-6">
+        - Ulthar <br/>
+        - Frostar <br/>
+        - Norte Gélido <br/>
+        - Planícies Amarelas <br/>
+        - Urdir <br/>
+        - Nimir (Onde há o grande Castelo) <br/>
+        - Nasir (Portal, população subterranea) <br/>
+        - Arcan (Torre Arcana) <br/>
+        - Terras de Prata (Onde é localizado o Templo de Prata)
+      </em>
+      <div class="overflow-auto mx-auto rounded-md shadow-lg mb-6">
+        <div class="relative text-xs text-gray-100 " style="
+          font-family: Cinzel;
+          width: 624px; min-width: 624px;
+          height: 350px; min-height: 350px;
+        ">
+          <img src="../map.jpg" class="absolute" style="inset: 0;"/>
+          <span class="absolute group" style="top: 87px;left: 117px;">
+            <span class="opacity-100 group-hover:brightness-150" style="transform: tranzincX(-50%);display: block;">Costa da Serpente</span>
+            <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+          </span>
+          <span class="absolute group" style="top: 144px;left: 114px;">
+            <span class="opacity-100 group-hover:brightness-150" style="transform: tranzincX(-50%);display: block;">Ruínas de Ulthar</span>
+            <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+          </span>
+          <span class="absolute group" style="top: 167px;left: 173px;">
+            <span class="opacity-100 group-hover:brightness-150" style="transform: tranzincX(-50%);display: block;">Monte Horus</span>
+            <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+          </span>
+          <span class="absolute group" style="top: 213px;left: 236px;">
+            <span class="opacity-100 group-hover:brightness-150" style="transform: tranzincX(-50%);display: block;">Ruínas de Frostar</span>
+            <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+          </span>
+          <span class="absolute group" style="bottom: 71px;left: 272px;">
+            <span class="opacity-100 group-hover:brightness-150" style="transform: tranzincX(-50%);display: block;">Taverna do Lobo Cinzen</span>
+            <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+          </span>
+          <span class="absolute group" style="top: 41px;left: 286px;">
+            <span class="opacity-100 group-hover:brightness-150" style="transform: tranzincX(-50%);display: block;">Norte Gélido</span>
+            <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+          </span>
+          <span class="absolute group" style="top: 163px;left: 291px;">
+            <span class="opacity-100 group-hover:brightness-150" style="transform: tranzincX(-50%);display: block;">Cidadela de Urdir</span>
+            <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+          </span>
+          <span class="absolute group" style="bottom: 94px;left: 327px;">
+            <span class="opacity-100 group-hover:brightness-150" style="transform: tranzincX(-50%);display: block;">Castelo de Nimir</span>
+            <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+          </span>
+          <span class="absolute group" style="top: 86px;right: 78px;">
+            <span class="opacity-100 group-hover:brightness-150" style="transform: tranzincX(-50%);display: block;">Planícies Amarelas</span>
+            <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+          </span>
+          <span class="absolute group" style="top: 127px;right: 134px;">
+            <span class="opacity-100 group-hover:brightness-150" style="transform: tranzincX(-50%);display: block;">Templo de Prata</span>
+            <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+          </span>
+          <span class="absolute group flex flex-col items-end" style="top: 148px;right: 37px;">
+            <span class="opacity-100 group-hover:brightness-150" style="transform: tranzincX(25%);display: block;">Portal de Nasir</span>
+            <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+          </span>
+          <span class="absolute group flex flex-col items-end" style="bottom: 128px;right: 54px;">
+            <span class="opacity-100 group-hover:brightness-150" style="transform: tranzincX(25%); display: block;">Torre Arcana</span>
+            <span class="h-2 w-2 rounded-full bg-red-500 block"></span>
+          </span>
+        </div>
+      </div>
+      <p class="mb-4">
+        Muitos monstros ainda vagam deste lado da brecha, o que força aos povos uma vida dificil, em constante alerta, tendo que treinar seus habitantes para combater as mais diversas aberrações.
+      </p>
+      <p class="mb-4">
+        Os 9 povos possuem representantes no Castelo de Nimir, que constituem a corte real, onde tomam as principais decisões que afetam todo o continente.
+      </p>
+
+      <hr class="mt-2 mb-6 border-slate-600" />
+
+      <p class="mb-4">
+        De uns tempos para cá passou a acontecer movimentações estranhas na corte, decisões contraditórias, o que espalhou a desconfiança por todo o reino. Junto a estes acontecimentos, as ordas de monstro intensificaram seus ataques, e o que antes eram ataques isolados, totalmente irracionais e aleatórios, se tornaram ataques organizados, atingindo pontos importantes de shadowland, como centros comerciais, áreas de importação e exportação, trazendo consequências graves a todo o reino.
+      </p>
+      <p class="mb-4">
+        O exercíto de Nimir parecia nunca estar no lugar certo, e todos os povos que dependia de sua proteção ficavam cada vez arrasados, os únicos que ainda resistiam aos ataques eram o Norte Gélido e as Planícies Amarelas, por serem grandes fortalezas cercadas pelas montanhas com seus próprios exercítos.
+      </p>
+      <div class="flex gap-2">
+        <button
+          type="button"
+          v-on:click="navigateTo('summary')"
+          class="mt-4 mb-8 w-full text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
+        >< Sumário</button>
+        <button
+          type="button"
+          v-on:click="navigateTo('the-nimirian')"
+          class="mt-4 mb-8 w-full text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
+        >O Nimiriano ></button>
+      </div>
+    </article>
+
+    <article class="flex flex-col text-gray-400 text-sm" id="the-nimirian" v-if="current_article === 'the-nimirian'">
+      <h2 class="flex flex-col text-xl p-1.5 mt-4 mb-2 rounded bg-slate-800">
+        <span class="font-semibold leading-none" style="letter-spacing: 4px; font-family: 'Jacquard 24';">O Nimiriano</span>  
+        <span class="text-[8px] leading-none text-slate-600">O Nimiriano</span>
+      </h2>
+
+      <p class="mb-4">
+        Um certo dia, na Taverna do Lobo Cinzen, <b>Cindar</b>, um lenhador nimiriano, ouviu boatos de um possível ataque a Ulthar. Ele já não confiava mais em seu próprio povo, por isso decidiu mandar uma mensagem de socorro para as outras casas avisando sobre o ataque, e foi em direção a Ulthar para tentar impedir mais uma catástrofe de acontecer.
+      </p>
+      <p class="mb-4">
+        Com toda a tensão que rondava o reino, e com a desconfiaça no povo de nimir, a mensagem foi ignorada e apenas 3 pessoas atenderam o chamado. <b>Gunna</b> do Norte Gélido e <b>Mazzur</b> e <b>Akesha</b> das Planícies Amarelas.<br/>
+        Foram enviados, não como uma resposta ao pedido de socorro, mas para conseguir mais informações sobre o que estava acontecendo em outras partes do reino. Quem era esse nimiriano? Quais as motivações para mandar uma mensagem dessa para as outras casas e não para sua própria?<br>
+        E se o ataque, realmente acontecesse, qual seria a desculpa do exercito de Nimir para não reagir?
+      </p>
+      
+      <p class="mb-4">
+        Quando se encontraram houve um conflito com <b>Cindar</b>, revoltado com as casas por terem ignorado seu chamado, e os 3 que atenderam, questionando a integridade do lenhador. Finalmente decidiram partir para a cidade de Ulthar, mesmo sabendo que se tratava de uma missão suicida, para tentar evacuar a cidade e salvar quem pudessem.
+      </p>
+      <p class="mb-4">
+        Ao chegar lá, tudo estava em ruínas, não havia ninguém para salvar. Algumas casas ainda estavam em chamas, corpos carbonizados por todo lado, animais, mortos, casas derrubadas, uma imagem terrível de destruição.
+      </p>
+      
+      <img class="max-w-full mx-auto rounded-md shadow-lg mb-6" src="https://img.freepik.com/fotos-premium/ataque-de-guerreiros-medievais-na-vila-da-cidade-incendio-criminoso-de-casas-e-predios-saque-da-cidade-tudo-esta-pegando-fogo-e-fumaca_86390-9813.jpg?size=626&ext=jpg"/>
+      
+      <p class="mb-4">
+        Entraram na cidade para procurar se ainda restava algo, pelo menos um sobrevivente, mas a única coisa diferente que viram era uma casa, que ao contrário das demais, em chamas, essa estava apenas revirada, mas sem nenhum sinal de fogo.
+      </p>
+      
+      <p class="mb-4">
+        Entraram na casa para procurar qualquer pista que pudessem levá-los à alguma direção e encontraram uma carta <em>criptografada</em> no sótom, com o carimbo do sinete real. Ainda não sabiam seu significado, mas a simples presença dela ali já insinuava o envolvimento do castelo nimiriano em mais uma tragédia do reino.
+      </p>
+    
+      <hr class="mt-2 mb-6 border-slate-600" />
+
+      <p class="mb-4">
+        Continuaram na casa procurando alguma outra evidência até que ouviram vozes. Era o que é chamado de <em>carniceiros</em>, uma segunda orda de um exercíto que vem para matar os sobriventes, roubar itens de valor, e pegar espólios da guerra.
+      </p>
+      <p class="mb-4">
+        Se esconderam na casa e começaram a espiar os carniceiros, que só depois perceberam que se tratavam de <b>Grimes</b>(pequenos humanoides, filhos de skandir, perversos que espreitam suas vítimas de longe, utilizando dardos e flechas envenenadas). Mais uma prova de que os monstros estavam fazendo ataques de forma coordenada, com objetivos específicos; objetivos ainda obscuros para eles.
+      </p>
+      <p class="mb-4">
+        A unica informação relevante que os 4 guerreiros conseguiram ouvir, foi sobre um sacrificio que aconteceria no Monte Horus, mas ao tentar sair do lugar furtivamente, foram notados por eles, 7 Grimes.
+      </p>
+      <p class="mb-4">
+        <b>Mazzur</b> protegeu eles dos dardos e flechas do inimigo com seu grande escudo, enquanto <b>Gunna</b> tentava acertá-los com sua flecha.<br/>
+        Eles eram muito difíceis de acertar, por seu tamanho e agilidade, mas impacientemente, <b>Cindar</b> decidiu saltar para cima deles com seu machado de combate, e exterminou os <b>Grimes</b> sem que sobrasse um para contar história.
+      </p>
+      <p class="mb-4">
+        Após o confronto, o grupo começou a ganhar confiança um no outro, quebrando grande parte do atrito do primeiro encontro. Sem muita informação porém, o único caminho que lhes restou foi o sacrificio no <b>Monte Horus</b>.
+      </p>
+    
+      
+      <div class="flex gap-2">
+        <button
+          type="button"
+          v-on:click="navigateTo('prologue')"
+          class="mt-4 mb-8 w-full text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
+        >< Prólogo</button>
+        <button
+          type="button"
+          v-on:click="navigateTo('mount-horus')"
+          class="mt-4 mb-8 w-full text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
+        >Monte Horus ></button>
+      </div>
+    </article>
+
+    <article class="flex flex-col text-gray-400 text-sm" id="mount-horus" v-if="current_article === 'mount-horus'">
+      <h2 class="flex flex-col text-xl p-1.5 mt-4 mb-2 rounded bg-slate-800">
+        <span class="font-semibold leading-none" style="letter-spacing: 4px; font-family: 'Jacquard 24';">Monte Horus</span>  
+        <span class="text-[8px] leading-none text-slate-600">Monte Horus</span>
+      </h2>
+
+      <p class="mb-4">
+        Revoltados com os acontecimentos, frustrados por não terem chegado a tempo de salvar ninguém os quatros decidiram se unir e buscar juntos resposta.<br/>
+        Foram para o monte de Horus, seguindo a pista do sacrifio e ao chegar ao cume da montanha viram um homem acorretado, com aparência raquitica. Pelos fiápos de suas roupas conseguiram identificar que provavelmente se tratava de um morador de Ulthar, a cídade que acabaram de ver em ruínas.
+      </p>
+      <p class="mb-4">
+        <b>Akesha</b> rapidamente soltou as corrente que prendiam o homem, e começou a aplicar magias de cura para tentar salvar a vida do homem, mas lentamente viu a vida se esvaindo de seus olhas. Ela deu um grito de frustação que ecoou pela montanha; mais uma vez, não haviam conseguido salvar ninguém.
+      </p>
+      <p class="mb-4">
+        Enquanto saiam da montanha uma serpente venenosa atacou-os, e feriu <b>Cindar</b>. Conseguiram matá-la, mas precisavam sair dali o mais rápido possível para poder tratar a ferida em um lugar seguro.
+      </p>
+      
+      <img class="max-w-full mx-auto rounded-md shadow-lg mb-6" src="https://img.freepik.com/fotos-premium/fantastica-paisagem-epica-de-inverno-das-montanhas-natureza-congelada-mystic-valley-gaming-rpg-background_636456-335.jpg?size=626&ext=jpg
+      ___"/>
+
+      <p class="mb-4">
+        Tiveram que andar por horas, se afastando daquele terrível monte, passando novamente pelas ruínas de uma cidade, agora em cinzas, até chegar a uma casa, próxima ao rio conhecido como Costa da Serpente.
+      </p>
+      <p class="mb-4">
+        <b>Gunna</b> e <b>Mazzur</b> fizeram a varredura na casa para ver se era um lugar seguro, e após terem certeza disso, os outros também entraram e <b>Akesha</b> começou a tratar dos ferimentos do grupo.
+      </p>
+
+      <div class="flex gap-2">
+        <button
+          type="button"
+          v-on:click="navigateTo('the-nimirian')"
+          class="mt-4 mb-8 w-full text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
+        >< O Nimiriano</button>
+        <button
+          type="button"
+          v-on:click="navigateTo('the-soldier-of-the-plain')"
+          class="mt-4 mb-8 w-full text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
+        >O Soldado da Planície ></button>
+      </div>
+    </article>
+
+    <article class="flex flex-col text-gray-400 text-sm" id="the-soldier-of-the-plain" v-if="current_article === 'the-soldier-of-the-plain'">
+      <h2 class="flex flex-col text-xl p-1.5 mt-4 mb-2 rounded bg-slate-800">
+        <span class="font-semibold leading-none" style="letter-spacing: 4px; font-family: 'Jacquard 24';">O Soldado da Planície</span>
+        <span class="text-[8px] leading-none text-slate-600">O Soldado da Planície</span>
+      </h2>
+      <p class="mb-4">
+        No dia seguinte acordaram muito cedo. Nenhum dos 4 conseguiu dormir muito bem com todas aquelas mortes ameaçando encontrá-los em seus sonhos. Andaram um pouco pelos arredores próximos a cidade em ruínas buscando sinais de onde o inimigo poderia ter vindo o que levou-os a uma floresta densa e sombria.
+      </p>
+      <p class="mb-4">
+        Atravessando essa floresta, <b>Mazzur</b> lutou contra um grande Lobo e foi gravemente ferido, mas ainda assim conseguiu sair vitorioso dessa disputa.
+      </p>
+      <p class="mb-4">
+        Alguns minutos de caminhada após o confronto com o lobo, encontraram o esconderijo dos <b>Grimes</b>. Uma casa cheia daqueles pequenos humanoides perversos.
+      </p>
+      
+      <img class="max-w-full mx-auto rounded-md shadow-lg mb-6" src="https://img.freepik.com/fotos-gratis/ansiedade-induzida-pela-floresta-escura_23-2150981903.jpg?size=626&ext=jpg&ga=GA1.1.672697106.1714176000&semt=ais"/>
+      
+      <p class="mb-4">
+        <b>Gunna</b> tentou conjurar um feitiço de invisibilidade para entrar furtivamente na casa e procurar informações, mas estava muito nervosa em se colocar numa situação daquela sozinha, e não conseguiu. O soldado da planície por outro lado, já revoltado com as bestas das montanhas e das floresta que tinham encontrado, e com aqueles carniceiros que atacaram a cidade, usou toda sua raiva e conseguiu conjurar o feitiço de invisibilidade, e entrou sozinho na casa infestada de Grimes.
+      </p>
+
+      <p class="mb-4">
+        Ele conseguiu chegar até o porão da casa, onde encontrou mais cartas da corte real, que ligava Nimir ao ataque de Ulthar, mas acabou perdendo a concentração e o feitiço foi quebrado. Acabando o tempo que tinham combinado, os seus companheiros perceberam que estava em apuros e conseguiram ajudar à tirá-lo de lá fugir para a floresta na direção oposta a do lobo que encontraram anteriormente.
+      </p>
+
+      <div class="flex gap-2">
+        <button
+          type="button"
+          v-on:click="navigateTo('mount-horus')"
+          class="mt-4 mb-8 w-full text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
+        >< Monte Horus</button>
+        <button
+          type="button"
+          v-on:click="navigateTo('wilderness-walkers')"
+          class="mt-4 mb-8 w-full text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
+        >Caminhantes do Ermo ></button>
+      </div>
+    </article>
+
+    <article class="flex flex-col text-gray-400 text-sm" id="wilderness-walkers" v-if="current_article === 'wilderness-walkers'">
+      <h2 class="flex flex-col text-xl p-1.5 mt-4 mb-2 rounded bg-slate-800">
+        <span class="font-semibold leading-none" style="letter-spacing: 4px; font-family: 'Jacquard 24';">Caminhantes do Ermo</span>
+        <span class="text-[8px] leading-none text-slate-600">Caminhantes do Ermo</span>
+      </h2>
+      <p class="mb-4">
+        Depois de 2 dias de frustração, travando lutas dificil em que sempre um deles saia gravemente ferido, onde nada que tentavam fazer dava totalmente certo, encontraram um alívio em sua jornada. Graças ao aviso do lenhador, os <b>Caminhantes do Ermo</b>, um grupo de nomades que vagam pelas terras como caçadores de recompensas, conseguiram evacuar várias familias, não só de <b>Ulthar</b>, mas também de outras terras que também foram atacadas, <b>Urdir</b> e <b>Frostar</b>.
+      </p>
+      <p class="mb-4">
+        Compartilharam suas informações com os caminhantes, que também estavam notando as mudanças no reino, e que temiam por uma guerra civil entre as casas. Ajudaram a tratar os feridos e trocaram conhecimentos entre si, de combate, sobrevivencia, e até feitiços de proteção.
+      </p>
+      
+      <img class="max-w-full mx-auto rounded-md shadow-lg mb-6" src="https://img.freepik.com/fotos-premium/portal-magico-de-fantasia-portal-na-floresta-elfica-para-outro-mundo-arte-digital-ilustracao-pintura-hiper-realista-gerar-ai_740533-4308.jpg"/>
+
+      <p class="mb-4">
+        Preocupados com a proximidade do esconderijo dos Grimes e dos sobreviventes, <b>Friga</b> a lider dos caminhantes começou a arquitetar um ataque com a ajuda dos quatro guerreiros ao esconderijo dos humanoides.
+      </p>
+      <p class="mb-4">
+        Um dia antes do dia do ataque, um grupo de caminhantes trouxe outros sobreviventes para o refúgio da floresta; 4 sacerdotes do templo de prata, que mudaram todos os planos que tinham até então.
+      </p>
+
+      <div class="flex gap-2">
+        <button
+          type="button"
+          v-on:click="navigateTo('the-soldier-of-the-plain')"
+          class="mt-4 mb-8 w-full text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
+        >< O Soldado da Planície</button>
+        <button
+          type="button"
+          v-on:click="navigateTo('the-prophecy')"
+          class="mt-4 mb-8 w-full text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
+        >A Profecia ></button>
+      </div>
+    </article>
+
+    <article class="flex flex-col text-gray-400 text-sm" id="the-prophecy" v-if="current_article === 'the-prophecy'">
+      <h2 class="flex flex-col text-xl p-1.5 mt-4 mb-2 rounded bg-slate-800">
+        <span class="font-semibold leading-none" style="letter-spacing: 4px; font-family: 'Jacquard 24';">A Profecia</span>
+        <span class="text-[8px] leading-none text-slate-600">A Profecia</span>
+      </h2>
+
+      <em class="text-center border-l-2 border-slate-700 mt-2 mb-4">
+        "Quando o Corvo Prateado se voltar para a dama das trevas<br/>
+        E o rio de fogo incendiar o norte, o selo do abismo será quebrado<br/>
+        E o Emissário da Escuridão finalmente caminhará entre os vivos"
+      </em>
+
+      <p class="mb-4">
+        Era a única coisa que saia da boca dos sacerdotes. Eles repetiam isso continuamente. Estavam com a aparência arrasada, sujos de sangue, deles mesmo, e de outras pessoas.
+      </p>
+      <p class="mb-4">
+       Eram sacerdotes do templo de prata, o maior templo de Shadowland, que cultuava a deusa de prata, representação da Lua. Atacar um templo tão importante quanto esse é uma declaração de guerra, as casas não vão ficar paradas. E o que preocupa a todos é terem encontrado apenas 4 sobreviventes. O que será que aconteceu no templo?
+      </p>
+      <p class="mb-4">
+        Mesmo contra a vontade deles, <b>Friga</b> decide dividir a equipe, enviando os quatro guerreiros para investigar o acontecimento do templo, e mantendo os planos de ataque com sua equipe mais os sobreviventes que tinham condição de lutar. Alguns dos sobreviventes que podiam lutar ficaram na floresta para proteger os demais, enquanto as duas equipes saiam em direções opostas. Um pequeno exercíto de mais o menos 35 guerreiros, contra uma casa infestada de monstros, e 4 guerreiros, indo em direção ao total desconhecido, de onde, sabem que apenas 4 sobreviventes escaparam nesta direção.
+      </p>
+      
+      <img class="max-w-full mx-auto rounded-md shadow-lg mb-6" src="https://media.istockphoto.com/id/506038966/it/foto/dettaglio-di-antica-architettura-maya-di-uxmal-sito-archeologico.jpg?s=1024x1024&w=is&k=20&c=of1nhTyPEpMXzv4GpVI0YJlrCaNG2bZLwk72w9uFmVo="/>
+      
+      <p class="mb-4">
+        Ao chegarem ao templo, ele estava em modo de conteção. Totalmente trancado, e sem sinal algum de vida, apenas rastros de uma guerra por todos os lados.
+      </p>
+      <p class="mb-4">
+        <b>Cindar</b> o lenhador com seus enormes braços, consegue abrir a porta do templo com muita dificuldade, e se deparam com um corredor grande, com vários corpos estirados pelo chão, de criaturas horrendas, feiticeiros, e também sacerdotes e magos do templo.<br/>
+        O chão com blocos quadrado de pedra cortados precisamente, e uma linha de chamas azuis de cada lado, que inves de emanar calor parecia roubar, tornando o ar gélido.
+      </p>
+      <p class="mb-4">
+        Foram andando cautelosamente, mas mesmo assim acabaram acionando algumas armadilhas que dispararam dardos contra eles.
+      </p>
+      <p class="mb-4">
+        Ao chegarem ao fim do corredor de chamas azuis, chegaram a outro onde as paredes começaram a se fechar ao seu redor. Todos correram deseperados, alguns com dificuldades por causa de machucados e também o próprio desespero do momento, mas mesmo com a dificuldade, chegaram ao fim do corredor, onde finalmente encontraram um lugar que parecia não haver armadilhas.
+      </p>
+      <p class="mb-4">
+        Estavam de frente agora ao <b>Salão do Conhecimento</b>.
+      </p>
+      <div class="flex gap-2">
+        <button
+          type="button"
+          v-on:click="navigateTo('wilderness-walkers')"
+          class="mt-4 mb-8 w-full text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
+        >< Caminhantes do Ermo</button>
+        <button
+          type="button"
+          v-on:click="navigateTo('hall-of-knowledge')"
+          class="mt-4 mb-8 w-full text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
+        >Salão do Conhecimento ></button>
+      </div>
+    </article>
+
+    <article class="flex flex-col text-gray-400 text-sm" id="hall-of-knowledge" v-if="current_article === 'hall-of-knowledge'">
+      <h2 class="flex flex-col text-xl p-1.5 mt-4 mb-2 rounded bg-slate-800">
+        <span class="font-semibold leading-none" style="letter-spacing: 4px; font-family: 'Jacquard 24';">Salão do Conhecimento</span>
+        <span class="text-[8px] leading-none text-slate-600">Salão do Conhecimento</span>
+      </h2>
+      <p class="mb-4">... em breve</p>
+      <img class="max-w-full mx-auto rounded-md shadow-lg mb-6" src="https://t.ctcdn.com.br/IHaHPCrEmb_ndk8WhIVGjBQUXNA=/1024x576/smart/i475957.jpeg"/>
+      <div class="flex gap-2">
+        <button
+          type="button"
+          v-on:click="navigateTo('the-prophecy')"
+          class="mt-4 mb-8 w-full text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
+        >< A Profecia</button>
+      </div>
+    </article>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        articles: [
+          { id: 'prologue',                 title: 'Prólogo'               },
+          { id: 'the-nimirian',             title: 'O Nimiriano'           },
+          { id: 'mount-horus',              title: 'Monte Horus'           },
+          { id: 'the-soldier-of-the-plain', title: 'O Soldado da Planície' },
+          { id: 'wilderness-walkers',       title: 'Caminhantes do Ermo'   },
+          { id: 'the-prophecy',             title: 'A Profecia'            },
+          { id: 'hall-of-knowledge',        title: 'Salão do Conhecimento' },
+        ],
+        current_article: 'summary'
+      },
+      methods: {
+        navigateTo: function(to){
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          this.current_article = to;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
