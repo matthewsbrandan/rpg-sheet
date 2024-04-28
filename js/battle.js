@@ -1,4 +1,6 @@
-const storageBattle = 'rpg@battle'
+const storageWarriors = 'rpg@warriors'
+const availableModals = ['attributes', 'books', 'warriors'];
+let warriorsPayload = undefined;
 
 const getMainPlayer = () => {
   const main = getPlayer();
@@ -11,6 +13,15 @@ const getMainPlayer = () => {
 
   return parsed;
 }
+const getWarriors = () => {
+  const warriors = localStorage.getItem(storageWarriors);
+  try{ return JSON.parse(warriors); }
+  catch(e){ return undefined; }
+}
+const setWarriors = (warriors) => {
+  warriorsPayload = JSON.stringify(warriors)
+  localStorage.setItem(storageWarriors, warriorsPayload)
+}
 
 const app = new Vue({
   el: '#app',
@@ -21,6 +32,7 @@ const app = new Vue({
       modal: {
         is_open_attributes: false,
         is_open_books: false,
+        is_open_warriors: false
       },
       magicians,
       malisons,
@@ -49,6 +61,7 @@ const app = new Vue({
         })
       },
       books: { current: 'grimorios' },
+      json_warriors: ''
     }
   },
   mounted() {
@@ -59,73 +72,70 @@ const app = new Vue({
       this.warriorConstructor(main, 'main')
     );
     
-    this.warriors.push(...[
-      this.warriorConstructor({
-        name: 'Mago Abbados',
-        attr: { ataque: 8, defesa: 9, sabedoria: 15 },
-        progress_attr: { vida: 14, modificador_vida: '' },
-        note: ''
-      }, 'npc'),
-      this.warriorConstructor({
-        name: 'Varogue I',
-        attr: { defesa: 13, ataque: 15 },
-        progress_attr: { vida: 24, modificador_vida: '' },
-        note: 'Dano 1d6 + 2'
-      }, 'npc'),
-      this.warriorConstructor({
-        name: 'Varogue II',
-        attr: { defesa: 13, ataque: 15 },
-        progress_attr: { vida: 24, modificador_vida: '' },
-        note: 'Dano 1d6 + 2'
-      }, 'npc'),
-      this.warriorConstructor({
-        name: 'Nebelor',
-        attr: { defesa: 12, ataque: 13 },
-        progress_attr: { vida: 18, modificador_vida: '' },
-        note: ''
-      }, 'npc'),
-      this.warriorConstructor({
-        name: 'Serpente Gigante',
-        attr: { defesa: 15, ataque: 16 },
-        progress_attr: { vida: 28, modificador_vida: '' },
-        note: ''
-      }, 'npc'),
-      this.warriorConstructor({
-        name: 'Feit. Bhur',
-        attr: { defesa: 13, ataque: 6, sabedoria: 15 },
-        progress_attr: { vida: 13, modificador_vida: '' },
-        note: ''
-      }, 'npc'),
-      this.warriorConstructor({
-        name: 'Feit. Belemor',
-        attr: { defesa: 9, ataque: 12, sabedoria: 15 },
-        progress_attr: { vida: 9, modificador_vida: '' },
-        note: ''
-      }, 'npc'),
-    ])
+    this.warriors.push(...(getWarriors() ?? []).map(
+      (warrior) => this.warriorConstructor(warrior, 'npc')
+    ));
 
-    console.log({
-      warriors: this.warriors, main
-    })
+    // this.warriors.push(...[
+    //   this.warriorConstructor({
+    //     name: 'Mago Abbados',
+    //     attr: { ataque: 8, defesa: 9, sabedoria: 15 },
+    //     progress_attr: { vida: 14, modificador_vida: '' },
+    //     note: ''
+    //   }, 'npc'),
+    //   this.warriorConstructor({
+    //     name: 'Varogue I',
+    //     attr: { defesa: 13, ataque: 15 },
+    //     progress_attr: { vida: 24, modificador_vida: '' },
+    //     note: 'Dano 1d6 + 2'
+    //   }, 'npc'),
+    //   this.warriorConstructor({
+    //     name: 'Varogue II',
+    //     attr: { defesa: 13, ataque: 15 },
+    //     progress_attr: { vida: 24, modificador_vida: '' },
+    //     note: 'Dano 1d6 + 2'
+    //   }, 'npc'),
+    //   this.warriorConstructor({
+    //     name: 'Nebelor',
+    //     attr: { defesa: 12, ataque: 13 },
+    //     progress_attr: { vida: 18, modificador_vida: '' },
+    //     note: '* Precisa ser controlado por um feiticeiro\n\n1d4 para decidir o tipo de ataque\n\n#AT1 1d6\n\n#AT2 toque agonizante(1d6 efeito)\n1-3 pele chamuscada (1d6)\n4-5 pele escarificada (2d6)\n6 pele esfolada 3d6'
+    //   }, 'npc'),
+    //   this.warriorConstructor({
+    //     name: 'Serpente Gigante',
+    //     attr: { defesa: 15, ataque: 16 },
+    //     progress_attr: { vida: 28, modificador_vida: '' },
+    //     note: '* Teste de agi. do inimigo p/ atacar despercebido (dif: bom)\n* 1d4 para saber o tipo de ataque\n\n#AT1 Picada: 2d6 + veneno(5 pontos depois de 3 rodadas se não curar)\n\n#AT2 Prender: o inimigo perde a rodada tendo que fazer um teste de força contra o dela, se perder, na próxima sofre o #AT1. Neste ataque os ataques de surpresa tem vantagem.'
+    //   }, 'npc'),
+    //   this.warriorConstructor({
+    //     name: 'Feit. Bhur',
+    //     attr: { defesa: 13, ataque: 6, sabedoria: 15 },
+    //     progress_attr: { vida: 13, modificador_vida: '' },
+    //     note: ''
+    //   }, 'npc'),
+    //   this.warriorConstructor({
+    //     name: 'Feit. Belemor',
+    //     attr: { defesa: 9, ataque: 12, sabedoria: 15 },
+    //     progress_attr: { vida: 9, modificador_vida: '' },
+    //     note: ''
+    //   }, 'npc'),
+    // ])
     //#endregion LOAD WARRIORS
 
-    // const recursiveAutosave = () => {
-    //   console.log('[verify-auto-save]');
-    //   if(this.verifyPayloadAndSave()){
-    //     this.game.is_auto_saved = true;
+    const recursiveAutosave = () => {
+      console.log('[verify-auto-save]');
+      if(document.visibilityState === 'visible' && this.verifyPayloadAndSave()){
+        this.game.is_auto_saved = true;
 
-    //     setTimeout(() => this.game.is_auto_saved = false, 2.5 * 1000);
-    //   }
+        setTimeout(() => this.game.is_auto_saved = false, 2.5 * 1000);
+      }
 
-    //   setTimeout(recursiveAutosave, 5 * 1000)
-    // }
-    // setTimeout(recursiveAutosave, 5 * 1000);
+      setTimeout(recursiveAutosave, 5 * 1000)
+    }
+    setTimeout(recursiveAutosave, 5 * 1000);
   },
   methods: {
-    /**
-     * type = 'main' | 'player' | 'npc'
-     * 
-     */
+    /** type = 'main' | 'player' | 'npc' */
     warriorConstructor: function (warrior, type){
       let parsed = {}
       if(type === 'npc'){
@@ -147,8 +157,8 @@ const app = new Vue({
           },
           type,
           calculeds: {
-            life: [100, '10/10'],
-            sanity: [100, '100/100']
+            life: [0, '-/-', 0],
+            sanity: [0, '-/-', 0]
           },
           note: warrior.note ?? ''
         };
@@ -171,8 +181,8 @@ const app = new Vue({
           modificador_vida: warrior.atributos.modificador_vida,
         },
         calculeds: {
-          life: [100, '10/10'],
-          sanity: [100, '100/100']
+          life: [0, '-/-', 0],
+          sanity: [0, '-/-', 0]
         },
         type,
         note: warrior.notas
@@ -189,6 +199,10 @@ const app = new Vue({
         return;
       }
 
+      if(modal === 'warriors') this.game.json_warriors = JSON.stringify(
+        this.warriors.filter((war) => war.type !== 'main'), undefined, 2
+      );
+      
       this.game.modal[`is_open_${modal}`] = true;
     },
     closeModal: function (modal){
@@ -199,48 +213,82 @@ const app = new Vue({
 
       this.game.modal[`is_open_${modal}`] = false;
     },
-    onDetails: function(modal, value){
-      if(modal === 'abilities'){
-        const findedAbility = this.game.abilities.find(({ name }) => name === value)
-        if(!findedAbility){
-          alert('Habilidade não encontrada');
-          return;
-        }
-
-        this.game.details.title = findedAbility.name;
-        this.game.details.description = findedAbility.description;
-      }else
-      if(modal === 'arms'){
-        const findedArm = this.game.arms.find(({ name }) => name === value)
-        if(!findedArm){
-          alert('Arma não encontrada');
-          return;
-        }
-
-        this.game.details.title = `${findedArm.name} | ${findedArm.value}`;
-        this.game.details.description = findedArm.description;
+    openTestAttribute: function (attr, warrior){
+      let value = '';
+      if(attr === 'sanidade'){
+        this.calculateDamages('modificador_sanidade', warrior)
+        value = Number(warrior.calculeds.sanity[2]) ?? 0;
       }
-
-      this.openModal('details');
-    },
-    openTestAttribute: function (attr){
-      let value = Number(this.atributos[attr] ?? 0);
+      else value = Number(warrior.attr[attr] ?? 0);
       
       if(isNaN(value)) value = '';
-      else if(!['sanidade', 'vida'].includes(attr) && this.atributos[`modificador_${attr}`]){
-        const modifier = Number(this.atributos[`modificador_${attr}`]);
-        if(!isNaN(modifier)) value+=modifier;
-      }
-
-      this.game.test_attribute.max = value;          
+      this.game.test_attribute.max = value;
       this.game.test_attribute.base = attr === 'sanidade' ? 100 : 20
 
       this.openModal('attributes');
     },
+    updateWarriors: function (){
+      let newWarriors = []
+      try{
+        newWarriors = JSON.parse(this.game.json_warriors ?? '[]').map(
+          (war) => this.warriorConstructor(war, 'npc')
+        );
+      }catch(e){
+        console.error(e);
+        alert('Preenchimento inválido');
+        return;
+      }
+
+      this.warriors = [
+        ...this.warriors.filter(war => war.type !== 'npc'),
+        ...newWarriors
+      ];
+
+      this.closeModal('warriors');
+    },
     save: function (){
-      
+      const npcWarriors = [];
+      this.warriors.forEach(warrior => {
+        if(warrior.type === 'main'){
+          const main = getPlayer();
+
+          if(main) setPlayer({
+            ...main,
+            atributos: {
+              ...main.atributos,
+              defesa: warrior.attr.defesa - Number(main.atributos?.modificador_defesa ?? 0),
+              forca: warrior.attr.forca - Number(main.atributos?.modificador_forca ?? 0),
+              agilidade: warrior.attr.agilidade - Number(main.atributos?.modificador_agilidade ?? 0),
+              saude: warrior.attr.saude - Number(main.atributos?.modificador_saude ?? 0),
+              inteligencia: warrior.attr.inteligencia - Number(main.atributos?.modificador_inteligencia ?? 0),
+              sabedoria: warrior.attr.sabedoria - Number(main.atributos?.modificador_sabedoria ?? 0),
+              personalidade: warrior.attr.personalidade - Number(main.atributos?.modificador_personalidade ?? 0),
+              sanidade: warrior.progress_attr.sanidade,
+              modificador_sanidade: warrior.progress_attr.modificador_sanidade,
+              vida: warrior.progress_attr.vida,
+              modificador_vida: warrior.progress_attr.modificador_vida
+            },
+            notas: warrior.note
+          })
+        }
+        else if(warrior.type === 'player') console.error('[ainda-não-há-tratamento-para-multiplos-players-em-batalha]');
+        else npcWarriors.push(warrior);
+      })
+
+      setWarriors(npcWarriors);
     },
     verifyPayloadAndSave: function (){
+      const storagedWarriors = [];
+      const main = getMainPlayer();
+      if(main) storagedWarriors.push(
+        this.warriorConstructor(main, 'main')
+      );
+      storagedWarriors.push(...getWarriors() ?? []);
+
+      if(JSON.stringify(storagedWarriors) === JSON.stringify(this.warriors)) return false;
+
+      this.save();
+
       return true;
     },
     itsBetween: function (curr, range){
@@ -283,7 +331,7 @@ const app = new Vue({
         }
       }
 
-      warrior.calculeds[refs[modifier].calculateds] = [percent,`${curr ?? '-'}/${total}`]
+      warrior.calculeds[refs[modifier].calculateds] = [percent,`${curr ?? '-'}/${total}`, curr]
     },
     calculateStrOperations: function (initialValue, strOperation){
       let numbers = [];
@@ -300,70 +348,6 @@ const app = new Vue({
       }
 
       return result;
-    },
-    downloadCharacter: function (){
-      const player = encodeURIComponent(JSON.stringify(getPlayer()));
-      window.open(`https://api.whatsapp.com/send?text=${player}`, '_blank');
-    },
-    selectCharacter: function (player){
-      if(player && this.bio.player === player) return;
-
-      this.save();
-
-      let selectedPlayer = player ? getPlayer(player) : undefined;
-      const { bio, atributos, itens, notas } = playerConstructor(selectedPlayer);
-
-      this.bio = bio;
-      this.atributos = atributos;
-      this.itens = itens;
-      this.notas = notas;
-
-      this.calculateDamages('modificador_vida');
-      this.calculateDamages('modificador_sanidade');
-
-      this.closeModal('alternate');
-    },
-    deleteCharacter: function (player){
-      if(!window.confirm('Tem certeza que deseja excluir esse personagem?')) return;
-
-      const all = getAllPlayers();
-      const allPlayers = all.filter(p => p !== player);
-      setAllPlayers(allPlayers);
-      localStorage.removeItem(`${storageKey}:${player}`);
-
-      this.game.allPlayers = allPlayers;
-    },
-    importChar: function (){
-      if(!this.game.import){
-        alert('É obrigatório preencher o campo de importação');
-        return;
-      }
-
-      try{
-        const importObject = JSON.parse(this.game.import);
-
-        if(!importObject.bio || !importObject.atributos || !importObject.itens){
-          alert('Importação inválida');
-          return;
-        }
-        
-        this.save();
-
-        const { bio, atributos, itens, notas } = playerConstructor(importObject);
-
-        this.bio = bio;
-        this.atributos = atributos;
-        this.itens = itens;
-        this.notas = notas;
-
-        this.calculateDamages('modificador_vida');
-        this.calculateDamages('modificador_sanidade');
-
-        this.closeModal('alternate');
-      }catch(e){
-        alert('Não foi possível importar')
-        return;
-      }
     }
   }
 });

@@ -16,8 +16,8 @@ const app = new Vue({
         is_open_details: false
       },
       calculeds: {
-        sanity: [0, '-/-'],
-        life: [0, '-/-']
+        sanity: [0, '-/-', 0],
+        life: [0, '-/-', 0]
       },
       abilities,
       arms,
@@ -117,11 +117,15 @@ const app = new Vue({
     openTestAttribute: function (attr){
       let value = Number(this.atributos[attr] ?? 0);
       
-      if(isNaN(value)) value = '';
-      else if(!['sanidade', 'vida'].includes(attr) && this.atributos[`modificador_${attr}`]){
+      if(attr === 'sanidade'){
+        this.calculateDamages('modificador_sanidade')
+        value = Number(this.game.calculeds.sanity[2]) ?? 0;
+      }else if(attr !== 'vida' && this.atributos[`modificador_${attr}`]){
         const modifier = Number(this.atributos[`modificador_${attr}`]);
         if(!isNaN(modifier)) value+=modifier;
       }
+
+      if(isNaN(value)) value = '';
 
       this.game.test_attribute.max = value;          
       this.game.test_attribute.base = attr === 'sanidade' ? 100 : 20
@@ -238,7 +242,7 @@ const app = new Vue({
         }
       }
 
-      this.game.calculeds[refs[modifier].calculateds] = [percent,`${curr ?? '-'}/${total}`]
+      this.game.calculeds[refs[modifier].calculateds] = [percent,`${curr ?? '-'}/${total}`, curr]
     },
     calculateStrOperations: function (initialValue, strOperation){
       let numbers = [];

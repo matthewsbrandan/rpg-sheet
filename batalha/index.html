@@ -24,44 +24,20 @@
       <div v-for="[index, warrior] of warriors.entries()" :key="warrior.name">
         <div class="bg-zinc-900 border-b border-zinc-950 rounded-t-md">
           <h3 class="text-sm text-center font-semibold px-1 py-1">{{ warrior.name }}</h3>
-          <div class="bg-zinc-800 relative" v-if="warrior.progress_attr.sanidade !== undefined">
-            <span class="text-[9px] absolute text-white inset-0 text-center leading-none">{{ warrior.calculeds.sanity[1] }}</span>
-            <div class="bg-blue-500 h-2.5" v-bind:style="{ width: `${warrior.calculeds.sanity[0]}%` }"></div>
-          </div>
           <div class="bg-zinc-800 relative" v-if="warrior.progress_attr.vida !== undefined">
             <span class="text-[9px] absolute text-white inset-0 text-center leading-none">{{ warrior.calculeds.life[1] }}</span>
             <div class="bg-red-500 h-2.5" v-bind:style="{ width: `${warrior.calculeds.life[0]}%` }"></div>
           </div>
+          <div class="bg-zinc-800 relative" v-if="warrior.progress_attr.sanidade !== undefined">
+            <span class="text-[9px] absolute text-white inset-0 text-center leading-none">{{ warrior.calculeds.sanity[1] }}</span>
+            <div class="bg-blue-500 h-2.5" v-bind:style="{ width: `${warrior.calculeds.sanity[0]}%` }"></div>
+          </div>
         </div>
         <div>
-          <div class="border-y border-zinc-950"  v-if="warrior.progress_attr.sanidade !== undefined">
-            <div class="grid grid-cols-2 border-zinc-950 border-b">
-              <!-- v-on:click="openTestAttribute('sanidade')" -->
-              <div
-                class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
-              >Sanidade</div>
-              <div class="flex shadow-sm ring-2 ring-inset ring-zinc-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-                <input
-                  type="number"
-                  class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                  v-model="warriors[index].progress_attr.sanidade"
-                />
-              </div>
-            </div>
-            <div class="bg-zinc-900/70">
-              <textarea
-                v-model="warriors[index].progress_attr.modificador_sanidade"
-                @input="() => calculateDamages('modificador_sanidade', warrior)"
-                class="flex-1 -mb-1.5 w-full !border-0 py-1.5 px-2 text-sm sm:leading-6 bg-transparent p-0 !outline-0 !ring-0"
-                rows="1"
-              ></textarea>
-            </div>
-          </div>
           <div class="border-y border-zinc-950">
             <div class="grid grid-cols-2 border-zinc-950 border-b">
-              <!-- v-on:click="openTestAttribute('vida')" -->
               <div
-                class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
+                class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center"
               >Vida</div>
               <div class="flex shadow-sm ring-2 ring-inset ring-zinc-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
                 <input
@@ -80,9 +56,32 @@
               ></textarea>
             </div>
           </div>
+          <div class="border-y border-zinc-950"  v-if="warrior.progress_attr.sanidade !== undefined">
+            <div class="grid grid-cols-2 border-zinc-950 border-b">
+              <div
+                class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
+                v-on:click="openTestAttribute('sanidade', warrior)"
+              >Sanidade</div>
+              <div class="flex shadow-sm ring-2 ring-inset ring-zinc-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                <input
+                  type="number"
+                  class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                  v-model="warriors[index].progress_attr.sanidade"
+                />
+              </div>
+            </div>
+            <div class="bg-zinc-900/70">
+              <textarea
+                v-model="warriors[index].progress_attr.modificador_sanidade"
+                @input="() => calculateDamages('modificador_sanidade', warrior)"
+                class="flex-1 -mb-1.5 w-full !border-0 py-1.5 px-2 text-sm sm:leading-6 bg-transparent p-0 !outline-0 !ring-0"
+                rows="1"
+              ></textarea>
+            </div>
+          </div>
           <div class="grid grid-cols-2 border-y border-zinc-950" v-for="[attr, value] of Object.entries(warrior.attr)" :key="attr">
-            <!-- v-on:click="openTestAttribute('defesa')" -->
             <div
+              v-on:click="openTestAttribute(attr, warrior)"
               class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
             >{{ attr.slice(0, 6) + (attr.length > 6 ? '.':'') }}</div>
             <div class="flex shadow-sm ring-2 ring-inset ring-zinc-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
@@ -94,11 +93,10 @@
             </div>
           </div>
           <div class="bg-zinc-900/70">
-            <!-- @input="() => calculateDamages('modificador_sanidade')" -->
             <textarea
               v-model="warriors[index].note"
               class="flex-1 -mb-1.5 w-full !border-0 py-1.5 px-2 text-sm sm:leading-6 bg-transparent p-0 !outline-0 !ring-0"
-              rows="1"
+              rows="2"
               placeholder="Notas..."
             ></textarea>
           </div>
@@ -106,6 +104,12 @@
       </div>
     </div>
 
+    <div class="mt-6 mb-6 flex flex-wrap items-center justify-center gap-4">
+      <button type="button" v-on:click="openModal('attributes')" class="w-40 text-center rounded-md bg-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-600 shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100">Teste de Atrib.</button>
+      <button type="button" v-on:click="openModal('books')" class="w-40 text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100">Livros</button>
+      <button type="button" v-on:click="openModal('warriors')" class="w-40 text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100">Guerreiros</button>
+      <a href="../" class="w-40 text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100">Personagem</a>
+    </div>
 
     <div id="modal-attributes"
       class="relative z-10 hidden"
@@ -270,7 +274,7 @@
                   
                   <iframe
                     v-if="!['grimorios', 'maldicoes'].includes(game.books.current)"
-                    v-bind:src="game.books.current" width="100%" style="height: calc(100vh - 5rem)" frameborder="0"
+                    v-bind:src="'../' + game.books.current" width="100%" style="height: calc(100vh - 5rem)" frameborder="0"
                   ></iframe>
                   <div v-if="game.books.current === 'grimorios'">
                     <div class="flex flex-col sm:flex-row pt-2">
@@ -337,6 +341,50 @@
                 type="button"
                 class="mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50/10 sm:mt-0 sm:w-auto"
                 v-on:click="closeModal('books')"
+              >Fechar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="modal-warriors"
+      class="relative z-10 hidden"
+      v-bind:style="{ display: game.modal.is_open_warriors ? 'block':'none' }"
+      aria-labelledby="modal-title"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div
+          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+          v-bind:style="{ display: game.modal.is_open_warriors ? 'block':'none' }"
+          v-on:click="closeModal('warriors')"
+        ></div>
+        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+          <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl">
+            <div class="bg-zinc-900 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+              <div>
+                <div class="mt-3 text-center sm:mt-0 sm:text-left">
+                  <div class="flex max-sm:flex-col justify-between mb-4">
+                    <h3 class="text-base font-semibold leading-6 text-gray-50 max-sm:mb-2" id="modal-title">Guerreiros</h3>
+                  </div>
+                  <div class="mt-6 mb-4 flex shadow-sm ring-2 ring-inset ring-gray-700 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative rounded">
+                    <textarea v-model="game.json_warriors" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" rows="10"></textarea>
+                    <span class="text-gray-500 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-900 font-semibold px-2">Gerenciar Guerreiros</span>
+                  </div>
+                  <button
+                    type="button"
+                    class="w-full text-center rounded-md  px-3 py-2 px-8 text-sm font-semibold shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100 bg-gray-200 text-gray-600"
+                    v-on:click="updateWarriors()"
+                  >Atualizar</button>
+                </div>
+              </div>
+            </div>
+            <div class="bg-gray-950 px-4 py-3 sm:flex sm:justify-end gap-2 sm:px-6">
+              <button
+                type="button"
+                class="mt-3 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50/10 sm:mt-0 sm:w-auto"
+                v-on:click="closeModal('warriors')"
               >Fechar</button>
             </div>
           </div>

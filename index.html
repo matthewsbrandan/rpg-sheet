@@ -174,7 +174,7 @@
             <span
               class="flex justify-between border-b last:border-0 border-zinc-800/40 cursor-pointer"
               v-for="arma in itens.armas"
-              :key="arma"
+              :key="arma.name"
               v-on:click="onDetails('arms', arma.name)"
             >
               <span class="px-2 py-1 flex-1">{{ arma.name }}</span>
@@ -737,7 +737,6 @@
         <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl">
             <div class="bg-zinc-900 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-              <!-- BEGIN:: HEADER -->
               <div>
                 <div class="mt-3 text-center sm:mt-0 sm:text-left">
                   <div class="flex justify-between mb-4 gap-2">
@@ -780,9 +779,6 @@
                     >Importar</button>
                   </div>
                 </div>
-              </div>
-              <!-- END:: HEADER -->
-              <div class="pt-6 pr-2 max-h-[calc(100vh-13rem)] overflow-y-auto">
               </div>
             </div>
             <div class="bg-gray-950 px-4 py-3 sm:flex sm:justify-end gap-2 sm:px-6">
