@@ -381,14 +381,57 @@
         <span class="font-semibold leading-none" style="letter-spacing: 4px; font-family: 'Jacquard 24';">Salão do Conhecimento</span>
         <span class="text-[8px] leading-none text-slate-600">Salão do Conhecimento</span>
       </h2>
-      <p class="mb-4">... em breve</p>
+      <p class="mb-4">
+        O salão do conhecimento é um salão enorme, com grandes colunas de sustentação, as paredes cobertas de adereços que remetem a cultura do templo. Vários corredores se desenham apartir deste salão, mas maior parte deles está obstruido por destroços ou enormes paredes. O único caminho possível são 4 escadas ao final do corredor.
+      </p>
+      <p class="mb-4">
+        Os 4 guerreiros separam este momento de paz para tratar as feridas causadas pelas armadilhas, e investigar as paredes do templo. Diferente de muitas religiões, eles dão muita importancia a ciência, alquimia e outros saberes do homem, sendo revelados por vários números e contas nas paredes, e um grande foco para um tabela periódica em outra parede com 4 elementos metálicos em destaque(Cádmo, Mercúrio, Prata, Selênio).
+      </p>
+      <p class="mb-4">
+        Outros desenhos também chamaram atenção deles, como o desenho de um ser de quatro faces com as letras XXIX sobre sua cabeça, e o desenho de uma mulher entregando uma criança com asas negras a uma divindade.
+      </p>
       <img class="max-w-full mx-auto rounded-md shadow-lg mb-6" src="https://t.ctcdn.com.br/IHaHPCrEmb_ndk8WhIVGjBQUXNA=/1024x576/smart/i475957.jpeg"/>
+      <p class="mb-4">
+        Procurando mais detalhes sobre o pintura da mulher, encontraram em um dos livros jogados pelo chão do salão(provavelmente durante o ataque que ocorrera), o mesmo desenho, com a descrição do significado, uma ordenança.
+      </p>
+      <p class="mb-4">
+        O templo <b>sempre</b>, deve ter uma profetiza, que é a pessoa com maior conexão com a deusa de prata. Em retribuição a essa conexão e a todos os dons que a entidade lhe concede, a profetiza deve entregar o seu primeiro filho, e consagrá-lo a lua como o <b>Corvo de Prata</b>.
+      </p>
+      <p class="mb-4">
+        A profetiza é o simbolo espiritual da deusa na Terra, enquanto o Corvo é a própria vontade dela, sendo eles a mensageira e o executor. 
+      </p>
       <div class="flex gap-2">
         <button
           type="button"
           v-on:click="navigateTo('the-prophecy')"
           class="mt-4 mb-8 w-full text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
         >< A Profecia</button>
+        <button
+          type="button"
+          v-on:click="navigateTo('the-four-doors')"
+          class="mt-4 mb-8 w-full text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
+        >As 4 Portas ></button>
+      </div>
+    </article>
+
+    <article class="flex flex-col text-gray-400 text-sm" id="hall-of-knowledge" v-if="current_article === 'the-four-doors'">
+      <h2 class="flex flex-col text-xl p-1.5 mt-4 mb-2 rounded bg-slate-800">
+        <span class="font-semibold leading-none" style="letter-spacing: 4px; font-family: 'Jacquard 24';">As 4 Portas</span>
+        <span class="text-[8px] leading-none text-slate-600">As 4 Portas</span>
+      </h2>
+      <p class="mb-4">
+        ... em breve
+      </p>
+      <img class="max-w-full mx-auto rounded-md shadow-lg mb-6" src="https://disneyplusbrasil.com.br/wp-content/uploads/2023/06/Reliquia-de-Arquimedes-Indiana-Jones.jpg"/>
+      <p class="mb-4">
+        ...
+      </p>
+      <div class="flex gap-2">
+        <button
+          type="button"
+          v-on:click="navigateTo('hall-of-knowledge')"
+          class="mt-4 mb-8 w-full text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
+        >< Salão do Conhecimento</button>
       </div>
     </article>
   </main>
@@ -405,6 +448,9 @@
           { id: 'wilderness-walkers',       title: 'Caminhantes do Ermo'   },
           { id: 'the-prophecy',             title: 'A Profecia'            },
           { id: 'hall-of-knowledge',        title: 'Salão do Conhecimento' },
+          { id: 'the-four-doors',           title: 'As 4 Portas'           },
+          // { title: 'O Ataque ao Templo' }
+          // { title: 'A Criança' }
         ],
         current_article: 'summary'
       },
