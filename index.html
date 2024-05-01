@@ -110,6 +110,17 @@
         <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
           <input type="number" v-model="atributos.modificador_personalidade" id="modificador-personalidade" autocomplete="modificador-personalidade" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
         </div>
+
+        <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+          <input type="number" v-model="atributos.percepcao" id="percepcao" autocomplete="percepcao" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+        </div>
+        <div
+          class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
+          v-on:click="openTestAttribute('percepcao')"
+        >Percep.</div>
+        <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+          <input type="number" v-model="atributos.modificador_percepcao" id="modificador-percepcao" autocomplete="modificador-percepcao" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+        </div>
       </div>
 
       <div class="col-span-2 grid grid-cols-2 gap-x-2 gap-y-2">

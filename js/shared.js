@@ -49,6 +49,8 @@ const playerConstructor = (initialPlayer) => ({
     modificador_sabedoria: Number(initialPlayer?.atributos?.modificador_sabedoria ?? 0),
     personalidade: Number(initialPlayer?.atributos?.personalidade ?? 0),
     modificador_personalidade: Number(initialPlayer?.atributos?.modificador_personalidade ?? 0),
+    percepcao: Number(initialPlayer?.atributos?.percepcao ?? 0),
+    modificador_percepcao: Number(initialPlayer?.atributos?.modificador_percepcao ?? 0),
     defesa: Number(initialPlayer?.atributos?.defesa ?? 0),
     modificador_defesa: Number(initialPlayer?.atributos?.modificador_defesa ?? 0),
     sanidade: Number(initialPlayer?.atributos?.sanidade ?? 0),

@@ -173,6 +173,7 @@ const app = new Vue({
           inteligencia: warrior.atributos.inteligencia + warrior.atributos.modificador_inteligencia,
           sabedoria: warrior.atributos.sabedoria + warrior.atributos.modificador_sabedoria,
           personalidade: warrior.atributos.personalidade + warrior.atributos.modificador_personalidade,
+          percepcao: warrior.atributos.percepcao + warrior.atributos.modificador_percepcao,
         },
         progress_attr: {
           sanidade: warrior.atributos.sanidade,
@@ -263,6 +264,7 @@ const app = new Vue({
               inteligencia: warrior.attr.inteligencia - Number(main.atributos?.modificador_inteligencia ?? 0),
               sabedoria: warrior.attr.sabedoria - Number(main.atributos?.modificador_sabedoria ?? 0),
               personalidade: warrior.attr.personalidade - Number(main.atributos?.modificador_personalidade ?? 0),
+              percepcao: warrior.attr.percepcao - Number(main.atributos?.modificador_percepcao ?? 0),
               sanidade: warrior.progress_attr.sanidade,
               modificador_sanidade: warrior.progress_attr.modificador_sanidade,
               vida: warrior.progress_attr.vida,
