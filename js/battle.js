@@ -154,6 +154,10 @@ const app = new Vue({
           progress_attr: {
             vida: Number(warrior?.progress_attr?.vida ?? 0),
             modificador_vida: warrior?.progress_attr?.modificador_vida ?? '',
+            ...(warrior?.progress_attr?.sanidade ? {
+              sanidade: Number(warrior.progress_attr.sanidade ?? 0),
+              modificador_sanidade: warrior.progress_attr.modificador_sanidade ?? '',
+            }:{})
           },
           type,
           calculeds: {

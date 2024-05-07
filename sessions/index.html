@@ -432,7 +432,67 @@
           v-on:click="navigateTo('hall-of-knowledge')"
           class="mt-4 mb-8 w-full text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
         >< Salão do Conhecimento</button>
+        <button
+          type="button"
+          v-on:click="navigateTo('characters')"
+          class="mt-4 mb-8 w-full text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
+        >Personagens ></button>
       </div>
+    </article>
+
+    <article class="flex flex-col text-gray-400 text-sm" id="characters" v-if="current_article === 'characters'">
+      <h2 class="flex flex-col text-xl p-1.5 mt-4 mb-2 rounded bg-slate-800">
+        <span class="font-semibold leading-none" style="letter-spacing: 4px; font-family: 'Jacquard 24';">Personagens</span>
+        <span class="text-[8px] leading-none text-slate-600">Personagens</span>
+      </h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-2 gap-y-8 py-8">
+        <div class="text-center">
+          <img class="mx-auto w-[15rem] h-[24rem] object-cover rounded-md shadow-lg mb-2" src="../images/akesha.webp" alt="Akesha"/>
+          <strong style="letter-spacing: 6px; font-family: 'Jacquard 24';" class="text-lg">Akesha</strong>
+          <em class="block text-xs">Curandeira das Planícies Amarelas</em>
+        </div>
+        <div class="text-center">
+          <img class="mx-auto w-[15rem] h-[24rem] object-cover rounded-md shadow-lg mb-2" src="../images/cindar.webp" alt="Cindar"/>
+          <strong style="letter-spacing: 6px; font-family: 'Jacquard 24';" class="text-lg">Cindar</strong>
+          <em class="block text-xs">Lenhador das terras de Nimir</em>
+        </div>
+        <div class="text-center">
+          <img class="mx-auto w-[15rem] h-[24rem] object-cover rounded-md shadow-lg mb-2" src="../images/gunna.webp" alt="Gunna"/>
+          <strong style="letter-spacing: 6px; font-family: 'Jacquard 24';" class="text-lg">Gunna</strong>
+          <em class="block text-xs">Feiticeira do Norte Gélido</em>
+        </div>
+        <div class="text-center">
+          <img class="mx-auto w-[15rem] h-[24rem] object-cover rounded-md shadow-lg mb-2" src="../images/mazzur.webp" alt="Mazzur" style="object-position: -16rem;"/>
+          <strong style="letter-spacing: 6px; font-family: 'Jacquard 24';" class="text-lg">Mazzur</strong>
+          <em class="block text-xs">Soldado das Planícies Amarelas</em>
+        </div>
+
+        <div class="text-center">
+          <img class="mx-auto w-[15rem] h-[24rem] object-cover rounded-md shadow-lg mb-2" src="../images/friga.webp" alt="Friga"/>
+          <strong style="letter-spacing: 6px; font-family: 'Jacquard 24';" class="text-lg">Friga</strong>
+          <em class="block text-xs">Lider dos Caminhantes do Ermo</em>
+        </div>
+        <div class="text-center">
+          <img class="mx-auto w-[15rem] h-[24rem] object-cover rounded-md shadow-lg mb-2" src="../images/corvius.webp" alt="Corvo de Prata"/>
+          <strong style="letter-spacing: 6px; font-family: 'Jacquard 24';" class="text-lg">Corvo de Prata</strong>
+          <em class="block text-xs">Protetor do Templo de Prata</em>
+        </div>
+        <div class="text-center">
+          <img class="mx-auto w-[15rem] h-[24rem] object-cover rounded-md shadow-lg mb-2" src="../images/profetiza.webp" alt="Corvo de Prata"/>
+          <strong style="letter-spacing: 6px; font-family: 'Jacquard 24';" class="text-lg">Profetiza</strong>
+          <em class="block text-xs">Profetiza do Templo de Prata</em>
+        </div>
+        <div class="text-center sm:col-span-2 lg:col-span-3">
+          <img class="mx-auto max-w-full object-contain rounded-md shadow-lg mb-2" src="../images/inimigos.webp" alt="Inimigos"/>
+          <strong style="letter-spacing: 6px; font-family: 'Jacquard 24';" class="text-lg">Grimes e o Lobo de Cinzen</strong>
+          <em class="block text-xs">Grimes e o Lobo de Cinzen</em>
+        </div>
+      </div>
+      <button
+        type="button"
+        v-on:click="navigateTo('summary')"
+        class="mt-4 mb-8 w-full text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
+      >Sumário</button>
     </article>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
@@ -449,10 +509,11 @@
           { id: 'the-prophecy',             title: 'A Profecia'            },
           { id: 'hall-of-knowledge',        title: 'Salão do Conhecimento' },
           { id: 'the-four-doors',           title: 'As 4 Portas'           },
+          { id: 'characters',               title: 'Personangens'          },
           // { title: 'O Ataque ao Templo' }
           // { title: 'A Criança' }
         ],
-        current_article: 'summary'
+        current_article: 'characters' // 'summary'
       },
       methods: {
         navigateTo: function(to){
