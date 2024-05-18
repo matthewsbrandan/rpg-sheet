@@ -30,38 +30,52 @@ const setAllPlayers = (allPlayers) => localStorage.setItem(storageAll, allPlayer
 
 const initialPlayer = getPlayer();
 
+const handlePartial = (initial, defaultValue, prop1, prop2) => {
+  if(initial){
+    if(prop1 && initial[prop1]){
+      if(!prop2) return initial[prop1];
+      else if(initial[prop1][prop2]) return initial[prop1][prop2];
+    }
+  }
+  return defaultValue;
+} 
+const handlePartialNumber = (initial, defaultValue, prop1, prop2) => Number(
+  handlePartial(initial, defaultValue, prop1, prop2) ?? 0
+)
 const playerConstructor = (initialPlayer) => ({
   bio: {
-    nome: initialPlayer?.bio?.nome ?? '',
-    ocupacao: initialPlayer?.bio?.ocupacao ?? '',
-    origem : initialPlayer?.bio?.origem ?? '',
+    nome: handlePartial(initialPlayer, '', 'bio', 'nome'),
+    ocupacao: handlePartial(initialPlayer, '', 'bio', 'ocupacao'),
+    origem : handlePartial(initialPlayer, '', 'bio', 'origem'),
   },
   atributos: {
-    forca: Number(initialPlayer?.atributos?.forca ?? 0),
-    modificador_forca: Number(initialPlayer?.atributos?.modificador_forca ?? 0),
-    agilidade: Number(initialPlayer?.atributos?.agilidade ?? 0),
-    modificador_agilidade: Number(initialPlayer?.atributos?.modificador_agilidade ?? 0),
-    saude: Number(initialPlayer?.atributos?.saude ?? 0),
-    modificador_saude: Number(initialPlayer?.atributos?.modificador_saude ?? 0),
-    inteligencia: Number(initialPlayer?.atributos?.inteligencia ?? 0),
-    modificador_inteligencia: Number(initialPlayer?.atributos?.modificador_inteligencia ?? 0),
-    sabedoria: Number(initialPlayer?.atributos?.sabedoria ?? 0),
-    modificador_sabedoria: Number(initialPlayer?.atributos?.modificador_sabedoria ?? 0),
-    personalidade: Number(initialPlayer?.atributos?.personalidade ?? 0),
-    modificador_personalidade: Number(initialPlayer?.atributos?.modificador_personalidade ?? 0),
-    percepcao: Number(initialPlayer?.atributos?.percepcao ?? 0),
-    modificador_percepcao: Number(initialPlayer?.atributos?.modificador_percepcao ?? 0),
-    defesa: Number(initialPlayer?.atributos?.defesa ?? 0),
-    modificador_defesa: Number(initialPlayer?.atributos?.modificador_defesa ?? 0),
-    sanidade: Number(initialPlayer?.atributos?.sanidade ?? 0),
-    modificador_sanidade: initialPlayer?.atributos?.modificador_sanidade ?? '',
-    vida: Number(initialPlayer?.atributos?.vida ?? 0),
-    modificador_vida: initialPlayer?.atributos?.modificador_vida ?? '',
-    habilidades: initialPlayer?.atributos?.habilidades ?? []
+    forca: handlePartialNumber(initialPlayer, 0, 'atributos', 'forca'),
+    modificador_forca: handlePartialNumber(initialPlayer, 0, 'atributos', 'modificador_forca'),
+    agilidade: handlePartialNumber(initialPlayer, 0, 'atributos', 'agilidade'),
+    modificador_agilidade: handlePartialNumber(initialPlayer, 0, 'atributos', 'modificador_agilidade'),
+    saude: handlePartialNumber(initialPlayer, 0, 'atributos', 'saude'),
+    modificador_saude: handlePartialNumber(initialPlayer, 0, 'atributos', 'modificador_saude'),
+    inteligencia: handlePartialNumber(initialPlayer, 0, 'atributos', 'inteligencia'),
+    modificador_inteligencia: handlePartialNumber(initialPlayer, 0, 'atributos', 'modificador_inteligencia'),
+    sabedoria: handlePartialNumber(initialPlayer, 0, 'atributos', 'sabedoria'),
+    modificador_sabedoria: handlePartialNumber(initialPlayer, 0, 'atributos', 'modificador_sabedoria'),
+    personalidade: handlePartialNumber(initialPlayer, 0, 'atributos', 'personalidade'),
+    modificador_personalidade: handlePartialNumber(initialPlayer, 0, 'atributos', 'modificador_personalidade'),
+    percepcao: handlePartialNumber(initialPlayer, 0, 'atributos', 'percepcao'),
+    modificador_percepcao: handlePartialNumber(initialPlayer, 0, 'atributos', 'modificador_percepcao'),
+    furtividade: handlePartialNumber(initialPlayer, 0, 'atributos', 'furtividade'),
+    modificador_furtividade: handlePartialNumber(initialPlayer, 0, 'atributos', 'modificador_furtividade'),
+    defesa: handlePartialNumber(initialPlayer, 0, 'atributos', 'defesa'),
+    modificador_defesa: handlePartialNumber(initialPlayer, 0, 'atributos', 'modificador_defesa'),
+    sanidade: handlePartialNumber(initialPlayer, 0, 'atributos', 'sanidade'),
+    modificador_sanidade: handlePartial(initialPlayer, '', 'atributos', 'modificador_sanidade'),
+    vida: handlePartialNumber(initialPlayer, 0, 'atributos', 'vida'),
+    modificador_vida: handlePartial(initialPlayer, '', 'atributos', 'modificador_vida'),
+    habilidades: handlePartial(initialPlayer, [], 'atributos', 'habilidades')
   },
   itens: {
-    equipamentos: initialPlayer?.itens?.equipamentos ?? [],
-    armas: initialPlayer?.itens?.armas ?? [],
+    equipamentos: handlePartial(initialPlayer, [], 'itens', 'equipamentos'),
+    armas: handlePartial(initialPlayer, [], 'itens', 'armas'),
     tesouros: initialPlayer?.itens?.tesouros && initialPlayer.itens.tesouros.length > 0 ? initialPlayer.itens.tesouros : ['']
   },
   notas: initialPlayer?.notas ?? '',

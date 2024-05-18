@@ -31,95 +31,46 @@
       </div>
     </header>
     <div class="grid sm:grid-cols-3 gap-y-6 sm:gap-x-6 mt-6">
-      <div class="grid grid-cols-3 gap-y-2" id="attributes">
-        <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
-          <input type="number" v-model="atributos.defesa" id="defesa" autocomplete="defesa" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-          <span class="text-gray-500 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-950 font-semibold px-2">Base</span>
-        </div>    
-        <div
-          class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
-          v-on:click="openTestAttribute('defesa')"
-        >Defesa</div>
-        <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
-          <input type="number" v-model="atributos.modificador_defesa" id="modificador-defesa" autocomplete="modificador-defesa" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-          <span class="text-gray-500 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-950 font-semibold px-2">Modificadores</span>
-        </div>
-        
-        <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-          <input type="number" v-model="atributos.forca" id="forca" autocomplete="forca" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-        </div>    
-        <div
-          class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
-          v-on:click="openTestAttribute('forca')"
-        >Força</div>
-        <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-          <input type="number" v-model="atributos.modificador_forca" id="modificador-forca" autocomplete="modificador-forca" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-        </div>
-
-        <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-          <input type="number" v-model="atributos.agilidade" id="agilidade" autocomplete="agilidade" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-        </div>
-        <div
-          class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
-          v-on:click="openTestAttribute('agilidade')"
-        >Agilid.</div>
-        <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-          <input type="number" v-model="atributos.modificador_agilidade" id="modificador-agilidade" autocomplete="modificador-agilidade" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-        </div>
-
-        <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-          <input type="number" v-model="atributos.saude" id="saude" autocomplete="saude" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-        </div>
-        <div
-          class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
-          v-on:click="openTestAttribute('saude')"
-        >Saúde</div>
-        <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-          <input type="number" v-model="atributos.modificador_saude" id="modificador-saude" autocomplete="modificador-saude" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-        </div>
-        
-        <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-          <input type="number" v-model="atributos.inteligencia" id="inteligencia" autocomplete="inteligencia" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-        </div>
-        <div
-          class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
-          v-on:click="openTestAttribute('inteligencia')"
-        >Inteli.</div>
-        <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-          <input type="number" v-model="atributos.modificador_inteligencia" id="modificador-inteligencia" autocomplete="modificador-inteligencia" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-        </div>
-
-        <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-          <input type="number" v-model="atributos.sabedoria" id="sabedoria" autocomplete="sabedoria" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-        </div>
-        <div
-          class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
-          v-on:click="openTestAttribute('sabedoria')"
-        >Sabedo.</div>
-        <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-          <input type="number" v-model="atributos.modificador_sabedoria" id="modificador-sabedoria" autocomplete="modificador-sabedoria" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-        </div>
-
-        <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-          <input type="number" v-model="atributos.personalidade" id="personalidade" autocomplete="personalidade" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-        </div>
-        <div
-          class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
-          v-on:click="openTestAttribute('personalidade')"
-        >Person.</div>
-        <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-          <input type="number" v-model="atributos.modificador_personalidade" id="modificador-personalidade" autocomplete="modificador-personalidade" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-        </div>
-
-        <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-          <input type="number" v-model="atributos.percepcao" id="percepcao" autocomplete="percepcao" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-        </div>
-        <div
-          class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
-          v-on:click="openTestAttribute('percepcao')"
-        >Percep.</div>
-        <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-          <input type="number" v-model="atributos.modificador_percepcao" id="modificador-percepcao" autocomplete="modificador-percepcao" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+      <div id="attributes">
+        <div class="grid grid-cols-3 gap-y-2" v-for="attr in [
+          { model: 'defesa',        title: 'Defesa'  },
+          { model: 'forca',         title: 'Força'   },
+          { model: 'agilidade',     title: 'Agilid.' },
+          { model: 'saude',         title: 'Saúde'   },
+          { model: 'inteligencia',  title: 'Inteli.' },
+          { model: 'sabedoria',     title: 'Sabedo.' },
+          { model: 'personalidade', title: 'Person.' },
+          { model: 'percepcao',     title: 'Percep.' },
+          { model: 'furtividade',   title: 'Furtiv.' }
+        ]" :key="attr.model">
+          <div class="flex rounded-l-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
+            <input
+              type="number"
+              v-bind:id="attr.model"
+              v-model="atributos[attr.model]"
+              class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+            />
+            <span
+              v-if="attr.model === 'defesa'"
+              class="text-gray-500 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-950 font-semibold px-2"
+            >Base</span>
+          </div>
+          <div
+            class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
+            v-on:click="openTestAttribute(attr.model)"
+          >{{ attr.title }}</div>
+          <div class="flex rounded-r-md shadow-sm ring-2 ring-inset ring-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative">
+            <input
+              type="number"
+              v-bind:id="'modificador-' + attr.model" 
+              v-model="atributos[`modificador_${attr.model}`]"
+              class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+            />
+            <span
+              v-if="attr.model === 'defesa'"
+              class="text-gray-500 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-950 font-semibold px-2"
+            >Modificadores</span>
+          </div>
         </div>
       </div>
 

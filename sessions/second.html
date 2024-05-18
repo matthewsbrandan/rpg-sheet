@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="bg-zinc-950">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RPG / SESSÕES - TEMPORADA 2</title>
+  <link rel="shortcut icon" href="../icon.jpg" type="image/jpg">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Jacquard+24&display=swap" rel="stylesheet">
+  <style> input{ overflow: auto; } </style>
+</head>
+<body class="m-0 p-0 w-screen h-screen overflow-y-auto overflow-x-hidden">
+  <main class="text-gray-400 py-4 px-6 m-0 max-w-5xl mx-auto" id="app">
+    <h1 class="flex flex-col text-3xl pt-2 cursor-pointer hover:opacity-70" v-on:click="navigateTo('summary')">
+      <span class="font-semibold leading-none" style="letter-spacing: 6px; font-family: 'Jacquard 24';">BORDERLAND</span>
+      <span class="text-[8px] leading-none text-slate-600">BORDERLAND</span>
+    </h1>
+
+    <article class="flex flex-col text-gray-400 text-sm pt-4" id="summary" v-if="current_article === 'summary'">
+      <button
+        type="button"
+        class="flex flex-col text-xl p-1.5 mb-2.5 rounded bg-slate-800 hover:bg-slate-700"
+        v-for="article of articles"
+        v-on:click="navigateTo(article.id)"
+      >
+        <span class="font-semibold leading-none" style="letter-spacing: 4px; font-family: 'Jacquard 24';">{{ article.title }}</span>  
+        <span class="text-[8px] leading-none text-slate-600">{{ article.title }}</span>
+      </button>
+
+      <a
+        href="../"
+        class="mt-4 mb-8 w-full text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100"
+      >Voltar p/ Personagem</a>
+    </article>
+
+    <article class="flex flex-col text-gray-400 text-sm" id="ideia" v-if="current_article === 'ideia'">
+      <h2 class="flex flex-col text-xl p-1.5 mt-4 mb-2 rounded bg-slate-800">
+        <span class="font-semibold leading-none" style="letter-spacing: 4px; font-family: 'Jacquard 24';">Idéia</span>
+        <span class="text-[8px] leading-none text-slate-600">Idéia</span>
+      </h2>
+      <p class="mb-4">- Ligação de Shadowland com o universo transcendente</p>
+      <p class="mb-4">- Shadowland seria o mesmo lugar que borderland</p>
+      <br/>
+      <b>Três possibilidades de conexão</b>
+      <br/>
+      <p class="mb-4">
+        1. O encontro dos universo poderia acontecer no passado do universo transcendente explorando a <b>UEID</b>(Unidade de Extração Interdimensional). Neste contexto os nimirianos(ou acadianos) encontrariam viajantes que estariam explorando o lugar para entender o que poderiam extrair, e após interrogar e ver a capacidade e intenções do viajante, motivaria todos os acontecimentos da primeira temporada. E acabaria a temporada 1 com uma extração interdimensional
+      </p>
+      <p class="mb-4">
+        2. O acontecimento pode ser ao final do segundo livro após terem vencido Elara, e terem estirpado o mal de borderland, mas teria menos conteúdo a ser explorado
+      </p>
+      <p class="mb-4">
+        Seguindo a opção 1 que é mais promissora, com eles conseguindo impedir as extrações, poderia ser explorados os testes falhos dos humanos com os experimento A1 - A2 - A3, principalmente com os psicologicamente alterados, com Fury, Soturno, etc, com a possibilidade dos habitantes de shadowland invadirem o mundo normal e levar a magia para lá, tendo a possibilidade de com o passar dos anos a civilização de shadowland sucumbir ao esquecimento e o continente ser dominado pela floresta. Tendo ao final o encontro com os 3 seven ability banidos.
+      </p>
+      <p class="mb-4">
+        3. Realidade circular, ao mesmo tempo que o acontecimento é posterior a derrota, começa a acontecer os acontecimentos de extração do passado.
+      </p>
+
+      <hr/>
+      <br/>
+      <strong>História da Criação</strong>
+      <br/>
+      <p class="mb-4">
+        No inicio só havia trevas, e sons estranhos soavam no ar, mais como ranjidos, e notas desconexas sem qualquer harmônia, mas com o tempo algumas notas começaram a se encontrar, e criar um sentido, entre si, criando melodias, das quais o ambiente ao seu redor reagia. Com a ordem começou a surgir as formas, com as ondas sonoras esculpindo o desenho das montanhas, os limites das terras e dos mares, e centenas de árvores, das quais iluminaram a criação com uma bioluminessencia.
+      </p>
+      <p class="mb-4">
+        Uma grande árvore(Mother-tree) conectava toda as outras e toda vida no grande bosque da criação, com a sua luz reagindo as notas da criação.
+      </p>
+      <p class="mb-4">
+        Mas o caos primordial ainda existia no grande abismo, de onde saiam sombras que tentava com todas suas forças resistir a luz e a ordem. Com a evolução da vida, até as sombras ganharam suas formas, mas por sua vez mostruoso e com sede do caos.
+      </p>
+      <p class="mb-4">
+        Das raizes da árvore-mãe surgiram os primeiros humanos, que precisaram ser centenas de vezes recriados até que fossem capazes de se defender das sombras do abismo.
+      </p>
+      <p class="mb-4">
+        Quando finalmente a humanidade venceu as sombras e selou o abismo, a civilização começou a prosperar, e com o crescimento das comunidades que vieram a se tornar cidades, e reinos, a custas da natureza, a mother-three se calou, e hoje está adormecida sob o castelo de nimir, e por isso se tornou tão dificil ver as luzes das árvores, sua dança, ou ouvir seus segredos.
+      </p>
+    </article>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        articles: [
+          { id: 'ideia',                 title: 'Idéia'               },
+        ],
+        current_article: 'ideia'
+      },
+      methods: {
+        navigateTo: function(to){
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          this.current_article = to;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
