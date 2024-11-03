@@ -388,45 +388,45 @@
                 </div>
                 <div class="grid grid-cols-6 mt-6">
                   <strong class="border border-zinc-800 p-1 text-xs">Pontos Max.</strong>
-                  <strong class="border border-zinc-800 p-1 text-xs">Extremo (20%)</strong>
-                  <strong class="border border-zinc-800 p-1 text-xs">Bom (40%)</strong>
-                  <strong class="border border-zinc-800 p-1 text-xs">Regular (40%)</strong>
-                  <strong class="border border-zinc-800 p-1 text-xs">Ruim (50%)</strong>
                   <strong class="border border-zinc-800 p-1 text-xs">Péssimo (50%)</strong>
+                  <strong class="border border-zinc-800 p-1 text-xs">Ruim (50%)</strong>
+                  <strong class="border border-zinc-800 p-1 text-xs">Regular (40%)</strong>
+                  <strong class="border border-zinc-800 p-1 text-xs">Bom (40%)</strong>
+                  <strong class="border border-zinc-800 p-1 text-xs">Extremo (20%)</strong>
                 </div>
                 <div class="grid grid-cols-6" v-bind:class="{ 'bg-zinc-800': row.points == game.test_attribute.max }" v-for="row in game.test_attribute.grid" :key="row.points">
                   <span class="border-x border-b border-zinc-800/40 text-center">{{ row.points }}</span>
                   <span
                     class="border-x border-b border-zinc-800/40 text-center"
-                    v-bind:class="{ 'bg-zinc-500': row.points == game.test_attribute.max && itsBetween(game.test_attribute.current, row.extreme) }"
-                  >{{ row.extreme[0] + ' - ' + row.extreme[1] }}</span>
-                  <span
-                    class="border-x border-b border-zinc-800/40 text-center"
-                    v-bind:class="{ 'bg-zinc-500': row.points == game.test_attribute.max && itsBetween(game.test_attribute.current, row.good) }"
-                  >{{ row.good[0] + ' - ' + row.good[1] }}</span>
-                  <span
-                    class="border-x border-b border-zinc-800/40 text-center"
-                    v-bind:class="{ 'bg-zinc-500': row.points == game.test_attribute.max && itsBetween(game.test_attribute.current, row.regular) }"
-                  >{{ row.regular[0] + ' - ' + row.regular[1] }}</span>
+                    v-bind:class="{ 'bg-zinc-500': row.points == game.test_attribute.max && itsBetween(game.test_attribute.current, row.terrible) }"
+                  >{{ row.terrible[0] + ' - ' + row.terrible[1] }}</span>
                   <span
                     class="border-x border-b border-zinc-800/40 text-center"
                     v-bind:class="{ 'bg-zinc-500': row.points == game.test_attribute.max && itsBetween(game.test_attribute.current, row.bad) }"
                   >{{ row.bad[0] + ' - ' + row.bad[1] }}</span>
                   <span
                     class="border-x border-b border-zinc-800/40 text-center"
-                    v-bind:class="{ 'bg-zinc-500': row.points == game.test_attribute.max && itsBetween(game.test_attribute.current, row.terrible) }"
-                  >{{ row.terrible[0] + ' - ' + row.terrible[1] }}</span>
+                    v-bind:class="{ 'bg-zinc-500': row.points == game.test_attribute.max && itsBetween(game.test_attribute.current, row.regular) }"
+                  >{{ row.regular[0] + ' - ' + row.regular[1] }}</span>
+                  <span
+                    class="border-x border-b border-zinc-800/40 text-center"
+                    v-bind:class="{ 'bg-zinc-500': row.points == game.test_attribute.max && itsBetween(game.test_attribute.current, row.good) }"
+                  >{{ row.good[0] + ' - ' + row.good[1] }}</span>
+                  <span
+                    class="border-x border-b border-zinc-800/40 text-center"
+                    v-bind:class="{ 'bg-zinc-500': row.points == game.test_attribute.max && itsBetween(game.test_attribute.current, row.extreme) }"
+                  >{{ row.extreme[0] + ' - ' + row.extreme[1] }}</span>
                 </div>
 
                 <p class="text-sm text-gray-400 mt-6">
                   Para definir a dificuldade o mestre(ou narrador da cena) pode usar 1D8 seguindo os valores da tabela abaixo. Está é a dificuldade mínima que o jogador deve atingir.
                 </p>
                 <div class="mt-2">
-                  <div class="flex border border-zinc-800 gap-4 p-1 text-sm"><strong class="">1-2</strong><span>Extremo</span></div>
-                  <div class="flex border border-zinc-800 gap-4 p-1 text-sm"><strong class="">3-4</strong><span>Bom</span></div>
-                  <div class="flex border border-zinc-800 gap-4 p-1 text-sm"><strong class="">5-6</strong><span>Regular</span></div>
-                  <div class="flex border border-zinc-800 gap-4 p-1 text-sm"><strong class="">7-7</strong><span>Ruim</span></div>
-                  <div class="flex border border-zinc-800 gap-4 p-1 text-sm"><strong class="">8-8</strong><span>Péssimo (Nesse caso dispensa o teste de atributo)</span></div>
+                  <div class="flex border border-zinc-800 gap-4 p-1 text-sm"><strong class="">1-1</strong><span>Péssimo (Nesse caso dispensa o teste de atributo)</span></div>
+                  <div class="flex border border-zinc-800 gap-4 p-1 text-sm"><strong class="">2-2</strong><span>Ruim</span></div>
+                  <div class="flex border border-zinc-800 gap-4 p-1 text-sm"><strong class="">3-4</strong><span>Regular</span></div>
+                  <div class="flex border border-zinc-800 gap-4 p-1 text-sm"><strong class="">5-6</strong><span>Bom</span></div>
+                  <div class="flex border border-zinc-800 gap-4 p-1 text-sm"><strong class="">7-8</strong><span>Extremo</span></div>
                 </div>
               </div>
             </div>

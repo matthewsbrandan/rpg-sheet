@@ -29,22 +29,25 @@ const app = new Vue({
         current: 0,
         base: 20,
         grid: Array.from({ length: 20 }).map((_,i) => {
+          let minOne = (num) => num < 1 ? 1 : num
           let points = 20 - i;
           
           let twentyPercent = Math.round(points * .2); 
           let fortyPercent = Math.round(points * .4);
           const invalidRange = ['','']
 
-          let extreme = twentyPercent === 0 ? invalidRange : [1, twentyPercent];              
-          let good = fortyPercent === 0 ? invalidRange : [Number(extreme[1]) + 1, Number(extreme[1]) + fortyPercent];
-          let regular = [good[1] + 1, points];
+          let extreme = twentyPercent === 0 ? invalidRange : [minOne(21 - twentyPercent), 20];
+          let good = fortyPercent === 0 || twentyPercent === 0 ? invalidRange : [minOne(Number(extreme[0]) - fortyPercent), minOne(Number(extreme[0]) - 1)];
+          let regular = [minOne(20 - points), fortyPercent <= 0 || twentyPercent <= 0 ? 20 : minOne(good[0] - 1)];
 
           let rest = 20 - points;
 
           let fiftyPercent = rest <= 0 ? 0 : Math.round(rest * .5);
 
-          let bad = rest <= 0 || regular[1] === 20 ? invalidRange : [regular[1] + 1, regular[1] + fiftyPercent];
-          let terrible = rest <= 0 || bad[1] === 20 ? invalidRange : [bad[1] + 1, 20];
+          let bad = rest <= 0 || regular[0] === 20 ? invalidRange : (
+            (regular[0] - fiftyPercent < 1 && regular[0] - 1 < 1) ? invalidRange : [minOne(regular[0] - fiftyPercent), minOne(regular[0] - 1)]
+          );
+          let terrible = rest <= 0 || bad[0] - 1 < 1 ? invalidRange : [1, minOne(bad[0] - 1)];
           return { points, extreme, good, regular, bad, terrible }
         })
       },
