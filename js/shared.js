@@ -65,6 +65,8 @@ const playerConstructor = (initialPlayer) => ({
     modificador_percepcao: handlePartialNumber(initialPlayer, 0, 'atributos', 'modificador_percepcao'),
     furtividade: handlePartialNumber(initialPlayer, 0, 'atributos', 'furtividade'),
     modificador_furtividade: handlePartialNumber(initialPlayer, 0, 'atributos', 'modificador_furtividade'),
+    movimento: handlePartialNumber(initialPlayer, 0, 'atributos', 'movimento'),
+    modificador_movimento: handlePartialNumber(initialPlayer, 0, 'atributos', 'modificador_movimento'),
     defesa: handlePartialNumber(initialPlayer, 0, 'atributos', 'defesa'),
     modificador_defesa: handlePartialNumber(initialPlayer, 0, 'atributos', 'modificador_defesa'),
     sanidade: handlePartialNumber(initialPlayer, 0, 'atributos', 'sanidade'),
