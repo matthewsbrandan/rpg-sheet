@@ -734,9 +734,20 @@
                       class="p-2 bg-zinc-950 flex-1 text-left text-[10px] font-semibold uppercase flex items-center justify-start cursor-pointer hover:bg-zinc-950/50"
                       v-on:click="selectCharacter()"
                     >Novo +</div>
-                    <div class="mt-6 mb-4 flex shadow-sm ring-2 ring-inset ring-gray-700 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative rounded">
+                    <div class="mt-6 mb-2 flex shadow-sm ring-2 ring-inset ring-gray-700 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative rounded">
                       <textarea v-model="game.import" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" rows="10"></textarea>
                       <span class="text-gray-500 uppercase text-[8px] absolute -top-1.5 left-1.5 bg-zinc-900 font-semibold px-2">Importar Personagem</span>
+                    </div>
+                    <div class="mb-6">
+                      <strong class="text-xs">Personagens Existentes</strong>
+                      <div class="grid grid-cols-2 sm:grid-cols-4">
+                        <div
+                          v-for="character of game.characters"
+                          class="p-2 flex-1 text-left text-[10px] font-semibold uppercase flex items-center justify-start hover:bg-zinc-950/50"
+                          v-bind:class="{ 'bg-zinc-950 cursor-pointer': character !== bio.nome }"
+                          v-on:click="selectDefaultCharacter(character)"
+                        >{{ character.bio.nome }}</div>
+                      </div>
                     </div>
                     <button
                       type="button"

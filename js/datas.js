@@ -165,3 +165,241 @@ const malisons = [
   { value: "63-64", description: "Você conjura um Demônio de Cinzas (pág. 67)"                          },
   { value: "65-66", description: "Você é atingido por um raio mortal, sofrendo 2d6 Dano"                },
 ];
+const characters = [
+  {
+    "bio": {
+      "nome": "Akesha",
+      "ocupacao": "Curandeira",
+      "origem": "Planícies Amarelas"
+    },
+    "atributos": {
+      "forca": 9,
+      "modificador_forca": 0,
+      "agilidade": 8,
+      "modificador_agilidade": 0,
+      "saude": 16,
+      "modificador_saude": 2,
+      "inteligencia": 11,
+      "modificador_inteligencia": 0,
+      "sabedoria": 11,
+      "modificador_sabedoria": 0,
+      "personalidade": 17,
+      "modificador_personalidade": 2,
+      "percepcao": 13,
+      "modificador_percepcao": 0,
+      "furtividade": 15,
+      "modificador_furtividade": 0,
+      "defesa": 10,
+      "modificador_defesa": 0,
+      "sanidade": 65,
+      "modificador_sanidade": "",
+      "vida": 16,
+      "modificador_vida": "",
+      "habilidades": [
+        "43. Luta",
+        "26. Feitiçaria",
+        "21. Cura",
+        "32. Herbalismo",
+        "45. Montaria",
+        "13. Caça",
+        "65. Sobrevivência"
+      ]
+    },
+    "itens": {
+      "equipamentos": [
+        "Antídoto (para tratar venenos)",
+        "Ervas"
+      ],
+      "armas": [],
+      "tesouros": [
+        "Moeda 120"
+      ]
+    },
+    "notas": ""
+  }, {
+    "bio": {
+      "nome": "Cindar",
+      "ocupacao": "Lenhador de Floresta",
+      "origem": "Nimir"
+    },
+    "atributos": {
+      "forca": 18,
+      "modificador_forca": 2,
+      "agilidade": 15,
+      "modificador_agilidade": 1,
+      "saude": 14,
+      "modificador_saude": 1,
+      "inteligencia": 17,
+      "modificador_inteligencia": 2,
+      "sabedoria": 11,
+      "modificador_sabedoria": 0,
+      "personalidade": 13,
+      "modificador_personalidade": 1,
+      "percepcao": 10,
+      "modificador_percepcao": 0,
+      "furtividade": 10,
+      "modificador_furtividade": 0,
+      "defesa": 11,
+      "modificador_defesa": 0,
+      "sanidade": 55,
+      "modificador_sanidade": "",
+      "vida": 14,
+      "modificador_vida": "",
+      "habilidades": [
+        "43. Luta",
+        "26. Feitiçaria",
+        "54. Ofício",
+        "44. Manha",
+        "53. Ocultismo",
+        "55. Persuasão"
+      ]
+    },
+    "itens": {
+      "equipamentos": [
+        "Bolsa",
+        "Cinzel (para esculpir pedra)",
+        "Elixir (para tratar doenças)",
+        "Bandagem (3 unidades)",
+        "Machadinha",
+        "Odre",
+        "Tocha (3 unidades)",
+        "Pergaminho (em branco)",
+        "Corda (3 metros)"
+      ],
+      "armas": [
+        {
+          "name": "Machado de Batalha",
+          "value": "3d6"
+        }
+      ],
+      "tesouros": [
+        "Moeda 1200"
+      ]
+    },
+    "notas": "2 Cordas"
+  }, {
+    "bio": {
+      "nome": "Gunna",
+      "ocupacao": "Conjuradora de Feitiços",
+      "origem": "Norte Gélido"
+    },
+    "atributos": {
+      "forca": 10,
+      "modificador_forca": 0,
+      "agilidade": 13,
+      "modificador_agilidade": 1,
+      "saude": 10,
+      "modificador_saude": 0,
+      "inteligencia": 13,
+      "modificador_inteligencia": 1,
+      "sabedoria": 8,
+      "modificador_sabedoria": 0,
+      "personalidade": 12,
+      "modificador_personalidade": 0,
+      "percepcao": 16,
+      "modificador_percepcao": 0,
+      "furtividade": 13,
+      "modificador_furtividade": 1,
+      "defesa": 11,
+      "modificador_defesa": 0,
+      "sanidade": 76,
+      "modificador_sanidade": "",
+      "vida": 14,
+      "modificador_vida": "",
+      "habilidades": [
+        "13. Caça",
+        "43. Luta",
+        "65. Sobrevivência",
+        "26. Feitiçaria",
+        "23. Erudição",
+        "46. Navegação",
+        "64. Resistência"
+      ]
+    },
+    "itens": {
+      "equipamentos": [
+        "Flechas ou Virotes (6 unidades)",
+        "Vela"
+      ],
+      "armas": [
+        {
+          "name": "Arco Curto",
+          "value": "2d6"
+        },
+        {
+          "name": "Machado",
+          "value": "2d6"
+        }
+      ],
+      "tesouros": [
+        "Moeda 50"
+      ]
+    },
+    "notas": "18 flechas"
+  }, {
+    "bio": {
+      "nome": "Mazzur",
+      "ocupacao": "Soldado de Batalhas",
+      "origem": "Planícies Amarelas"
+    },
+    "atributos": {
+      "forca": 12,
+      "modificador_forca": 0,
+      "agilidade": 10,
+      "modificador_agilidade": 0,
+      "saude": 12,
+      "modificador_saude": 0,
+      "inteligencia": 15,
+      "modificador_inteligencia": 1,
+      "sabedoria": 16,
+      "modificador_sabedoria": 2,
+      "personalidade": 14,
+      "modificador_personalidade": 1,
+      "percepcao": 15,
+      "modificador_percepcao": 1,
+      "furtividade": 15,
+      "modificador_furtividade": 1,
+      "defesa": 10,
+      "modificador_defesa": 0,
+      "sanidade": 54,
+      "modificador_sanidade": "",
+      "vida": 11,
+      "modificador_vida": "",
+      "habilidades": [
+        "11. Arremesso",
+        "14. Combate",
+        "13. Caça",
+        "43. Luta",
+        "45. Montaria",
+        "65. Sobrevivência",
+        "26. Feitiçaria"
+      ]
+    },
+    "itens": {
+      "equipamentos": [
+        "Pedra de Amolar",
+        "Gancho",
+        "Flauta",
+        "Lanterna de Bronze"
+      ],
+      "armas": [
+        {
+          "name": "Dardo",
+          "value": "1d6"
+        },
+        {
+          "name": "Lança de Montaria",
+          "value": "3d6"
+        },
+        {
+          "name": "Escudo Grande",
+          "value": "+1"
+        }
+      ],
+      "tesouros": [
+        "Moeda 293"
+      ]
+    },
+    "notas": ""
+  }
+]

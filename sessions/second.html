@@ -37,6 +37,116 @@
 
     <article class="flex flex-col text-gray-400 text-sm" id="ideia" v-if="current_article === 'ideia'">
       <h2 class="flex flex-col text-xl p-1.5 mt-4 mb-2 rounded bg-slate-800">
+        <span class="font-semibold leading-none" style="letter-spacing: 4px; font-family: 'Jacquard 24';">Background</span>
+        <span class="text-[14px] leading-none text-slate-600">Shadowland</span>
+      </h2>
+
+      <p class="mb-1">
+        Estamos entrando agora no reino de Shadowland. Essas terras são tudo o que é conhecido aqui, não há nada além de suas fronteiras.
+      </p>
+      <p class="mb-4">
+        A sul, a leste e a oeste estamos cercados pelo bravo oceano, com suas águas mortalmente gélidas, e a norte bloqueados pelas montanhas que se perdem na escuridão.
+      </p>
+
+      <p class="mb-1">
+        Assim como do lado de fora, aqui temos dia e noite, porém eles são muito diferentes. Não é a luz que se propaga, afastando a escuridão, mas sim a escuridão que emana, consumindo a luz. É como se o mundo fosse uma grande tela branca manchada por sombras.
+      </p>
+      <p class="mb-4">
+        Não existe sol, a luz simplesmente existe dando origem ao dia, e a noite chega como uma nuvem negra que surge das montanhas e cobre o reino, que é resistida apenas pelo brilho pálido dá lua, que é o único astro solitário no céu.
+      </p>
+
+      <p class="mb-1">
+        Por nada iradiar luz, as únicas sombras que existem são projetadas pelas trevas que há dentro de cada um, e pelas memórias carregadas nas pedras e nas construções que presenciam as atrocidades deste mundo.
+      </p>
+      <p class="mb-4">
+        Muitos feiticeiros e assassinos, para não revelar as trevas que guardam dentro de si, se marcam com runas com o símbolo de ordem(um circulo com um quadro e um losango sobrepostos), além de outras runas que usam para manipular as sombras e lhes concerder poderes sobrenaturais.
+      </p>
+      
+      <img class="mb-4 mx-auto rounded-full shadow-lg opacity-90" src="../images/ordem.png" width="50"/>
+
+      <p class="mb-1">
+        Nunca se sabe a hora em que ela vai chegar, mas quando a noite chega, todos correm para suas casas para se protegerem dos monstros e feras que vêm junto com ela, os únicos que se arriscam são aqueles que têm afinidade com as trevas e os tementes a deusa de prata, que os guarda nas fases em que o astro ainda é capaz de vencer a escuridão.
+      </p>
+    </article>
+
+    <article class="flex flex-col text-gray-400 text-sm" id="ideia" v-if="current_article === 'ideia'">
+      <h2 class="flex flex-col text-xl p-1.5 mt-4 mb-2 rounded bg-slate-800">
+        <span class="font-semibold leading-none" style="letter-spacing: 4px; font-family: 'Jacquard 24';">Background</span>
+        <span class="text-[14px] leading-none text-slate-600">Deuses da Ordem</span>
+      </h2>
+      
+      <div class="grid grid-cols-2 gap-2 mb-2">
+        <p class="mb-2">
+          <strong>Deusa de Prata</strong>, deusa da lua<br/>
+          Outros nomes: Dama de Prata, Lupa<br/>
+          Símbolo: Coruja<br/>
+          Elemento: Água<br/>
+          Representantes (conexão direta com o deus):<br/>
+          - Profetiza, também conhecida com a voz da lua.<br/>
+          - Corvo prateado, é o arauto da deusa, também conhecido como as mãos da lua.
+        </p>
+        <p class="mb-2">
+          <strong>Gaia</strong>, deusa da terra<br/>
+          Outros nomes: Mother-tree<br/>
+          Símbolo: Serpente<br/>
+          Elemento: Terra<br/>
+          Representantes (conexão direta com o deus):<br/>
+          - Árvores (Dríades)
+        </p>
+        <p class="mb-2">
+          <strong>Zirzan</strong>, deus da sorte<br/>
+          Símbolo: Raposa<br/>
+          Elemento: Ar<br/>
+          Representantes (conexão direta com o deus):<br/>
+          - Poeira (Silfos)
+        </p>
+        <p class="mb-2">
+          <strong>Horus</strong>, deus da punição<br/>
+          Símbolo: Lobo<br/>
+          Elemento: Fogo<br/>
+          Representantes (conexão direta com o deus):<br/>
+          - Montanhas (Oréade)
+        </p>
+      </div>
+
+      <hr class="border-gray-600 mt-2 mb-4"/>
+
+      <p class="mb-4 text-center">
+        <strong>Hierarquia de poder</strong><br/>
+        Água > Terra > Ar > Fogo > Água
+      </p>
+    </article>
+
+    <article class="flex flex-col text-gray-400 text-sm" id="ideia" v-if="current_article === 'ideia'">
+      <h2 class="flex flex-col text-xl p-1.5 mt-4 mb-2 rounded bg-slate-800">
+        <span class="font-semibold leading-none" style="letter-spacing: 4px; font-family: 'Jacquard 24';">Mecânica de Batalha</span>
+        <span class="text-[14px] leading-none text-slate-600">Regras</span>
+      </h2>
+      <p class="mb-2">
+        <strong>Iniciantiva:</strong> É baseada na agilidade e definirá a ordem dos ataques.
+      </p>
+      <p class="mb-1">
+        <strong>Reação:</strong> Todo jogador tem direito a 1 reação por rodada, e quem está atacando tem vantagem no empate.
+      </p>
+      <p class="mb-2">
+        As reações de esquiva e bloqueio são um teste de atributo contra o ataque do inimigo:<br/>
+        - <b>Esquivar</b>: teste de atributo baseado na agilidade.<br/>
+        - <b>Bloquear</b>: teste de atributo baseado na força. Se o modificador de força do oponente for maior do que o seu modificador de força, ao bloquear com sucesso, você ainda sofre dano da diferença do modificador (ex: você tem +1 e seu inimigo +2, ao bloquear, você sofre 1 de dano).<br/>
+        - <b>Contra-ataque</b>: se você escolher contra-atacar, você deixará o inimigo fazer o ataque direto contra sua defesa, e caso ele erre você tem a chance de fazer o ataque contra a defesa dele.
+      </p>
+      <p class="mb-2">
+        <b>Defesa padrão:</b> quando você não reagir ao ataque do inimigo, ele além de ter que passar no teste de atributo no ataque, precisa tirar um dado maior do que sua defesa.
+      </p>
+      <p class="mb-2">
+        <b>Ataque Furtivo/Flanqueado/Indefeso:</b> quando o ataque for desse tipo a defesa é ignorada, precisando apenas passar no teste de atributo.
+        - Furtivo: para fazer um ataque furtivo você deve ter um lugar para se esconder, e deve lançar um teste de furtividade, contra a percepção do inimigo. No empate a vantagem é do inimigo.<br/>
+        - Flanqueado: é quando o inimigo já está em combate corpo-a-corpo com um oponente, e você chega do lado oposto para atacá-lo.<br/>
+        - Indefeso: é quando você está caido ou agarrado por outro inimigo.
+      </p>
+    </article>
+    
+    <article class="flex flex-col text-gray-400 text-sm" id="ideia" v-if="current_article === 'ideia'">
+      <h2 class="flex flex-col text-xl p-1.5 mt-4 mb-2 rounded bg-slate-800">
         <span class="font-semibold leading-none" style="letter-spacing: 4px; font-family: 'Jacquard 24';">Idéia</span>
         <span class="text-[8px] leading-none text-slate-600">Idéia</span>
       </h2>
@@ -75,7 +185,7 @@
         Das raizes da árvore-mãe surgiram os primeiros humanos, que precisaram ser centenas de vezes recriados até que fossem capazes de se defender das sombras do abismo.
       </p>
       <p class="mb-4">
-        Quando finalmente a humanidade venceu as sombras e selou o abismo, a civilização começou a prosperar, e com o crescimento das comunidades que vieram a se tornar cidades, e reinos, a custas da natureza, a mother-three se calou, e hoje está adormecida sob o castelo de nimir, e por isso se tornou tão dificil ver as luzes das árvores, sua dança, ou ouvir seus segredos.
+        Quando finalmente a humanidade venceu as sombras e selou o abismo, a civilização começou a prosperar, e com o crescimento das comunidades que vieram a se tornar cidades, e reinos, a custas da natureza, a mother-tree se calou, e hoje está adormecida sob o castelo de nimir, e por isso se tornou tão dificil ver as luzes das árvores, sua dança, ou ouvir seus segredos.
       </p>
     </article>
   </main>

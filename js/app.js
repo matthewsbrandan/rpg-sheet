@@ -52,6 +52,7 @@ const app = new Vue({
       maps: {  current: './map.jpg'    },
       details: { title: 'Detalhes', description: '' },
       allPlayers: [],
+      characters,
       import: ''
     }
   },
@@ -263,6 +264,27 @@ const app = new Vue({
     downloadCharacter: function (){
       const player = encodeURIComponent(JSON.stringify(getPlayer()));
       window.open(`https://api.whatsapp.com/send?text=${player}`, '_blank');
+    },
+    selectDefaultCharacter: function (player){
+      const all = getAllPlayers();
+      let nome = all && all.find((char) => char === player.bio.nome) ? (
+        `${player.bio.nome} (Cópia)`        
+      ):player.bio.nome;
+      
+      this.save();
+
+      const { bio, atributos, itens, notas } = playerConstructor(player);
+
+      this.bio = { ...bio, nome };
+      this.atributos = atributos;
+      this.itens = itens;
+      this.notas = notas;
+
+      this.calculateDamages('modificador_vida');
+      this.calculateDamages('modificador_sanidade');
+
+      this.closeModal('alternate');
+
     },
     selectCharacter: function (player){
       if(player && this.bio.player === player) return;
