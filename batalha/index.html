@@ -157,10 +157,10 @@
                 <div v-if="!isNaN(game.test_attribute.max) && !!game.test_attribute.max && !isNaN(game.test_attribute.current) && !!game.test_attribute.current">
                   <span class="block bg-zinc-800 px-2 py-1 w-full text-center font-semibold mt-4">
                     {{ 
-                      (game.test_attribute.current * 100 / game.test_attribute.max) <= 20 ? 'Extremo' : (
-                        (game.test_attribute.current * 100 / game.test_attribute.max) <= (40 + 20) ? 'Bom' : (
-                          (game.test_attribute.current * 100 / game.test_attribute.max) <= (40 + 40 + 20) ? 'Regular' : (
-                            ((game.test_attribute.current - game.test_attribute.max) * 100 / (game.test_attribute.base - game.test_attribute.max)) <= 50 ?
+                      ((21 - game.test_attribute.current) * 100 / game.test_attribute.max) <= 20 ? 'Extremo' : (
+                        ((21 - game.test_attribute.current) * 100 / game.test_attribute.max) <= (40 + 20) ? 'Bom' : (
+                          ((21 - game.test_attribute.current) * 100 / game.test_attribute.max) <= (40 + 40 + 20) ? 'Regular' : (
+                            (((21 - game.test_attribute.current) - game.test_attribute.max) * 100 / (game.test_attribute.base - game.test_attribute.max)) <= 50 ?
                              'Ruim':'Péssimo'
                           )
                         )
@@ -294,10 +294,10 @@
                     <div v-if="!isNaN(game.test_attribute.max) && !!game.test_attribute.max && !isNaN(game.test_attribute.current) && !!game.test_attribute.current">
                       <span class="block bg-zinc-800 px-2 py-1 w-full text-center font-semibold mt-4">
                         {{ 
-                          (game.test_attribute.current * 100 / game.test_attribute.max) <= 20 ? 'Extremo (100% dano | 0 custo)' : (
-                            (game.test_attribute.current * 100 / game.test_attribute.max) <= (40 + 20) ? 'Bom (custo => sanidade)' : (
-                              (game.test_attribute.current * 100 / game.test_attribute.max) <= (40 + 40 + 20) ? 'Regular (custo => vida)' : (
-                                ((game.test_attribute.current - game.test_attribute.max) * 100 / (game.test_attribute.base - game.test_attribute.max)) <= 50 ?
+                          ((21 - game.test_attribute.current) * 100 / game.test_attribute.max) <= 20 ? 'Extremo (100% dano | 0 custo)' : (
+                            ((21 - game.test_attribute.current) * 100 / game.test_attribute.max) <= (40 + 20) ? 'Bom (custo => sanidade)' : (
+                              ((21 - game.test_attribute.current) * 100 / game.test_attribute.max) <= (40 + 40 + 20) ? 'Regular (custo => vida)' : (
+                                (((21 - game.test_attribute.current) - game.test_attribute.max) * 100 / (game.test_attribute.base - game.test_attribute.max)) <= 50 ?
                                  'Ruim (custo => vida)':'Péssimo (custo => vida + maldição)'
                               )
                             )
@@ -367,6 +367,38 @@
                 <div class="mt-3 text-center sm:mt-0 sm:text-left">
                   <div class="flex max-sm:flex-col justify-between mb-4">
                     <h3 class="text-base font-semibold leading-6 text-gray-50 max-sm:mb-2" id="modal-title">Guerreiros</h3>
+                  </div>
+                  <div class="mb-6">
+                    <strong class="text-xs">Personagens Existentes</strong>
+                    <div class="grid grid-cols-2 sm:grid-cols-4">
+                      <div
+                        v-for="character of game.characters"
+                        class="p-2 flex-1 text-left text-[10px] font-semibold uppercase flex items-center justify-start hover:bg-zinc-950/50"
+                        v-bind:class="{ 'bg-zinc-950 cursor-pointer': true }"
+                        v-on:click="selectDefaultCharacter(character)"
+                      >{{ character.bio.nome }}</div>
+                      <div
+                        v-for="npc of game.npcs"
+                        class="p-2 flex-1 text-left text-[10px] font-semibold uppercase flex items-center justify-start hover:bg-zinc-950/50"
+                        v-bind:class="{ 'bg-zinc-950 cursor-pointer': true }"
+                        v-on:click="selectDefaultCharacter(npc, 'npc')"
+                      >{{ npc.name }}</div>
+                    </div>
+                  </div>
+                  <div class="mb-6">
+                    <strong class="text-xs">Guerreiros Atuais</strong>
+                    <div class="grid grid-cols-2 sm:grid-cols-4">
+                      <div
+                        v-for="[i, warrior] of warriors.entries()"
+                        class="p-2 flex-1 text-left text-[10px] font-semibold uppercase flex items-center justify-between hover:bg-zinc-950/50"
+                        v-bind:class="{ 'bg-zinc-950': true, 'cursor-pointer': i != 0 }"
+                        v-on:click="removeWarrior(warrior.name)"
+                        v-bind:disabled="i === 0"
+                      >
+                        {{ warrior.name }}
+                        <span v-if="i != 0" class="px-2 text-red-500 font-weight-bold">x</span>
+                      </div>
+                    </div>
                   </div>
                   <div class="mt-6 mb-4 flex shadow-sm ring-2 ring-inset ring-gray-700 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 relative rounded">
                     <textarea v-model="game.json_warriors" class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" rows="10"></textarea>

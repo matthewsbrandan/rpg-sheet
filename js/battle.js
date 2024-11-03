@@ -28,6 +28,8 @@ const app = new Vue({
   data: {
     warriors: [],
     game: {
+      characters: characters,
+      npcs,
       is_auto_saved: false,
       modal: {
         is_open_attributes: false,
@@ -79,50 +81,7 @@ const app = new Vue({
       (warrior) => this.warriorConstructor(warrior, 'npc')
     ));
 
-    // this.warriors.push(...[
-    //   this.warriorConstructor({
-    //     name: 'Mago Abbados',
-    //     attr: { ataque: 8, defesa: 9, sabedoria: 15 },
-    //     progress_attr: { vida: 14, modificador_vida: '' },
-    //     note: ''
-    //   }, 'npc'),
-    //   this.warriorConstructor({
-    //     name: 'Varogue I',
-    //     attr: { defesa: 13, ataque: 15 },
-    //     progress_attr: { vida: 24, modificador_vida: '' },
-    //     note: 'Dano 1d6 + 2'
-    //   }, 'npc'),
-    //   this.warriorConstructor({
-    //     name: 'Varogue II',
-    //     attr: { defesa: 13, ataque: 15 },
-    //     progress_attr: { vida: 24, modificador_vida: '' },
-    //     note: 'Dano 1d6 + 2'
-    //   }, 'npc'),
-    //   this.warriorConstructor({
-    //     name: 'Nebelor',
-    //     attr: { defesa: 12, ataque: 13 },
-    //     progress_attr: { vida: 18, modificador_vida: '' },
-    //     note: '* Precisa ser controlado por um feiticeiro\n\n1d4 para decidir o tipo de ataque\n\n#AT1 1d6\n\n#AT2 toque agonizante(1d6 efeito)\n1-3 pele chamuscada (1d6)\n4-5 pele escarificada (2d6)\n6 pele esfolada 3d6'
-    //   }, 'npc'),
-    //   this.warriorConstructor({
-    //     name: 'Serpente Gigante',
-    //     attr: { defesa: 15, ataque: 16 },
-    //     progress_attr: { vida: 28, modificador_vida: '' },
-    //     note: '* Teste de agi. do inimigo p/ atacar despercebido (dif: bom)\n* 1d4 para saber o tipo de ataque\n\n#AT1 Picada: 2d6 + veneno(5 pontos depois de 3 rodadas se não curar)\n\n#AT2 Prender: o inimigo perde a rodada tendo que fazer um teste de força contra o dela, se perder, na próxima sofre o #AT1. Neste ataque os ataques de surpresa tem vantagem.'
-    //   }, 'npc'),
-    //   this.warriorConstructor({
-    //     name: 'Feit. Bhur',
-    //     attr: { defesa: 13, ataque: 6, sabedoria: 15 },
-    //     progress_attr: { vida: 13, modificador_vida: '' },
-    //     note: ''
-    //   }, 'npc'),
-    //   this.warriorConstructor({
-    //     name: 'Feit. Belemor',
-    //     attr: { defesa: 9, ataque: 12, sabedoria: 15 },
-    //     progress_attr: { vida: 9, modificador_vida: '' },
-    //     note: ''
-    //   }, 'npc'),
-    // ])
+    
     //#endregion LOAD WARRIORS
 
     const recursiveAutosave = () => {
@@ -139,9 +98,9 @@ const app = new Vue({
   },
   methods: {
     /** type = 'main' | 'player' | 'npc' */
-    warriorConstructor: function (warrior, type){
+    warriorConstructor: function (warrior, type, suport = false){
       let parsed = {}
-      if(type === 'npc'){
+      if(type === 'npc' && !suport){
         let outherAttrs = {};
         if(warrior?.attr) Object.entries(warrior?.attr).forEach(
           ([key, value]) => outherAttrs[key] = Number(value ?? 0)
@@ -150,7 +109,6 @@ const app = new Vue({
         parsed = {
           name: warrior.name,
           attr: {
-            ataque: Number(warrior?.attr?.ataque ?? 0),
             defesa: Number(warrior?.attr?.defesa ?? 0),
             ...outherAttrs
           },
@@ -197,7 +155,7 @@ const app = new Vue({
       }
     
       this.calculateDamages('modificador_vida', parsed);
-      if(type !== 'npc') this.calculateDamages('modificador_sanidade', parsed);
+      if(parsed.progress_attr.sanidade !== undefined) this.calculateDamages('modificador_sanidade', parsed);
     
       return parsed;
     },
@@ -357,6 +315,18 @@ const app = new Vue({
       }
 
       return result;
+    },
+    selectDefaultCharacter: function (player, type){
+      this.warriors.push(
+        this.warriorConstructor(player, 'npc', type !== 'npc')
+      );
+
+      this.game.json_warriors = JSON.stringify(this.warriors, null, 2)
+    },
+    removeWarrior: function(warrior_name){
+      this.warriors = this.warriors.filter((warrior,i) => i === 0 || warrior.name !== warrior_name)
+
+      this.game.json_warriors = JSON.stringify(this.warriors, null, 2)
     }
   }
 });

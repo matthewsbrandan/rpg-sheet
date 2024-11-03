@@ -410,4 +410,37 @@ const characters = [
     },
     "notas": ""
   }
-]
+];
+const npcs = [
+  {
+    name: 'Mago Abbados',
+    attr: { ataque: 8, defesa: 9, sabedoria: 15, movimento: 8 },
+    progress_attr: { vida: 14, modificador_vida: '' },
+    note: ''
+  }, {
+    name: 'Varogue',
+    attr: { defesa: 13, ataque: 15, movimento: 6 },
+    progress_attr: { vida: 24, modificador_vida: '' },
+    note: 'Dano 1d6 + 2'
+  }, {
+    name: 'Nebelor',
+    attr: { defesa: 12, ataque: 13, movimento: 10 },
+    progress_attr: { vida: 18, modificador_vida: '' },
+    note: '* Precisa ser controlado por um feiticeiro\n\n1d4 para decidir o tipo de ataque\n\n#AT1 1d6\n\n#AT2 toque agonizante(1d6 efeito)\n1-3 pele chamuscada (1d6)\n4-5 pele escarificada (2d6)\n6 pele esfolada 3d6'
+  }, {
+    name: 'Serpente Gigante',
+    attr: { defesa: 15, ataque: 16, movimento: 12 },
+    progress_attr: { vida: 28, modificador_vida: '' },
+    note: '* Teste de agi. do inimigo p/ atacar despercebido (dif: bom)\n* 1d4 para saber o tipo de ataque\n\n#AT1 Picada: 2d6 + veneno(5 pontos depois de 3 rodadas se não curar)\n\n#AT2 Prender: o inimigo perde a rodada tendo que fazer um teste de força contra o dela, se perder, na próxima sofre o #AT1. Neste ataque os ataques de surpresa tem vantagem.'
+  }, {
+    name: 'Feit. Bhur',
+    attr: { defesa: 13, ataque: 6, sabedoria: 15, movimento: 8 },
+    progress_attr: { vida: 13, modificador_vida: '' },
+    note: ''
+  }, {
+    name: 'Feit. Belemor',
+    attr: { defesa: 9, ataque: 12, sabedoria: 15, movimento: 8 },
+    progress_attr: { vida: 9, modificador_vida: '' },
+    note: ''
+  },
+];
