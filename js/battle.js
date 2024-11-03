@@ -28,6 +28,12 @@ const app = new Vue({
   data: {
     warriors: [],
     game: {
+      mode: 'sheets', // 'battle-grid',
+      battle_grid: {
+        space: { x: 20, y: 15 },
+        selected: '',
+        positions: {}
+      },
       characters: characters,
       npcs,
       is_auto_saved: false,
@@ -139,6 +145,8 @@ const app = new Vue({
           sabedoria: warrior.atributos.sabedoria + warrior.atributos.modificador_sabedoria,
           personalidade: warrior.atributos.personalidade + warrior.atributos.modificador_personalidade,
           percepcao: warrior.atributos.percepcao + warrior.atributos.modificador_percepcao,
+          furtividade: warrior.atributos.furtividade + warrior.atributos.modificador_furtividade,
+          movimento: warrior.atributos.movimento + warrior.atributos.modificador_movimento,
         },
         progress_attr: {
           sanidade: warrior.atributos.sanidade,
@@ -327,6 +335,33 @@ const app = new Vue({
       this.warriors = this.warriors.filter((warrior,i) => i === 0 || warrior.name !== warrior_name)
 
       this.game.json_warriors = JSON.stringify(this.warriors, null, 2)
+    },
+    moveInBattleGrid: function(position){
+      const warrior = this.game.battle_grid.selected;
+      if(!warrior) return;
+
+      if(warrior === '@clear'){
+        delete this.game.battle_grid.positions[position];
+        this.game.battle_grid = {
+          ...this.game.battle_grid,
+          positions: { ...this.game.battle_grid.positions }
+        };
+        return;
+      }
+
+      if(warrior !== '@obstacle'){
+        const [pos] = Object.entries(this.game.battle_grid.positions).find(([_, war]) => war === warrior) ?? [];
+        if(pos) delete this.game.battle_grid.positions[pos];
+      }
+      
+
+      this.game.battle_grid = {
+        ...this.game.battle_grid,
+        positions: {
+          ...this.game.battle_grid.positions,
+          [position]: warrior
+        }
+      };
     }
   }
 });

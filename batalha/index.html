@@ -20,7 +20,7 @@
       <div class="flex-1 h-0.5 w-full bg-zinc-700"></div>
     </div>
     
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" v-if="game.mode === 'sheets'">
       <div v-for="[index, warrior] of warriors.entries()" :key="warrior.name">
         <div class="bg-zinc-900 border-b border-zinc-950 rounded-t-md">
           <h3 class="text-sm text-center font-semibold px-1 py-1">{{ warrior.name }}</h3>
@@ -103,8 +103,72 @@
         </div>
       </div>
     </div>
+    <div class="w-full" v-if="game.mode === 'battle-grid'">
+      <!-- GRID SETTINGS -->
+      <div>
+        <div class="grid grid-cols-4 w-full mb-4">
+          <div class="grid grid-cols-2 border-y border-zinc-950" v-for="[attr, value] of Object.entries(game.battle_grid.space)" :key="attr">
+            <div
+              class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
+            >{{ attr }}</div>
+            <div class="flex shadow-sm ring-2 ring-inset ring-zinc-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+              <input
+                type="number"
+                class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                v-model="game.battle_grid.space[attr]"
+              />
+            </div>
+          </div>
+          <div
+            class="cursor-pointer p-2 flex-1 text-left text-[10px] font-semibold uppercase flex items-center justify-between hover:bg-zinc-900/50 border border-zinc-900/50"
+            v-bind:class="{ 'bg-zinc-900': game.battle_grid.selected === '@obstacle', 'bg-zinc-950': game.battle_grid.selected !== '@obstacle' }"
+            v-on:click="game.battle_grid.selected = '@obstacle'"
+          >Obstáculo</div>
+          <div
+            class="cursor-pointer p-2 flex-1 text-left text-[10px] font-semibold uppercase flex items-center justify-between hover:bg-zinc-900/50 border border-zinc-900/50"
+            v-bind:class="{ 'bg-zinc-900': game.battle_grid.selected === '@clear', 'bg-zinc-950': game.battle_grid.selected !== '@clear'}"
+            v-on:click="game.battle_grid.selected = '@clear'"
+          >Limpar</div>
+        </div>
+        <div class="mb-6">
+          <strong class="text-xs">Guerreiros Atuais</strong>
+          <div class="grid grid-cols-2 sm:grid-cols-4">
+            <div
+              v-for="[i, warrior] of warriors.entries()"
+              class="p-2 flex-1 text-left text-[10px] font-semibold uppercase flex items-center justify-between hover:bg-zinc-900/50 border border-zinc-900/50"
+              v-bind:class="{ 'cursor-pointer': true, 'bg-zinc-900': game.battle_grid.selected === warrior.name, 'bg-zinc-950': game.battle_grid.selected !== warrior.name }"
+              v-on:click="game.battle_grid.selected = warrior.name"
+            >
+              <span>{{ warrior.name }}</span>
+              <span>{{ warrior.attr.movimento }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GRID -->
+      <div class="grid" v-bind:style="{ gridTemplateColumns: `repeat(${game.battle_grid.space.x}, 1fr)` }">
+        <div
+          class="
+            flex shadow-sm ring-2 ring-inset ring-zinc-900 focus-within:ring-2 focus-within:ring-inset
+            focus-within:ring-indigo-600 w-full min-w-[2rem] min-h-[2rem]
+            hover:bg-zinc-900/50
+          "
+          v-for="coordenate of Array.from({ length: game.battle_grid.space.y }).map((_, y) => Array.from({ length: game.battle_grid.space.x }).map((_, x) => `${x}:${y}`)).reduce((acc, curr) => [...acc, ...curr],[])"
+          :key="coordenate"
+          v-on:click="moveInBattleGrid(coordenate)"
+        >
+          <span
+            class="bg-zinc-900 flex-1 flex items-center justify-center text-center text-xs"
+            v-if="!!game.battle_grid.positions[coordenate]"
+          >{{ game.battle_grid.positions[coordenate] === '@obstacle' ? '':game.battle_grid.positions[coordenate] }}</span>
+        </div>
+      </div>
+    </div>
 
     <div class="mt-6 mb-6 flex flex-wrap items-center justify-center gap-4">
+      <button type="button" v-if="game.mode === 'battle-grid'" v-on:click="game.mode = 'sheets'" class="w-40 text-center rounded-md bg-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-600 shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100">Fichas</button>
+      <button type="button" v-if="game.mode === 'sheets'" v-on:click="game.mode = 'battle-grid'" class="w-40 text-center rounded-md bg-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-600 shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100">Grid de Batal.</button>
       <button type="button" v-on:click="openModal('attributes')" class="w-40 text-center rounded-md bg-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-600 shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100">Teste de Atrib.</button>
       <button type="button" v-on:click="openModal('books')" class="w-40 text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100">Livros</button>
       <button type="button" v-on:click="openModal('warriors')" class="w-40 text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100">Guerreiros</button>
