@@ -130,24 +130,112 @@
             v-on:click="game.battle_grid.selected = '@clear'"
           >Limpar</div>
         </div>
-        <div class="mb-6">
-          <strong class="text-xs">Guerreiros Atuais</strong>
-          <div class="grid grid-cols-2 sm:grid-cols-4">
-            <div
-              v-for="[i, warrior] of warriors.entries()"
-              class="p-2 flex-1 text-left text-[10px] font-semibold uppercase flex items-center justify-between hover:bg-zinc-900/50 border border-zinc-900/50"
-              v-bind:class="{ 'cursor-pointer': true, 'bg-zinc-900': game.battle_grid.selected === warrior.name, 'bg-zinc-950': game.battle_grid.selected !== warrior.name }"
-              v-on:click="game.battle_grid.selected = warrior.name"
-            >
-              <span>{{ warrior.name }}</span>
-              <span>{{ warrior.attr.movimento }}</span>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-6">
+          <div class="lg:col-span-2 xl:col-span-3">
+            <strong class="text-xs">Guerreiros Atuais</strong>
+            <div class="grid grid-cols-2 sm:grid-cols-4">
+              <div
+                v-for="[i, warrior] of warriors.entries()"
+                class="p-2 flex-1 text-left text-[10px] font-semibold uppercase flex items-center justify-between hover:bg-zinc-900/50 border border-zinc-900/50"
+                v-bind:class="{ 'cursor-pointer': true, 'bg-zinc-900': game.battle_grid.selected === warrior.name, 'bg-zinc-950': game.battle_grid.selected !== warrior.name }"
+                v-on:click="game.battle_grid.selected = warrior.name"
+              >
+                <span v-bind:class="{ 'text-gray-700': !Object.values(game.battle_grid.positions).includes(warrior.name) }">{{ warrior.name }}</span>
+                <span>{{ warrior.attr.movimento }}</span>
+              </div>
+            </div>
+          </div>
+          <div
+            v-if="game.battle_grid.selected && game.battle_grid.selected !== '@obstacle' && game.battle_grid.selected !== '@clear'"
+            class="overflow-y-auto max-h-[17rem]"
+          >
+            <div v-for="warrior of warriors.filter((war) => war.name === game.battle_grid.selected)" :key="warrior.name">
+              <div class="bg-zinc-900 border-b border-zinc-950 rounded-t-md">
+                <h3 class="text-sm text-center font-semibold px-1 py-1">{{ warrior.name }}</h3>
+                <div class="bg-zinc-800 relative" v-if="warrior.progress_attr.vida !== undefined">
+                  <span class="text-[9px] absolute text-white inset-0 text-center leading-none">{{ warrior.calculeds.life[1] }}</span>
+                  <div class="bg-red-500 h-2.5" v-bind:style="{ width: `${warrior.calculeds.life[0]}%` }"></div>
+                </div>
+                <div class="bg-zinc-800 relative" v-if="warrior.progress_attr.sanidade !== undefined">
+                  <span class="text-[9px] absolute text-white inset-0 text-center leading-none">{{ warrior.calculeds.sanity[1] }}</span>
+                  <div class="bg-blue-500 h-2.5" v-bind:style="{ width: `${warrior.calculeds.sanity[0]}%` }"></div>
+                </div>
+              </div>
+              <div>
+                <div class="border-y border-zinc-950">
+                  <div class="grid grid-cols-2 border-zinc-950 border-b">
+                    <div
+                      class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center"
+                    >Vida</div>
+                    <div class="flex shadow-sm ring-2 ring-inset ring-zinc-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                      <input
+                        type="number"
+                        class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                        v-model="warrior.progress_attr.vida"
+                      />
+                    </div>
+                  </div>
+                  <div class="bg-zinc-900/70">
+                    <textarea
+                      v-model="warrior.progress_attr.modificador_vida"
+                      @input="() => calculateDamages('modificador_vida', warrior)"
+                      class="flex-1 -mb-1.5 w-full !border-0 py-1.5 px-2 text-sm sm:leading-6 bg-transparent p-0 !outline-0 !ring-0"
+                      rows="1"
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="border-y border-zinc-950"  v-if="warrior.progress_attr.sanidade !== undefined">
+                  <div class="grid grid-cols-2 border-zinc-950 border-b">
+                    <div
+                      class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
+                      v-on:click="openTestAttribute('sanidade', warrior)"
+                    >Sanidade</div>
+                    <div class="flex shadow-sm ring-2 ring-inset ring-zinc-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                      <input
+                        type="number"
+                        class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                        v-model="warrior.progress_attr.sanidade"
+                      />
+                    </div>
+                  </div>
+                  <div class="bg-zinc-900/70">
+                    <textarea
+                      v-model="warrior.progress_attr.modificador_sanidade"
+                      @input="() => calculateDamages('modificador_sanidade', warrior)"
+                      class="flex-1 -mb-1.5 w-full !border-0 py-1.5 px-2 text-sm sm:leading-6 bg-transparent p-0 !outline-0 !ring-0"
+                      rows="1"
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="grid grid-cols-2 border-y border-zinc-950" v-for="[attr, value] of Object.entries(warrior.attr)" :key="attr">
+                  <div
+                    v-on:click="openTestAttribute(attr, warrior)"
+                    class="bg-zinc-900 flex-1 text-center text-[10px] font-semibold uppercase flex items-center justify-center cursor-pointer hover:bg-zinc-900/50"
+                  >{{ attr.slice(0, 6) + (attr.length > 6 ? '.':'') }}</div>
+                  <div class="flex shadow-sm ring-2 ring-inset ring-zinc-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                    <input
+                      type="number"
+                      class="block flex-1 border-0 bg-transparent py-1.5 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      v-model="warrior.attr[attr]"
+                    />
+                  </div>
+                </div>
+                <div class="bg-zinc-900/70">
+                  <textarea
+                    v-model="warrior.note"
+                    class="flex-1 -mb-1.5 w-full !border-0 py-1.5 px-2 text-sm sm:leading-6 bg-transparent p-0 !outline-0 !ring-0"
+                    rows="2"
+                    placeholder="Notas..."
+                  ></textarea>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       <!-- GRID -->
-      <div class="grid" v-bind:style="{ gridTemplateColumns: `repeat(${game.battle_grid.space.x}, 1fr)` }">
+      <div class="grid max-w-full overflow-x-auto" v-bind:style="{ gridTemplateColumns: `repeat(${game.battle_grid.space.x}, 1fr)` }">
         <div
           class="
             flex shadow-sm ring-2 ring-inset ring-zinc-900 focus-within:ring-2 focus-within:ring-inset
@@ -167,8 +255,8 @@
     </div>
 
     <div class="mt-6 mb-6 flex flex-wrap items-center justify-center gap-4">
-      <button type="button" v-if="game.mode === 'battle-grid'" v-on:click="game.mode = 'sheets'" class="w-40 text-center rounded-md bg-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-600 shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100">Fichas</button>
-      <button type="button" v-if="game.mode === 'sheets'" v-on:click="game.mode = 'battle-grid'" class="w-40 text-center rounded-md bg-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-600 shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100">Grid de Batal.</button>
+      <button type="button" v-if="game.mode === 'battle-grid'" v-on:click="toggleMode('sheets')" class="w-40 text-center rounded-md bg-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-600 shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100">Fichas</button>
+      <button type="button" v-if="game.mode === 'sheets'" v-on:click="toggleMode('battle-grid')" class="w-40 text-center rounded-md bg-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-600 shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100">Grid de Batal.</button>
       <button type="button" v-on:click="openModal('attributes')" class="w-40 text-center rounded-md bg-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-600 shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100">Teste de Atrib.</button>
       <button type="button" v-on:click="openModal('books')" class="w-40 text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100">Livros</button>
       <button type="button" v-on:click="openModal('warriors')" class="w-40 text-center rounded-md border border-gray-200 px-3 py-2 px-8 text-sm font-semibold text-gray-400 shadow-sm hover:bg-gray-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-100">Guerreiros</button>

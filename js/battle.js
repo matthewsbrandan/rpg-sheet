@@ -1,4 +1,5 @@
 const storageWarriors = 'rpg@warriors'
+const storageBattle = 'rpg@battle'
 const availableModals = ['attributes', 'books', 'warriors'];
 let warriorsPayload = undefined;
 
@@ -23,17 +24,33 @@ const setWarriors = (warriors) => {
   localStorage.setItem(storageWarriors, warriorsPayload)
 }
 
+const getBattle = () => {
+  const battle = localStorage.getItem(storageBattle);
+  let parsed = {}
+  try{ parsed = JSON.parse(battle) ?? {}; }
+  catch(e){ parsed = {} }
+
+  if(!parsed.mode) parsed.mode = 'sheets'; // 'battle-grid';
+  if(!parsed.battle_grid) parsed.battle_grid = {}
+  if(!parsed.battle_grid.space) parsed.battle_grid.space = { x: 20, y: 15 };
+  if(!parsed.battle_grid.selected) parsed.battle_grid.selected = '';
+  if(!parsed.battle_grid.positions) parsed.battle_grid.positions = {};
+    
+  return parsed;
+}
+const setBattle = (battle) => {
+  battlePayload = JSON.stringify(battle)
+  localStorage.setItem(storageBattle, battlePayload)
+}
+const battle = getBattle();
+
 const app = new Vue({
   el: '#app',
   data: {
     warriors: [],
     game: {
-      mode: 'sheets', // 'battle-grid',
-      battle_grid: {
-        space: { x: 20, y: 15 },
-        selected: '',
-        positions: {}
-      },
+      mode: battle.mode,
+      battle_grid: battle.battle_grid,
       characters: characters,
       npcs,
       is_auto_saved: false,
@@ -349,12 +366,18 @@ const app = new Vue({
         return;
       }
 
+      if(!!this.game.battle_grid.positions[position]){
+        if(!['@clear','@obstacle'].includes(this.game.battle_grid.positions[position])){
+          this.game.battle_grid.selected = this.game.battle_grid.positions[position];
+        }
+        return;
+      }
+
       if(warrior !== '@obstacle'){
         const [pos] = Object.entries(this.game.battle_grid.positions).find(([_, war]) => war === warrior) ?? [];
         if(pos) delete this.game.battle_grid.positions[pos];
       }
       
-
       this.game.battle_grid = {
         ...this.game.battle_grid,
         positions: {
@@ -362,6 +385,12 @@ const app = new Vue({
           [position]: warrior
         }
       };
+
+      setBattle({ mode: this.game.mode, battle_grid: this.game.battle_grid });
+    },
+    toggleMode: function(mode){
+      this.game.mode = mode;
+      setBattle({ mode, battle_grid: this.game.battle_grid });
     }
   }
 });
